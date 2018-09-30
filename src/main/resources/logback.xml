@@ -24,7 +24,7 @@
     <logger name="org.hibernate" level="warn"/>
     <logger name="org.springframework" level="info"/>
 
-    <logger name="fraglab" level="info"/>
+    <logger name="fraglab" level="debug"/>
 
     <root level="info">
         <appender-ref ref="STDOUT"/>

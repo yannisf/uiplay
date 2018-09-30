@@ -5,17 +5,18 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>fraglab.spring</groupId>
-    <artifactId>library</artifactId>
+    <artifactId>uiplay</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <platform-bom.version>Cairo-SR3</platform-bom.version>
+        <!--<tomcat.version>9.0.12</tomcat.version>-->
     </properties>
 
     <build>
-        <finalName>library</finalName>
+        <finalName>uiplay</finalName>
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -50,14 +51,6 @@
                         </annotationProcessor>
                     </annotationProcessors>
                 </configuration>
-<!--
-                <dependencies>
-                    <dependency>
-                        <groupId>org.hibernate</groupId>
-                        <artifactId>hibernate-jpamodelgen</artifactId>
-                    </dependency>
-                </dependencies>
--->
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -166,12 +159,36 @@
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-core</artifactId>
+            <!--<version>${tomcat.version}</version>-->
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-jasper</artifactId>
+            <!--<version>${tomcat.version}</version>-->
             <scope>test</scope>
+        </dependency>
+
+        <!-- JEE APIs with Java9+ -->
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>2.3.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.activation</groupId>
+            <artifactId>activation</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>javax.annotation-api</artifactId>
+            <version>1.3.1</version>
         </dependency>
 
     </dependencies>

@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class AuthorService {
@@ -13,6 +15,10 @@ public class AuthorService {
 
     public Author find(Long id) {
         return authorRepository.findById(id).orElseThrow(IllegalStateException::new);
+    }
+
+    public List<Author> findAll() {
+        return authorRepository.findAll();
     }
 
     public Author save(Author author) {

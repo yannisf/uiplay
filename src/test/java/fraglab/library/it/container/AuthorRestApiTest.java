@@ -7,7 +7,6 @@ import fraglab.library.it.container.embedded.EmbeddedServer;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.testng.annotations.Test;
-import sun.reflect.generics.tree.VoidDescriptor;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -50,7 +49,8 @@ public class AuthorRestApiTest extends AbstractRestIntegrationTest {
                 String.format("%s/%s/books", AUTHOR_URL, id),
                 HttpMethod.GET,
                 new HttpEntity<>(headers),
-                new ParameterizedTypeReference<List<Book>>(){});
+                new ParameterizedTypeReference<List<Book>>() {
+                });
         List<Book> books = response.getBody();
 
         assertThat(books).hasSize(1);
