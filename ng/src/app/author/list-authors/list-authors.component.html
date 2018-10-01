@@ -1,5 +1,10 @@
 <div>
-  <ul *ngIf="authors">
-    <li *ngFor="let author of authors">{{author.name}}</li>
+  <ul class="list-group" *ngIf="authors">
+    <li class="list-group-item" *ngFor="let author of authors">
+      {{author.name}}
+      <button type="button" class="btn btn-link float-right" (click)="delete(author.id)">
+        <i class="remove-icon" title="Delete"></i>
+      </button>
+    </li>
   </ul>
 </div>
