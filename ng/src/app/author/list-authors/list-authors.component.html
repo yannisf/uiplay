@@ -1,5 +1,8 @@
 <div>
-  <ul *ngIf="authors">
-    <li *ngFor="let author of authors">{{author.name}}</li>
+  <ul class="list-group" *ngIf="authors">
+    <li class="list-group-item" *ngFor="let author of authors">
+      {{author.name}}
+      <span class="float-right"><i class="fas fa-backspace"></i></span>
+    </li>
   </ul>
 </div>
