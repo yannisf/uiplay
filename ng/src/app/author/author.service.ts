@@ -20,6 +20,10 @@ export class AuthorService {
     return this.http.post<Author>('http://localhost:8080/api/author', author);
   }
 
+  delete(authorId: number): Observable<void> {
+    return this.http.delete<void>(`http://localhost:8080/api/author/${authorId}`);
+  }
+
   addedAuthor() {
       this.subject.next({ added: true });
   }

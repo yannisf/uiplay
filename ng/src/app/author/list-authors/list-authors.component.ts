@@ -26,6 +26,12 @@ export class ListAuthorsComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
+  delete(id): void {
+    this.authorService.delete(id).subscribe(data => {
+      this.list();
+    });
+  }
+
   private list(): void {
     this.authorService.list().subscribe(data => {
       this.authors = data;
