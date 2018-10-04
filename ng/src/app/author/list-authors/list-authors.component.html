@@ -3,10 +3,26 @@
     <ul class="list-group" *ngIf="authors">
       <li class="list-group-item" *ngFor="let author of authors">
         {{author.name}}
-        <button type="button" title="Delete" class="btn btn-link float-right" (click)="delete(author.id)">
+        <button type="button" title="Delete" class="btn btn-link float-right" (click)="openModal(template, author.id)">
           <i class="fas fa-backspace"></i>
         </button>
       </li>
     </ul>
   </div>
 </div>
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Warning</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    Are you sure you want to delete this author?
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" (click)="delete()" >Yes</button>
+    <button type="button" class="btn btn-primary" (click)="modalRef.hide()" >No</button>
+  </div>
+</ng-template>

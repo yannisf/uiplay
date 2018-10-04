@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { Author } from './author';
 
+const RESOURCE_AUTHOR = "/api/author";
+
 @Injectable({
   providedIn: 'root'
 })
@@ -13,15 +15,15 @@ export class AuthorService {
   constructor(private http: HttpClient) { }
 
   list(): Observable<Author[]> {
-    return this.http.get<Author[]>('http://localhost:8080/api/author');
+    return this.http.get<Author[]>(RESOURCE_AUTHOR);
   }
 
   insert(author: Author): Observable<Author> {
-    return this.http.post<Author>('http://localhost:8080/api/author', author);
+    return this.http.post<Author>(RESOURCE_AUTHOR, author);
   }
 
   delete(authorId: number): Observable<void> {
-    return this.http.delete<void>(`http://localhost:8080/api/author/${authorId}`);
+    return this.http.delete<void>(`${RESOURCE_AUTHOR}/${authorId}`);
   }
 
   addedAuthor() {
