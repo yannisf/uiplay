@@ -1,10 +1,12 @@
-<div>
-  <ul class="list-group" *ngIf="authors">
-    <li class="list-group-item" *ngFor="let author of authors">
-      {{author.name}}
-      <button type="button" title="Delete"class="btn btn-link float-right" (click)="delete(author.id)">
-        <i class="fas fa-backspace"></i>
-      </button>
-    </li>
-  </ul>
+<div class="row">
+  <div class="col-4">
+    <ul class="list-group" *ngIf="authors">
+      <li class="list-group-item" *ngFor="let author of authors">
+        {{author.name}}
+        <button type="button" title="Delete" class="btn btn-link float-right" (click)="delete(author.id)">
+          <i class="fas fa-backspace"></i>
+        </button>
+      </li>
+    </ul>
+  </div>
 </div>
