@@ -1,19 +1,12 @@
-<div style="text-align:center">
-  <h1> {{ title }} </h1>
-</div>
-
 <div class="container">
-  <div class="row">
-    <div class="col-lg-12 col-sm-12">
-      <app-insert-author></app-insert-author>
-    </div>
+  <div style="text-align:center">
+    <h1> {{ title }} </h1>
   </div>
 
-  <div class="row">
-    <div class="col-lg-12 col-sm-12">
-      <app-list-authors></app-list-authors>
-    </div>
-  </div>
-
+  <nav class="nav">
+    <a class="nav-link" routerLink="/author/insert">Insert</a>
+    <a class="nav-link" routerLink="/author/list">List</a>
+  </nav>
+  <router-outlet></router-outlet>
 </div>
-<!--<accordion-basic></accordion-basic>-->
+

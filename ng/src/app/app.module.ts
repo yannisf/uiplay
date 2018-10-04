@@ -9,21 +9,21 @@ import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { AppComponent } from './app.component';
 import { InsertAuthorComponent } from './author/insert-author/insert-author.component';
 import { ListAuthorsComponent } from './author/list-authors/list-authors.component';
-import { AccordionBasicComponent } from './accordion/accordion.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     InsertAuthorComponent,
-    ListAuthorsComponent,
-    AccordionBasicComponent
+    ListAuthorsComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    ModalModule.forRoot(),
-    AccordionModule.forRoot()
+    AppRoutingModule,
+    HttpClientModule,
+    ModalModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

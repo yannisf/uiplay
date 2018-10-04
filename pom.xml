@@ -11,7 +11,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <platform-bom.version>Cairo-SR3</platform-bom.version>
+        <boot-bom.version>2.0.5.RELEASE</boot-bom.version>
         <!--<tomcat.version>9.0.12</tomcat.version>-->
     </properties>
 
@@ -66,9 +66,9 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>io.spring.platform</groupId>
-                <artifactId>platform-bom</artifactId>
-                <version>${platform-bom.version}</version>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${boot-bom.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -132,6 +132,7 @@
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
+            <version>6.14.3</version>
             <scope>test</scope>
         </dependency>
         <dependency>
