@@ -1,8 +1,12 @@
 <form>
   <div class="form-group">
-    <label> Add author </label>
-    <input type="text" class="form-control" name="name" [(ngModel)]="author.name" placeholder="Author name" />
+    <label for="insertAuthor">Insert author</label>
+    <div class="input-group">
+      <input id="insertAuthor" type="text" class="form-control" name="name" [(ngModel)]="author.name" placeholder="author name"/>
+      <div class="input-group-append">
+        <button class="btn btn-primary" type="button" (click)="insert()">Insert</button>
+      </div>
+    </div>
     <small class="form-text text-muted">This will be the author name</small>
   </div>
-  <button type="submit" title="Insert author" class="btn btn-primary" (click)="insert()">Insert</button>
 </form>

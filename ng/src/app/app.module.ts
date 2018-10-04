@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 
 import { AppComponent } from './app.component';
@@ -21,6 +22,7 @@ import { AccordionBasicComponent } from './accordion/accordion.component';
     BrowserModule,
     FormsModule,
     HttpClientModule,
+    ModalModule.forRoot(),
     AccordionModule.forRoot()
   ],
   providers: [],

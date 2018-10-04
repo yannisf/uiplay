@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Author } from '../author';
-import { AuthorService } from '../author.service';
+import {Component, OnInit} from '@angular/core';
+import {Author} from '../author';
+import {AuthorService} from '../author.service';
 
 @Component({
   selector: 'app-insert-author',
@@ -21,7 +21,7 @@ export class InsertAuthorComponent implements OnInit {
   insert(): void {
     console.log(this.author);
     this.authorService.insert(this.author).subscribe(author => {
-        this.authorService.addedAuthor();
+      this.authorService.addedAuthor();
     });
   }
 
