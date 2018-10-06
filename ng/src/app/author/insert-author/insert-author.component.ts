@@ -10,6 +10,7 @@ import {AuthorService} from '../author.service';
 export class InsertAuthorComponent implements OnInit {
 
   author: Author;
+  loading: boolean;
 
   constructor(private authorService: AuthorService) {
   }
@@ -19,9 +20,10 @@ export class InsertAuthorComponent implements OnInit {
   }
 
   insert(): void {
-    console.log(this.author);
+    this.loading = true;
     this.authorService.insert(this.author).subscribe(author => {
       this.authorService.addedAuthor();
+      this.loading = false;
     });
   }
 

@@ -1,5 +1,7 @@
 package fraglab.library;
 
+import fraglab.library.valueobject.AuthorValue;
+import fraglab.library.valueobject.BookValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,22 +20,22 @@ public class AuthorResource {
     private AuthorService authorService;
 
     @GetMapping(produces = "application/json")
-    public List<Author> findAll() {
+    public List<AuthorValue> findAll() {
         LOG.debug("Finding all Authors");
-        return authorService.findAll();
+        return authorService.findAllValues();
     }
 
     @GetMapping(value = "/{id}", produces = "application/json")
-    public Author find(@PathVariable Long id) {
+    public AuthorValue find(@PathVariable Long id) {
         LOG.debug("Finding Author[{}]", id);
-        return authorService.find(id);
+        return authorService.findValue(id);
     }
 
     @PostMapping(consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
-    public Author save(@RequestBody Author author) {
-        LOG.debug("Saving Author[{}]", author);
-        return authorService.save(author);
+    public AuthorValue save(@RequestBody AuthorValue authorValue) {
+        LOG.debug("Saving Author[{}]", authorValue);
+        return authorService.saveValue(authorValue);
     }
 
     @DeleteMapping(value = "/{id}")
@@ -45,9 +47,9 @@ public class AuthorResource {
 
     @PostMapping(value = "/{authorId}", consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void addBook(@PathVariable Long authorId, @RequestBody Book book) {
-        LOG.debug("Adding Book[{}] to Author[{}]", book, authorId);
-        authorService.addBook(authorId, book);
+    public void addBook(@PathVariable Long authorId, @RequestBody BookValue bookValue) {
+        LOG.debug("Adding Book[{}] to Author[{}]", bookValue, authorId);
+        authorService.addBookValue(authorId, bookValue);
     }
 
     @DeleteMapping(value = "/{authorId}/{bookId}", consumes = "application/json", produces = "application/json")
@@ -59,9 +61,9 @@ public class AuthorResource {
 
     @GetMapping(value = "/{id}/books", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
-    public List<Book> getAuthorBooks(@PathVariable Long id) {
+    public List<BookValue> getAuthorBooks(@PathVariable Long id) {
         LOG.debug("Finding books of Author[{}]", id);
-        return authorService.findWithBooks(id).getBooks();
+        return authorService.findValueWithBooksValues(id).getBooks();
     }
 
 }

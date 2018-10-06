@@ -11,10 +11,12 @@ import {BsModalRef} from 'ngx-bootstrap/modal/bs-modal-ref.service';
   styleUrls: ['./list-authors.component.scss']
 })
 export class ListAuthorsComponent implements OnInit, OnDestroy {
+
   subscription: Subscription;
   authors: Author[];
   modalRef: BsModalRef;
   selectedAuthorId: number;
+  loading: boolean;
 
   constructor(private authorService: AuthorService,
               private modalService: BsModalService) {
@@ -40,8 +42,10 @@ export class ListAuthorsComponent implements OnInit, OnDestroy {
   }
 
   private list(): void {
+    this.loading = true;
     this.authorService.list().subscribe(data => {
       this.authors = data;
+      this.loading = false;
     });
   }
 

@@ -1,5 +1,7 @@
 package fraglab;
 
+import com.github.dozermapper.core.DozerBeanMapperBuilder;
+import com.github.dozermapper.core.Mapper;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -61,6 +63,11 @@ public class ApplicationConfiguration implements WebMvcConfigurer {
         JpaTransactionManager platformTransactionManager = new JpaTransactionManager();
         platformTransactionManager.setEntityManagerFactory(entityManagerFactory);
         return platformTransactionManager;
+    }
+
+    @Bean
+    public Mapper dozerMapper() {
+        return DozerBeanMapperBuilder.buildDefault();
     }
 
     @Override
