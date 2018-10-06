@@ -26,6 +26,10 @@ export class AuthorService {
     return this.http.delete<void>(`${RESOURCE_AUTHOR}/${authorId}`);
   }
 
+  fetch(authorId: number): Observable<Author> {
+    return this.http.get<Author>(`${RESOURCE_AUTHOR}/${authorId}`)
+  }
+
   addedAuthor() {
       this.subject.next({ added: true });
   }

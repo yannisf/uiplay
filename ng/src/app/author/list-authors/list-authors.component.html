@@ -1,8 +1,12 @@
+<h2>Authors</h2>
 <div class="row">
-  <div class="col-4">
+  <div class="col-12">
+    <div class="alert alert-primary" role="alert" *ngIf="!authors?.length">
+      No authors.
+    </div>
     <ul class="list-group" *ngIf="authors">
       <li class="list-group-item" *ngFor="let author of authors">
-        {{author.name}}
+        <a routerLink="/author/{{author.id}}">{{author.name}}</a>
         <button type="button" title="Delete" class="btn btn-link float-right" (click)="openModal(template, author.id)">
           <i class="fas fa-backspace"></i>
         </button>

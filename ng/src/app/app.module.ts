@@ -4,18 +4,24 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { AccordionModule } from 'ngx-bootstrap/accordion';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 import { AppComponent } from './app.component';
 import { InsertAuthorComponent } from './author/insert-author/insert-author.component';
 import { ListAuthorsComponent } from './author/list-authors/list-authors.component';
 import { AppRoutingModule } from './app-routing.module';
+import { DetailAuthorComponent } from './author/detail-author/detail-author.component';
+import { InsertBookComponent } from './author/book/insert-book/insert-book.component';
+import { ListBooksComponent } from './author/book/list-books/list-books.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     InsertAuthorComponent,
-    ListAuthorsComponent
+    ListAuthorsComponent,
+    DetailAuthorComponent,
+    InsertBookComponent,
+    ListBooksComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +29,8 @@ import { AppRoutingModule } from './app-routing.module';
     HttpClientModule,
     AppRoutingModule,
     HttpClientModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    TooltipModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
