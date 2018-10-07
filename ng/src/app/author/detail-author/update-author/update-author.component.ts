@@ -10,25 +10,27 @@ import {AuthorService} from "../../author.service";
 export class UpdateAuthorComponent implements OnInit {
 
   @Input() author: Author;
-  @Output() saved = new EventEmitter<boolean>();
+  @Output() saved = new EventEmitter<Author>();
   @ViewChild('updateAuthor')
   private input: ElementRef;
+  private originalAuthor: Author;
 
   constructor(private authorService: AuthorService) {
   }
 
   ngOnInit() {
+    this.originalAuthor = JSON.parse(JSON.stringify(this.author));
     this.input.nativeElement.focus();
   }
 
   save(): void {
     this.authorService.insert(this.author).subscribe(author => {
-      this.saved.emit(true);
+      this.saved.emit(author);
     });
   }
 
   cancel(): void {
-    this.saved.emit(false);
+    this.saved.emit(this.originalAuthor);
   }
 
 }
