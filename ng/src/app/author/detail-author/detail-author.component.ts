@@ -31,10 +31,15 @@ export class DetailAuthorComponent implements OnInit {
       .subscribe(author => this.author = author);
   }
 
-  @HostListener('document:keydown.e')
-  edit(): boolean {
+  @HostListener('document:keydown.e', ['$event'])
+  onKeydownHandler(event: KeyboardEvent): boolean {
+    const result = this.editMode;
+    this.edit();
+    return result;
+  }
+
+  edit(): void {
     this.editMode = true;
-    return false;
   }
 
   saved($event: Author) {
