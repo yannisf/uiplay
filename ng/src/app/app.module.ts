@@ -1,18 +1,19 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
 
-import { ModalModule } from 'ngx-bootstrap/modal';
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import {ModalModule} from 'ngx-bootstrap/modal';
+import {TooltipModule} from 'ngx-bootstrap/tooltip';
 
-import { AppComponent } from './app.component';
-import { InsertAuthorComponent } from './author/insert-author/insert-author.component';
-import { ListAuthorsComponent } from './author/list-authors/list-authors.component';
-import { AppRoutingModule } from './app-routing.module';
-import { DetailAuthorComponent } from './author/detail-author/detail-author.component';
-import { InsertBookComponent } from './author/book/insert-book/insert-book.component';
-import { ListBooksComponent } from './author/book/list-books/list-books.component';
+import {AppComponent} from './app.component';
+import {InsertAuthorComponent} from './author/insert-author/insert-author.component';
+import {ListAuthorsComponent} from './author/list-authors/list-authors.component';
+import {AppRoutingModule} from './app-routing.module';
+import {DetailAuthorComponent} from './author/detail-author/detail-author.component';
+import {InsertBookComponent} from './author/book/insert-book/insert-book.component';
+import {ListBooksComponent} from './author/book/list-books/list-books.component';
+import {UpdateAuthorComponent} from './author/detail-author/update-author/update-author.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ListBooksComponent } from './author/book/list-books/list-books.componen
     ListAuthorsComponent,
     DetailAuthorComponent,
     InsertBookComponent,
-    ListBooksComponent
+    ListBooksComponent,
+    UpdateAuthorComponent
   ],
   imports: [
     BrowserModule,

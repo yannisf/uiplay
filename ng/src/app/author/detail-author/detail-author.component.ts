@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {Component, HostListener, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from "@angular/common";
 
 import {Author} from "../author";
@@ -12,10 +12,13 @@ import {AuthorService} from "../author.service";
 })
 export class DetailAuthorComponent implements OnInit {
 
-  public author: Author;
+  public author: Author = new Author();
+  public editMode: boolean = false;
+  private originalAuthor: Author;
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private location: Location,
     private authorService: AuthorService) {
   }
@@ -30,8 +33,22 @@ export class DetailAuthorComponent implements OnInit {
       .subscribe(author => this.author = author);
   }
 
-  goBack(): void {
-    this.location.back();
+  @HostListener('document:keydown.e')
+  edit(): void {
+    this.editMode = true;
+    this.originalAuthor = JSON.parse(JSON.stringify(this.author));
   }
 
+  goBack(): void {
+    this.location.back();
+    // this.router.navigateByUrl('/');
+  }
+
+  saved($event: boolean) {
+    this.editMode = false;
+    if (!$event) {
+      this.author = this.originalAuthor;
+    }
+    this.originalAuthor = null;
+  }
 }

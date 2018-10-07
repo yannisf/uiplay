@@ -2,7 +2,7 @@
   <div class="form-row mt-5 mb-2">
     <div class="col-8">
       <label class="sr-only" for="inputAuthor"> Add author </label>
-      <input id="inputAuthor" type="text" class="form-control" name="name" [(ngModel)]="author.name"
+      <input #inputAuthor id="inputAuthor" type="text" class="form-control" name="name" [(ngModel)]="author.name"
              placeholder="author name"/>
       <small class="form-text text-muted">This will be the author name</small>
     </div>
