@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
-import { Author } from './author';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable, Subject} from 'rxjs';
+import {Author} from './author';
+import {Book} from "./book/book";
 
 const RESOURCE_AUTHOR = "/api/author";
 
@@ -12,7 +13,8 @@ export class AuthorService {
 
   private subject = new Subject<any>();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   list(): Observable<Author[]> {
     return this.http.get<Author[]>(RESOURCE_AUTHOR);
@@ -31,11 +33,15 @@ export class AuthorService {
   }
 
   addedAuthor() {
-      this.subject.next({ added: true });
+    this.subject.next({added: true});
   }
 
   receiveAddedAuthor(): Observable<any> {
-      return this.subject.asObservable();
+    return this.subject.asObservable();
+  }
+
+  fetchBooks(authorId: number) {
+    return this.http.get<Book[]>(`${RESOURCE_AUTHOR}/${authorId}/books`);
   }
 
 }

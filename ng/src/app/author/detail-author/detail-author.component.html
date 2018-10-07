@@ -19,9 +19,10 @@
 </div>
 
 <h3>Books</h3>
+<app-list-books *ngIf="author.id !== undefined" [authorId]="author.id"></app-list-books>
 
-<div class="alert alert-primary" role="alert" *ngIf="!books?.length">
-  Author does not have any books registered.
-</div>
 
+<div>
 <a [routerLink]="" (click)="goBack()">Back</a>
+
+</div>

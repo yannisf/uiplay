@@ -1,3 +1,25 @@
-<p>
-  list-books works!
-</p>
+<div class="alert alert-primary" role="alert" *ngIf="!books?.length">
+  Author does not have any books registered.
+</div>
+
+<div>
+  <ul class="list-group" *ngIf="books?.length">
+    <li class="list-group-item" *ngFor="let book of books">
+      <div class="input-group input-group-sm">
+        <input type="text" class="form-control" [(ngModel)]="book.title"/>
+        <div class="input-group-append">
+          <button class="btn btn-primary" title="Cancel" (click)="cancel()"><i class="fas fa-undo"></i></button>
+          <button class="btn btn-success" title="Save" (click)="save()"><i class="fas fa-check"></i></button>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<div>
+
+  <button class="btn btn-primary" (click)="addBook()">
+    <i class="fas fa-plus"></i> Add book
+  </button>
+</div>
+
