@@ -3,4 +3,8 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
 @import "~@fortawesome/fontawesome-free/scss/brands";
 @import "~@fortawesome/fontawesome-free/scss/regular";
 @import "~@fortawesome/fontawesome-free/scss/solid";
+
+@import "~bootswatch/dist/cosmo/variables";
 @import '~bootstrap/scss/bootstrap';
+@import "~bootswatch/dist/cosmo/bootswatch";
+
