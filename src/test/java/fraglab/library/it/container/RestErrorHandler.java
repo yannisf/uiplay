@@ -15,6 +15,7 @@ public class RestErrorHandler implements ResponseErrorHandler {
     public void handleError(ClientHttpResponse response) throws IOException {
         if (response.getStatusCode().is4xxClientError()) {
             LOG.error("Client error (4xx)");
+            throw new RuntimeException("Client error");
         } else if (response.getStatusCode().is5xxServerError()) {
             LOG.error("Server error (5xx)");
             throw new RuntimeException("Server error");

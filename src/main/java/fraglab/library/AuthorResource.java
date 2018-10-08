@@ -2,68 +2,37 @@ package fraglab.library;
 
 import fraglab.library.valueobject.AuthorValue;
 import fraglab.library.valueobject.BookValue;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/author")
-public class AuthorResource {
-
-    private static final Logger LOG = LoggerFactory.getLogger(AuthorResource.class);
-
-    @Autowired
-    private AuthorService authorService;
+public interface AuthorResource {
 
     @GetMapping(produces = "application/json")
-    public List<AuthorValue> findAll() {
-        LOG.debug("Finding all Authors");
-        return authorService.findAllValues();
-    }
+    List<AuthorValue> findAllAuthors();
 
-    @GetMapping(value = "/{id}", produces = "application/json")
-    public AuthorValue find(@PathVariable Long id) {
-        LOG.debug("Finding Author[{}]", id);
-        return authorService.findValue(id);
-    }
+    @GetMapping(value = "/{authorId}", produces = "application/json")
+    AuthorValue findAuthor(@PathVariable Long authorId);
 
     @PostMapping(consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
-    public AuthorValue save(@RequestBody AuthorValue authorValue) {
-        LOG.debug("Saving Author[{}]", authorValue);
-        return authorService.saveValue(authorValue);
-    }
+    AuthorValue saveAuthor(@RequestBody AuthorValue authorValue);
 
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping(value = "/{authorId}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void delete(@PathVariable Long id) {
-        LOG.debug("Deleting Author[{}]", id);
-        authorService.delete(id);
-    }
+    void deleteAuthor(@PathVariable Long authorId);
 
     @PostMapping(value = "/{authorId}/book", consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void addBook(@PathVariable Long authorId, @RequestBody BookValue bookValue) {
-        LOG.debug("Adding Book[{}] to Author[{}]", bookValue, authorId);
-        authorService.addBookValue(authorId, bookValue);
-    }
+    void saveBook(@PathVariable Long authorId, @RequestBody BookValue bookValue);
 
     @DeleteMapping(value = "/{authorId}/book/{bookId}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void deleteBook(@PathVariable Long authorId, @PathVariable Long bookId) {
-        LOG.debug("Removing Book[{}] to Author[{}]", bookId, authorId);
-        authorService.deleteBook(authorId, bookId);
-    }
+    void deleteBook(@PathVariable Long authorId, @PathVariable Long bookId);
 
-    @GetMapping(value = "/{id}/book", produces = "application/json")
+    @GetMapping(value = "/{authorId}/book", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
-    public List<BookValue> getAuthorBooks(@PathVariable Long id) {
-        LOG.debug("Finding books of Author[{}]", id);
-        return authorService.findValueWithBooksValues(id).getBooks();
-    }
+    List<BookValue> getAuthorBooks(@PathVariable Long authorId);
 
 }

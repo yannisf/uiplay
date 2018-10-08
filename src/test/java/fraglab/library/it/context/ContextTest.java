@@ -1,6 +1,5 @@
 package fraglab.library.it.context;
 
-import fraglab.library.it.context.AbstractContextIntegrationTest;
 import org.springframework.mock.web.MockServletContext;
 import org.testng.annotations.Test;
 
@@ -15,7 +14,7 @@ public class ContextTest extends AbstractContextIntegrationTest {
         ServletContext servletContext = wac.getServletContext();
         assertThat(servletContext).isNotNull();
         assertThat(servletContext).isInstanceOf(MockServletContext.class);
-        assertThat(wac.getBean("authorResource")).isNotNull();
+        assertThat(wac.getBean("authorResourceImpl")).isNotNull();
     }
 
 }
