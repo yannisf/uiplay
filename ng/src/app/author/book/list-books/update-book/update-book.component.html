@@ -1,0 +1,9 @@
+<div class="input-group">
+  <input type="text" class="form-control" [(ngModel)]="updatedBook.title" placeholder="book title"/>
+  <div class="input-group-append">
+    <button class="btn btn-success" title="Save" (click)="saveEdit()">
+      <i class="fas fa-check"></i>
+    </button>
+  </div>
+  <button class="btn btn-link" title="Cancel" (click)="cancelEdit()">Cancel</button>
+</div>

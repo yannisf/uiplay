@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Book} from "../book";
 import {AuthorService} from "../../author.service";
 
@@ -9,10 +9,9 @@ import {AuthorService} from "../../author.service";
 })
 export class ListBooksComponent implements OnInit {
 
-  @Input()
-  authorId: number;
+  @Input() authorId: number;
   books: Book[];
-  book: Book;
+  newBook: boolean;
   editBookId: number;
 
   constructor(private authorService: AuthorService) {
@@ -26,31 +25,18 @@ export class ListBooksComponent implements OnInit {
     this.authorService.fetchBooks(this.authorId).subscribe(books => this.books = books);
   }
 
-  newBook(): void {
-    this.book = new Book();
+  saved($event: string) {
+    if ($event === 'success') {
+      this.fetchBooks();
+    }
+    this.newBook = false;
   }
 
-  cancel(){
-    this.book = null;
-  }
-
-  cancelEdit() {
+  updated($event: string) {
+    if ($event === 'success') {
+      this.fetchBooks();
+    }
     this.editBookId = null;
-  }
-
-  save(){
-    this.authorService.addBook(this.authorId, this.book).subscribe(book => {
-      this.book = null;
-      this.fetchBooks();
-    });
-  }
-
-  saveEdit(book: Book){
-    console.log(book);
-    this.authorService.addBook(this.authorId, book).subscribe(book => {
-      this.editBookId = null;
-      this.fetchBooks();
-    });
   }
 
   deleteBook(bookId: number) {

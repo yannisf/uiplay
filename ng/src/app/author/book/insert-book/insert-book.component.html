@@ -1,3 +1,7 @@
-<p>
-  insert-book works!
-</p>
+<div class="input-group">
+  <input type="text" class="form-control" [(ngModel)]="book.title" placeholder="book title"/>
+  <div class="input-group-append">
+    <button class="btn btn-success" title="Save" (click)="save()"><i class="fas fa-check"></i></button>
+  </div>
+  <button class="btn btn-link" title="Cancel" (click)="cancel()">Cancel</button>
+</div>

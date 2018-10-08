@@ -14,6 +14,7 @@ import {DetailAuthorComponent} from './author/detail-author/detail-author.compon
 import {InsertBookComponent} from './author/book/insert-book/insert-book.component';
 import {ListBooksComponent} from './author/book/list-books/list-books.component';
 import {UpdateAuthorComponent} from './author/detail-author/update-author/update-author.component';
+import { UpdateBookComponent } from './author/book/list-books/update-book/update-book.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import {UpdateAuthorComponent} from './author/detail-author/update-author/update
     DetailAuthorComponent,
     InsertBookComponent,
     ListBooksComponent,
-    UpdateAuthorComponent
+    UpdateAuthorComponent,
+    UpdateBookComponent
   ],
   imports: [
     BrowserModule,
