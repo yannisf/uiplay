@@ -62,8 +62,15 @@ public class AuthorService {
 
     public void addBookValue(Long authorId, BookValue bookValue) {
         Author author = find(authorId);
-        Book book = authorMapperService.toBookEntity(bookValue);
-        author.addBook(book);
+        if (bookValue.getId() != null) {
+            Book book = author.getBooks().stream()
+                    .filter(b -> b.getId().equals(bookValue.getId()))
+                    .findFirst().orElseThrow(IllegalStateException::new);
+            authorMapperService.toBookEntity(bookValue, book);
+        } else {
+            Book book = authorMapperService.toBookEntity(bookValue);
+            author.addBook(book);
+        }
     }
 
     public void deleteBook(Long authorId, Long bookId) {

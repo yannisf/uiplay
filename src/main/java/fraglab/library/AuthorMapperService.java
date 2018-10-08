@@ -28,4 +28,9 @@ public class AuthorMapperService {
     public Book toBookEntity(BookValue bookValue) {
         return mapper.map(bookValue, Book.class);
     }
+
+    public Book toBookEntity(BookValue bookValue, Book book) {
+        mapper.map(bookValue, book);
+        return book;
+    }
 }

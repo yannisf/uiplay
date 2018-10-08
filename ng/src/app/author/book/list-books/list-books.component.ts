@@ -12,26 +12,51 @@ export class ListBooksComponent implements OnInit {
   @Input()
   authorId: number;
   books: Book[];
+  book: Book;
+  editBookId: number;
 
   constructor(private authorService: AuthorService) {
   }
 
   ngOnInit() {
+    this.fetchBooks();
+  }
+
+  fetchBooks() {
     this.authorService.fetchBooks(this.authorId).subscribe(books => this.books = books);
   }
 
-  addBook(): void {
-    let book = new Book();
-    book.title = Math.random().toString(36).replace(/[^a-z]+/g, '');
-    this.books.push(book);
+  newBook(): void {
+    this.book = new Book();
   }
 
-  cancel(): void {
-
+  cancel(){
+    this.book = null;
   }
 
-  save(): void {
+  cancelEdit() {
+    this.editBookId = null;
+  }
 
+  save(){
+    this.authorService.addBook(this.authorId, this.book).subscribe(book => {
+      this.book = null;
+      this.fetchBooks();
+    });
+  }
+
+  saveEdit(book: Book){
+    console.log(book);
+    this.authorService.addBook(this.authorId, book).subscribe(book => {
+      this.editBookId = null;
+      this.fetchBooks();
+    });
+  }
+
+  deleteBook(bookId: number) {
+    this.authorService.deleteBook(this.authorId, bookId).subscribe( _ => {
+      this.fetchBooks();
+    });
   }
 
 }

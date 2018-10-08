@@ -18,11 +18,11 @@
   </dl>
 </div>
 
-<h3>Books</h3>
 <app-list-books *ngIf="author.id !== undefined" [authorId]="author.id"></app-list-books>
 
-
-<div>
-<a [routerLink]="" (click)="goBack()">Back</a>
-
+<div class="row">
+  <div class="col-12">
+    <a [routerLink]="" class="float-right" (click)="goBack()">Back</a>
+  </div>
 </div>
+

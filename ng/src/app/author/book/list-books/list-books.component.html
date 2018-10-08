@@ -1,25 +1,45 @@
-<div class="alert alert-primary" role="alert" *ngIf="!books?.length">
+<h3>Books
+  <button class="btn btn-primary btn-sm" (click)="newBook()">
+    <i class="fas fa-plus"></i> New book
+  </button>
+</h3>
+
+<div *ngIf="book != null" class="input-group">
+  <input type="text" class="form-control" [(ngModel)]="book.title" placeholder="book title"/>
+  <div class="input-group-append">
+    <button class="btn btn-success" title="Save" (click)="save()"><i class="fas fa-check"></i></button>
+  </div>
+  <button class="btn btn-link" title="Cancel" (click)="cancel()">Cancel</button>
+</div>
+
+<div class="alert alert-primary" role="alert" *ngIf="!books?.length && book == null">
   Author does not have any books registered.
 </div>
 
-<div>
-  <ul class="list-group" *ngIf="books?.length">
-    <li class="list-group-item" *ngFor="let book of books">
-      <div class="input-group input-group-sm">
-        <input type="text" class="form-control" [(ngModel)]="book.title"/>
-        <div class="input-group-append">
-          <button class="btn btn-primary" title="Cancel" (click)="cancel()"><i class="fas fa-undo"></i></button>
-          <button class="btn btn-success" title="Save" (click)="save()"><i class="fas fa-check"></i></button>
-        </div>
-      </div>
-    </li>
-  </ul>
-</div>
-
-<div>
-
-  <button class="btn btn-primary" (click)="addBook()">
-    <i class="fas fa-plus"></i> Add book
-  </button>
+<div *ngIf="books?.length">
+  <table class="table table-borderless table-hover">
+    <tbody>
+    <tr *ngFor="let book of books">
+      <td>
+        <span *ngIf="editBookId != book.id">
+        {{book.title}}
+        <button class="btn btn-link hover-show" title="Edit title" (click)="editBookId = book.id">
+          <i class="fas fa-edit"></i>
+        </button>
+        <button class="btn btn-link hover-show" title="Delete book" (click)="deleteBook(book.id)">
+          <i class="fas fa-backspace"></i>
+        </button>
+        </span>
+        <span class="input-group" *ngIf="editBookId == book.id">
+          <input type="text" class="form-control" [(ngModel)]="book.title" placeholder="book title"/>
+          <div class="input-group-append">
+            <button class="btn btn-success" title="Save" (click)="saveEdit(book)"><i class="fas fa-check"></i></button>
+          </div>
+          <button class="btn btn-link" title="Cancel" (click)="cancelEdit()">Cancel</button>
+        </span>
+      </td>
+    </tr>
+    </tbody>
+  </table>
 </div>
 

@@ -41,7 +41,15 @@ export class AuthorService {
   }
 
   fetchBooks(authorId: number) {
-    return this.http.get<Book[]>(`${RESOURCE_AUTHOR}/${authorId}/books`);
+    return this.http.get<Book[]>(`${RESOURCE_AUTHOR}/${authorId}/book`);
+  }
+
+  addBook(authorId: number, book: Book) {
+    return this.http.post<Book>(`${RESOURCE_AUTHOR}/${authorId}/book`, book);
+  }
+
+  deleteBook(authorId: number, bookId: number) {
+    return this.http.delete<void>(`${RESOURCE_AUTHOR}/${authorId}/book/${bookId}`);
   }
 
 }

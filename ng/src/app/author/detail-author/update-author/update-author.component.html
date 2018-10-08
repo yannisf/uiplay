@@ -2,7 +2,7 @@
   <input #updateAuthor type="text" class="form-control" [(ngModel)]="author.name" (keydown.enter)="save()"
          (keydown.esc)="cancel()"/>
   <div class="input-group-append">
-    <button class="btn btn-primary" title="Cancel" (click)="cancel()"><i class="fas fa-undo"></i></button>
     <button class="btn btn-success" title="Save" (click)="save()"><i class="fas fa-check"></i></button>
   </div>
+    <button class="btn btn-link" title="Cancel" (click)="cancel()">Cancel</button>
 </div>

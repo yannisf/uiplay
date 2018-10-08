@@ -45,21 +45,21 @@ public class AuthorResource {
         authorService.delete(id);
     }
 
-    @PostMapping(value = "/{authorId}", consumes = "application/json", produces = "application/json")
+    @PostMapping(value = "/{authorId}/book", consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void addBook(@PathVariable Long authorId, @RequestBody BookValue bookValue) {
         LOG.debug("Adding Book[{}] to Author[{}]", bookValue, authorId);
         authorService.addBookValue(authorId, bookValue);
     }
 
-    @DeleteMapping(value = "/{authorId}/{bookId}", consumes = "application/json", produces = "application/json")
+    @DeleteMapping(value = "/{authorId}/book/{bookId}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void deleteBook(@PathVariable Long authorId, @PathVariable Long bookId) {
         LOG.debug("Removing Book[{}] to Author[{}]", bookId, authorId);
         authorService.deleteBook(authorId, bookId);
     }
 
-    @GetMapping(value = "/{id}/books", produces = "application/json")
+    @GetMapping(value = "/{id}/book", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     public List<BookValue> getAuthorBooks(@PathVariable Long id) {
         LOG.debug("Finding books of Author[{}]", id);
