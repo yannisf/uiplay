@@ -16,6 +16,8 @@ import {ListBooksComponent} from './author/book/list-books/list-books.component'
 import {UpdateAuthorComponent} from './author/detail-author/update-author/update-author.component';
 import {UpdateBookComponent} from './author/book/list-books/update-book/update-book.component';
 import {DisplayBookComponent} from './author/book/list-books/display-book/display-book.component';
+import {NgProgressModule} from "@ngx-progressbar/core";
+import {NgProgressHttpModule} from "@ngx-progressbar/http";
 
 @NgModule({
   declarations: [
@@ -36,9 +38,12 @@ import {DisplayBookComponent} from './author/book/list-books/display-book/displa
     AppRoutingModule,
     HttpClientModule,
     ModalModule.forRoot(),
-    TooltipModule.forRoot()
+    TooltipModule.forRoot(),
+    NgProgressModule.forRoot(),
+    NgProgressHttpModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
