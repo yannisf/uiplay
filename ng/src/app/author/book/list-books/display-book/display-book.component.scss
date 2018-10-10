@@ -1,0 +1,7 @@
+:host-context(tr) button.hover-show {
+  display: none;
+}
+
+:host-context(tr:hover) button.hover-show {
+  display: inline-block;
+}

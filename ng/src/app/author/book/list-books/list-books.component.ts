@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Book} from "../book";
 import {AuthorService} from "../../author.service";
 
@@ -39,10 +39,13 @@ export class ListBooksComponent implements OnInit {
     this.editBookId = null;
   }
 
-  deleteBook(bookId: number) {
-    this.authorService.deleteBook(this.authorId, bookId).subscribe( _ => {
-      this.fetchBooks();
-    });
+  onEditBook($event: number) {
+    this.editBookId = $event;
   }
 
+  onDeleteBook($event: boolean) {
+    if ($event) {
+      this.fetchBooks();
+    }
+  }
 }

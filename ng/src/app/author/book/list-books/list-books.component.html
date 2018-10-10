@@ -15,16 +15,10 @@
     <tbody>
     <tr *ngFor="let book of books">
       <td>
-        <div *ngIf="editBookId !== book.id">
-        {{book.title}}
-        <button class="btn btn-link hover-show" title="Edit title" (click)="editBookId = book.id">
-          <i class="fas fa-edit"></i>
-        </button>
-        <button class="btn btn-link hover-show" title="Delete book" (click)="deleteBook(book.id)">
-          <i class="fas fa-backspace"></i>
-        </button>
-        </div>
-        <app-update-book *ngIf="editBookId == book.id" [book]="book" [authorId]="authorId" (updated)="updated($event)"></app-update-book>
+        <app-display-book *ngIf="editBookId !== book.id" [book]="book" [authorId]="authorId"
+                          (editingBook)="onEditBook($event)" (deletedBook)="onDeleteBook($event)"></app-display-book>
+        <app-update-book *ngIf="editBookId == book.id" [book]="book" [authorId]="authorId"
+                         (updated)="updated($event)"></app-update-book>
       </td>
     </tr>
     </tbody>
