@@ -33,4 +33,8 @@ public class AuthorMapperService {
         mapper.map(bookValue, book);
         return book;
     }
+
+    public BookValue toBookValue(Book book) {
+        return mapper.map(book, BookValue.class);
+    }
 }

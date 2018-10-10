@@ -2,6 +2,7 @@ package fraglab.library;
 
 import fraglab.library.valueobject.AuthorValue;
 import fraglab.library.valueobject.BookValue;
+import fraglab.library.valueobject.PagedValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,13 @@ public class AuthorResourceImpl implements AuthorResource {
     public List<AuthorValue> findAllAuthors() {
         LOG.debug("Finding all Authors");
         return authorService.findAllValues();
+    }
+
+    @Override
+    @GetMapping(value = "/page/{pageNumber}", produces = "application/json")
+    public PagedValue<AuthorValue> pageAllAuthors(@PathVariable int pageNumber, @RequestParam(defaultValue = "10") int pageSize) {
+        LOG.debug("Finding Authors page[{}]", pageNumber);
+        return authorService.findPageValue(pageNumber, pageSize);
     }
 
     @Override
@@ -70,7 +78,7 @@ public class AuthorResourceImpl implements AuthorResource {
     @ResponseStatus(HttpStatus.OK)
     public List<BookValue> getAuthorBooks(@PathVariable Long authorId) {
         LOG.debug("Finding books of Author[{}]", authorId);
-        return authorService.findValueWithBooksValues(authorId).getBooks();
+        return authorService.findBooksValues(authorId);
     }
 
 }

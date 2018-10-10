@@ -2,7 +2,12 @@ package fraglab.library;
 
 import fraglab.library.valueobject.AuthorValue;
 import fraglab.library.valueobject.BookValue;
+import fraglab.library.valueobject.PagedValue;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,20 +34,28 @@ public class AuthorService {
         return authorMapperService.toValue(author);
     }
 
-    public List<Author> findAll() {
-        return authorRepository.findAll();
+    public PagedValue<AuthorValue> findPageValue(int page, int pageSize) {
+        Page<Author> authorPage = authorRepository.findAll(PageRequest.of(page, pageSize));
+        List<AuthorValue> authorValues = authorPage.getContent().stream()
+                .map(authorMapperService::toValue)
+                .collect(toList());
+
+        return PagedValue.of(authorPage.getTotalElements(), authorPage.getTotalPages(), authorValues);
     }
 
+    @Cacheable({"authors"})
     public List<AuthorValue> findAllValues() {
         return authorRepository.findAll().stream()
                 .map(authorMapperService::toValue)
                 .collect(toList());
     }
 
+    @CacheEvict(value = "authors", allEntries = true)
     public Author save(Author author) {
         return authorRepository.save(author);
     }
 
+    @CacheEvict(value = "authors", allEntries = true)
     public void delete(Long authorId) {
         authorRepository.deleteById(authorId);
     }
@@ -51,8 +64,10 @@ public class AuthorService {
         return authorRepository.getById(id);
     }
 
-    public AuthorValue findValueWithBooksValues(Long id) {
-        return authorMapperService.toValue(authorRepository.getById(id));
+    public List<BookValue> findBooksValues(Long id) {
+        return authorRepository.getById(id).getBooks().stream()
+                .map(authorMapperService::toBookValue)
+                .collect(toList());
     }
 
     public void addBook(Long authorId, Book book) {
@@ -78,6 +93,8 @@ public class AuthorService {
         author.getBooks().removeIf(b -> b.getId().equals(bookId));
     }
 
+
+    @CacheEvict(value = "authors", allEntries = true)
     public AuthorValue saveValue(AuthorValue authorValue) {
         Author author;
         if (authorValue.getId() != null) {

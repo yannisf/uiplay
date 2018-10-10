@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable, Subject} from 'rxjs';
 import {Author} from './author';
 import {Book} from "./book/book";
+import {PagedAuthor} from "./paged-author";
 
 const RESOURCE_AUTHOR = "/api/author";
 
@@ -11,6 +12,7 @@ const RESOURCE_AUTHOR = "/api/author";
 })
 export class AuthorService {
 
+  currentPage = 0;
   private subject = new Subject<any>();
 
   constructor(private http: HttpClient) {
@@ -18,6 +20,10 @@ export class AuthorService {
 
   list(): Observable<Author[]> {
     return this.http.get<Author[]>(RESOURCE_AUTHOR);
+  }
+
+  page(pageNumber: number, pageSize = 10): Observable<PagedAuthor> {
+    return this.http.get<PagedAuthor>(`${RESOURCE_AUTHOR}/page/${pageNumber}?pageSize=${pageSize}`);
   }
 
   insert(author: Author): Observable<Author> {

@@ -2,6 +2,7 @@ package fraglab.library;
 
 import fraglab.library.valueobject.AuthorValue;
 import fraglab.library.valueobject.BookValue;
+import fraglab.library.valueobject.PagedValue;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +12,9 @@ public interface AuthorResource {
 
     @GetMapping(produces = "application/json")
     List<AuthorValue> findAllAuthors();
+
+    @GetMapping(value = "/page/{pageNumber}", produces = "application/json")
+    PagedValue pageAllAuthors(@PathVariable int pageNumber, @RequestParam(defaultValue = "10") int pageSize);
 
     @GetMapping(value = "/{authorId}", produces = "application/json")
     AuthorValue findAuthor(@PathVariable Long authorId);

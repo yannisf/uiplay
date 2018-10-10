@@ -4,6 +4,9 @@ import com.github.dozermapper.core.DozerBeanMapperBuilder;
 import com.github.dozermapper.core.Mapper;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +26,7 @@ import javax.sql.DataSource;
 @Configuration
 @EnableWebMvc
 @EnableTransactionManagement
+@EnableCaching
 @ComponentScan(basePackages = {"fraglab"})
 @EnableJpaRepositories(basePackages = "fraglab")
 @PropertySource("classpath:/jdbc.properties")
@@ -63,6 +67,11 @@ public class ApplicationConfiguration implements WebMvcConfigurer {
         JpaTransactionManager platformTransactionManager = new JpaTransactionManager();
         platformTransactionManager.setEntityManagerFactory(entityManagerFactory);
         return platformTransactionManager;
+    }
+
+    @Bean
+    public CacheManager cacheManager() {
+        return new ConcurrentMapCacheManager("authors");
     }
 
     @Bean

@@ -19,6 +19,9 @@
   </div>
 </div>
 
+<pagination *ngIf="totalItems > 10" [totalItems]="totalItems" [itemsPerPage]="10"
+            (pageChanged)="pageChanged($event)"></pagination>
+
 <ng-template #template>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Warning</h4>

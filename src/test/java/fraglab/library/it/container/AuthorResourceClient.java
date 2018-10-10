@@ -6,6 +6,7 @@ import fraglab.library.AuthorResource;
 import fraglab.library.it.container.embedded.EmbeddedServer;
 import fraglab.library.valueobject.AuthorValue;
 import fraglab.library.valueobject.BookValue;
+import fraglab.library.valueobject.PagedValue;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -34,8 +35,15 @@ public class AuthorResourceClient implements AuthorResource {
 
     @Override
     public List<AuthorValue> findAllAuthors() {
-        String format = String.format("%s", AUTHOR_URL);
-        return restTemplate.exchange(format, GET, justHeadersEmptyEntity(), LIST_AUTHOR_VALUE).getBody();
+        String url = String.format("%s", AUTHOR_URL);
+        return restTemplate.exchange(url, GET, justHeadersEmptyEntity(), LIST_AUTHOR_VALUE).getBody();
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public PagedValue<AuthorValue> pageAllAuthors(int pageNumber, int pageSize) {
+        String url = String.format("%s/page/%s", AUTHOR_URL, pageNumber);
+        return restTemplate.exchange(url, GET, justHeadersEmptyEntity(), PagedValue.class).getBody();
     }
 
     @Override

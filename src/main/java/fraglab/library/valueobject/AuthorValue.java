@@ -1,12 +1,10 @@
 package fraglab.library.valueobject;
 
-import java.util.List;
 import java.util.Objects;
 
 public class AuthorValue {
     private Long id;
     private String name;
-    private List<BookValue> books;
 
     public AuthorValue() {
     }
@@ -34,14 +32,6 @@ public class AuthorValue {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<BookValue> getBooks() {
-        return books;
-    }
-
-    public void setBooks(List<BookValue> books) {
-        this.books = books;
     }
 
     @Override

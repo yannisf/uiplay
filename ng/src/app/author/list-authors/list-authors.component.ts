@@ -1,9 +1,10 @@
 import {Component, OnDestroy, OnInit, TemplateRef} from '@angular/core';
 import {Author} from '../author';
 import {AuthorService} from '../author.service';
-import {Subscription} from 'rxjs';
 import {BsModalService} from 'ngx-bootstrap/modal';
 import {BsModalRef} from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import {PageChangedEvent} from "ngx-bootstrap";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-list-authors',
@@ -16,20 +17,20 @@ export class ListAuthorsComponent implements OnInit, OnDestroy {
   authors: Author[];
   modalRef: BsModalRef;
   selectedAuthorId: number;
-  loading: boolean;
+  totalItems: number;
 
   constructor(private authorService: AuthorService,
               private modalService: BsModalService) {
   }
 
   ngOnInit() {
-    this.list();
+    this.page();
     this.subscription = this.authorService.receiveAddedAuthor().subscribe(m => {
-      this.list();
+      this.page();
     });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy() { // <- Do I have to do this every time? What about hostkeys
     this.subscription.unsubscribe();
   }
 
@@ -37,15 +38,19 @@ export class ListAuthorsComponent implements OnInit, OnDestroy {
     this.authorService.delete(this.selectedAuthorId).subscribe(data => {
       this.selectedAuthorId = null;
       this.modalRef.hide();
-      this.list();
+      this.page();
     });
   }
 
-  private list(): void {
-    this.loading = true;
-    this.authorService.list().subscribe(data => {
-      this.authors = data;
-      this.loading = false;
+  pageChanged($event: PageChangedEvent) {
+    this.authorService.currentPage = $event.page - 1;
+    this.page();
+  }
+
+  private page(): void {
+    this.authorService.page(this.authorService.currentPage).subscribe(data => {
+      this.authors = data.values;
+      this.totalItems = data.totalElements;
     });
   }
 

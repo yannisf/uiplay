@@ -10,7 +10,6 @@ import {AuthorService} from '../author.service';
 export class InsertAuthorComponent implements OnInit {
 
   public author: Author;
-  public loading: boolean;
   @ViewChild('inputAuthor')
   private input: ElementRef;
 
@@ -23,11 +22,9 @@ export class InsertAuthorComponent implements OnInit {
   }
 
   insert(): void {
-    this.loading = true;
     this.authorService.insert(this.author).subscribe(author => {
       this.authorService.addedAuthor();
       this.author = new Author();
-      this.loading = false;
       this.input.nativeElement.focus();
     });
   }
