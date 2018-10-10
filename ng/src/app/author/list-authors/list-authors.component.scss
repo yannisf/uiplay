@@ -1,0 +1,7 @@
+tr .hover-show {
+  display: none;
+}
+
+tr:hover .hover-show {
+  display: inline-block;
+}

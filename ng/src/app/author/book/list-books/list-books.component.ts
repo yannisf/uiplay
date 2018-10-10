@@ -11,7 +11,6 @@ export class ListBooksComponent implements OnInit {
 
   @Input() authorId: number;
   books: Book[];
-  newBook: boolean;
   editBookId: number;
 
   constructor(private authorService: AuthorService) {
@@ -25,11 +24,10 @@ export class ListBooksComponent implements OnInit {
     this.authorService.fetchBooks(this.authorId).subscribe(books => this.books = books);
   }
 
-  saved($event: string) {
+  onSave($event: string) {
     if ($event === 'success') {
       this.fetchBooks();
     }
-    this.newBook = false;
   }
 
   updated($event: string) {

@@ -1,12 +1,6 @@
-<h3>Books
-  <button class="btn btn-primary btn-sm" (click)="newBook = true">
-    <i class="fas fa-plus"></i> New book
-  </button>
-</h3>
+<h3>Books</h3>
 
-<app-insert-book *ngIf="newBook" [authorId]="authorId" (saved)="saved($event)"></app-insert-book>
-
-<div class="alert alert-primary" role="alert" *ngIf="!books?.length && !newBook">
+<div class="alert alert-primary" role="alert" *ngIf="!books?.length">
   Author does not have any books registered.
 </div>
 
@@ -25,3 +19,4 @@
   </table>
 </div>
 
+<app-insert-book [authorId]="authorId" (saved)="onSave($event)"></app-insert-book>

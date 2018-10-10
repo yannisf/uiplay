@@ -4,14 +4,18 @@
     <div class="alert alert-primary" role="alert" *ngIf="!authors?.length">
       No authors.
     </div>
-    <ul class="list-group" *ngIf="authors">
-      <li class="list-group-item" *ngFor="let author of authors">
-        <a routerLink="/author/{{author.id}}">{{author.name}}</a>
-        <button type="button" title="Delete" class="btn btn-link float-right" (click)="openModal(template, author.id)">
-          <i class="fas fa-backspace"></i>
-        </button>
-      </li>
-    </ul>
+    <table *ngIf="authors" class="table table-borderless table-hover">
+      <tbody>
+      <tr *ngFor="let author of authors">
+        <td>
+          <a class="mr-3" routerLink="/author/{{author.id}}">{{author.name}}</a>
+          <a routerLink="" title="Delete" class="hover-show" (click)="openModal(template, author.id)">
+            <i class="fas fa-backspace"></i>
+          </a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 

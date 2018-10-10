@@ -1,5 +1,6 @@
 <div class="input-group">
-  <input type="text" class="form-control" [(ngModel)]="updatedBook.title" placeholder="book title"/>
+  <input #input type="text" class="form-control" placeholder="book title"
+         [(ngModel)]="updatedBook.title" (keydown.enter)="saveEdit()" (keydown.esc)="cancelEdit()"/>
   <div class="input-group-append">
     <button class="btn btn-success" title="Save" (click)="saveEdit()">
       <i class="fas fa-check"></i>

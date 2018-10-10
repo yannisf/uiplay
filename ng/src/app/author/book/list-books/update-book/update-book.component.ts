@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Book} from "../../book";
 import {AuthorService} from "../../../author.service";
 
@@ -7,17 +7,22 @@ import {AuthorService} from "../../../author.service";
   templateUrl: './update-book.component.html',
   styleUrls: ['./update-book.component.scss']
 })
-export class UpdateBookComponent implements OnInit {
+export class UpdateBookComponent implements OnInit, AfterViewInit {
 
   @Input() book: Book;
   @Input() authorId: number;
   @Output() updated = new EventEmitter<string>();
-  private updatedBook: Book;
+  updatedBook: Book;
+  @ViewChild('input') private input: ElementRef;
 
   constructor(private authorService: AuthorService) { }
 
   ngOnInit() {
     this.updatedBook = JSON.parse(JSON.stringify(this.book));
+  }
+
+  ngAfterViewInit(): void {
+    this.input.nativeElement.focus();
   }
 
   cancelEdit() {

@@ -11,8 +11,7 @@ export class UpdateAuthorComponent implements OnInit {
 
   @Input() author: Author;
   @Output() saved = new EventEmitter<Author>();
-  @ViewChild('updateAuthor')
-  private input: ElementRef;
+  @ViewChild('updateAuthor') private input: ElementRef;
   private originalAuthor: Author;
 
   constructor(private authorService: AuthorService) {

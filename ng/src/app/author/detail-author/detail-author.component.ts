@@ -31,8 +31,11 @@ export class DetailAuthorComponent implements OnInit {
       .subscribe(author => this.author = author);
   }
 
-  @HostListener('document:keydown.control.e', ['$event'])
-  edit(): void {
+  @HostListener('window:keyup.e', ['$event'])
+  edit($event): boolean {
+    if ($event !== undefined && $event !== null && $event.target.localName !== 'body') {
+      return false;
+    }
     this.editMode = true;
   }
 

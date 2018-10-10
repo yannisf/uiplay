@@ -1,5 +1,10 @@
-<div class="input-group">
-  <input type="text" class="form-control" [(ngModel)]="book.title" placeholder="book title"/>
+<button class="btn btn-default btn-sm" *ngIf="!book" (click)="addBook()">
+  <i class="fas fa-plus"></i> New book
+</button>
+
+<div *ngIf="book" class="input-group">
+  <input #inputBook type="text" class="form-control" placeholder="book title"
+         [(ngModel)]="book.title" (keydown.enter)="save()" (keydown.esc)="cancel()"/>
   <div class="input-group-append">
     <button class="btn btn-success" title="Save" (click)="save()"><i class="fas fa-check"></i></button>
   </div>
