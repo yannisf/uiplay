@@ -41,7 +41,8 @@ public class AuthorResourceClient implements AuthorResource {
 
     @Override
     @SuppressWarnings("unchecked")
-    public PagedValue<AuthorValue> pageAllAuthors(int pageNumber, int pageSize) {
+    public PagedValue<AuthorValue> pageAllAuthors(int pageNumber, int pageSize, String sort) {
+        //TODO: Needs update implementation
         String url = String.format("%s/page/%s", AUTHOR_URL, pageNumber);
         return restTemplate.exchange(url, GET, justHeadersEmptyEntity(), PagedValue.class).getBody();
     }

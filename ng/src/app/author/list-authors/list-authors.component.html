@@ -1,10 +1,21 @@
 <h2>Authors</h2>
+
 <div class="row">
+
   <div class="col-12">
+
     <div class="alert alert-primary" role="alert" *ngIf="!authors?.length">
       No authors.
     </div>
+
     <table *ngIf="authors" class="table table-borderless table-hover">
+      <thead>
+      <tr>
+        <th>
+          <app-sortable-control label="Name" (updatedSort)="onChangedSort($event)"></app-sortable-control>
+        </th>
+      </tr>
+      </thead>
       <tbody>
       <tr *ngFor="let author of authors">
         <td>
@@ -16,7 +27,9 @@
       </tr>
       </tbody>
     </table>
+
   </div>
+
 </div>
 
 <pagination *ngIf="totalItems > 10" [totalItems]="totalItems" [itemsPerPage]="10"

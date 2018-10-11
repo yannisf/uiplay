@@ -29,9 +29,12 @@ public class AuthorResourceImpl implements AuthorResource {
 
     @Override
     @GetMapping(value = "/page/{pageNumber}", produces = "application/json")
-    public PagedValue<AuthorValue> pageAllAuthors(@PathVariable int pageNumber, @RequestParam(defaultValue = "10") int pageSize) {
-        LOG.debug("Finding Authors page[{}]", pageNumber);
-        return authorService.findPageValue(pageNumber, pageSize);
+    public PagedValue<AuthorValue> pageAllAuthors(
+            @PathVariable int pageNumber,
+            @RequestParam(defaultValue = "10") int pageSize,
+            @RequestParam String sort) {
+        LOG.debug("Finding Authors page[{},{}]", pageNumber, sort);
+        return authorService.findPageValue(pageNumber, pageSize, sort);
     }
 
     @Override

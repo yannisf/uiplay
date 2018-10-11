@@ -4,6 +4,7 @@ import {Observable, Subject} from 'rxjs';
 import {Author} from './author';
 import {Book} from "./book/book";
 import {PagedAuthor} from "./paged-author";
+import {Sort} from "./sort";
 
 const RESOURCE_AUTHOR = "/api/author";
 
@@ -13,6 +14,7 @@ const RESOURCE_AUTHOR = "/api/author";
 export class AuthorService {
 
   currentPage = 0;
+  sort: string = Sort[Sort.NONE];
   private subject = new Subject<any>();
 
   constructor(private http: HttpClient) {
@@ -23,7 +25,7 @@ export class AuthorService {
   }
 
   page(pageNumber: number, pageSize = 10): Observable<PagedAuthor> {
-    return this.http.get<PagedAuthor>(`${RESOURCE_AUTHOR}/page/${pageNumber}?pageSize=${pageSize}`);
+    return this.http.get<PagedAuthor>(`${RESOURCE_AUTHOR}/page/${pageNumber}?pageSize=${pageSize}&sort=${this.sort}`);
   }
 
   insert(author: Author): Observable<Author> {

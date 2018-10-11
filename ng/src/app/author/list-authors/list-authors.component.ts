@@ -5,6 +5,7 @@ import {BsModalService} from 'ngx-bootstrap/modal';
 import {BsModalRef} from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import {PageChangedEvent} from "ngx-bootstrap";
 import {Subscription} from "rxjs";
+import {Sort} from "../sort";
 
 @Component({
   selector: 'app-list-authors',
@@ -13,7 +14,7 @@ import {Subscription} from "rxjs";
 })
 export class ListAuthorsComponent implements OnInit, OnDestroy {
 
-  subscription: Subscription;
+  private subscription: Subscription;
   authors: Author[];
   modalRef: BsModalRef;
   selectedAuthorId: number;
@@ -57,6 +58,11 @@ export class ListAuthorsComponent implements OnInit, OnDestroy {
   openModal(template: TemplateRef<any>, authorId) {
     this.selectedAuthorId = authorId;
     this.modalRef = this.modalService.show(template);
+  }
+
+  onChangedSort($event: Sort) {
+    this.authorService.sort = Sort[$event];
+    this.page();
   }
 
 }

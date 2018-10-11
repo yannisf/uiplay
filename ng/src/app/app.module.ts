@@ -20,6 +20,7 @@ import {NgProgressModule} from "@ngx-progressbar/core";
 import {NgProgressHttpModule} from "@ngx-progressbar/http";
 import {AlertModule, PaginationModule} from "ngx-bootstrap";
 import {AddedAuthorComponent} from './author/insert-author/added-author/added-author.component';
+import {SortableControlComponent} from './author/sortable-control/sortable-control.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import {AddedAuthorComponent} from './author/insert-author/added-author/added-au
     UpdateAuthorComponent,
     UpdateBookComponent,
     DisplayBookComponent,
-    AddedAuthorComponent
+    AddedAuthorComponent,
+    SortableControlComponent
   ],
   imports: [
     BrowserModule,
