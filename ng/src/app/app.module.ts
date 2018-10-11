@@ -50,5 +50,4 @@ import {AddedAuthorComponent} from './author/insert-author/added-author/added-au
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule { }
