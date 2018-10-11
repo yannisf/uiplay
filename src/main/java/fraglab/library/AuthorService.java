@@ -121,4 +121,11 @@ public class AuthorService {
         author = save(author);
         return authorMapperService.toValue(author);
     }
+
+    public List<AuthorValue> findTop10ByNameContainingIgnoreCase(String query) {
+        return authorRepository.findTop10ByNameContainingIgnoreCase(query).stream()
+                .map(authorMapperService::toValue)
+                .collect(toList());
+    }
+
 }

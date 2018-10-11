@@ -28,6 +28,10 @@ export class AuthorService {
     return this.http.get<PagedAuthor>(`${RESOURCE_AUTHOR}/page/${pageNumber}?pageSize=${pageSize}&sort=${this.sort}`);
   }
 
+  search(query: string): Observable<PagedAuthor> {
+    return this.http.get<PagedAuthor>(`${RESOURCE_AUTHOR}/search?q=${query}`);
+  }
+
   insert(author: Author): Observable<Author> {
     return this.http.post<Author>(RESOURCE_AUTHOR, author);
   }

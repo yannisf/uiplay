@@ -13,6 +13,9 @@ public interface AuthorResource {
     @GetMapping(produces = "application/json")
     List<AuthorValue> findAllAuthors();
 
+    @GetMapping(value = "/search", produces = "application/json")
+    List<AuthorValue> findByName(@RequestParam(value = "q") String query);
+
     @GetMapping(value = "/page/{pageNumber}", produces = "application/json")
     PagedValue<AuthorValue> pageAllAuthors(
             @PathVariable int pageNumber,

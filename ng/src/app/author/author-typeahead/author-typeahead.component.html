@@ -1,0 +1,5 @@
+<input type="search" class="form-control mr-sm-2" placeholder="Search for author"
+       [(ngModel)]="selected"
+       [typeahead]="authors"
+       (typeaheadOnSelect)="onSelect($event)"
+       typeaheadOptionField="name"/>

@@ -40,6 +40,11 @@ public class AuthorResourceClient implements AuthorResource {
     }
 
     @Override
+    public List<AuthorValue> findByName(String query) {
+        return null;
+    }
+
+    @Override
     @SuppressWarnings("unchecked")
     public PagedValue<AuthorValue> pageAllAuthors(int pageNumber, int pageSize, String sort) {
         //TODO: Needs update implementation

@@ -1,32 +1,36 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {Location} from "@angular/common";
 
 import {Author} from "../author";
 import {AuthorService} from "../author.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-detail-author',
   templateUrl: './detail-author.component.html',
   styleUrls: ['./detail-author.component.scss']
 })
-export class DetailAuthorComponent implements OnInit {
+export class DetailAuthorComponent implements OnInit, OnDestroy {
 
   public author: Author = new Author();
   public editMode: boolean = false;
+  private subscription: Subscription;
 
-  constructor(
-    private route: ActivatedRoute,
-    private location: Location,
-    private authorService: AuthorService) {
+  constructor(private route: ActivatedRoute,
+              private authorService: AuthorService) {
   }
 
   ngOnInit() {
-    this.getAuthor();
+    this.subscription = this.route.params.subscribe(params => {
+      this.getAuthor(params['id']);
+    });
   }
 
-  getAuthor(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  getAuthor(id: number): void {
     this.authorService.fetch(id)
       .subscribe(author => this.author = author);
   }
@@ -42,10 +46,6 @@ export class DetailAuthorComponent implements OnInit {
   saved($event: Author) {
     this.editMode = false;
     this.author = $event;
-  }
-
-  goBack(): void {
-    this.location.back();
   }
 
 }

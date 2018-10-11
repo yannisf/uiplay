@@ -28,6 +28,13 @@ public class AuthorResourceImpl implements AuthorResource {
     }
 
     @Override
+    @GetMapping(value = "/search", produces = "application/json")
+    public List<AuthorValue> findByName(@RequestParam(value = "q") String query) {
+        LOG.debug("Finding Authors like [{}]", query);
+        return authorService.findTop10ByNameContainingIgnoreCase(query);
+    }
+
+    @Override
     @GetMapping(value = "/page/{pageNumber}", produces = "application/json")
     public PagedValue<AuthorValue> pageAllAuthors(
             @PathVariable int pageNumber,
