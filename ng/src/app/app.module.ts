@@ -18,7 +18,8 @@ import {UpdateBookComponent} from './author/book/list-books/update-book/update-b
 import {DisplayBookComponent} from './author/book/list-books/display-book/display-book.component';
 import {NgProgressModule} from "@ngx-progressbar/core";
 import {NgProgressHttpModule} from "@ngx-progressbar/http";
-import {PaginationModule} from "ngx-bootstrap";
+import {AlertModule, PaginationModule} from "ngx-bootstrap";
+import {AddedAuthorComponent} from './author/insert-author/added-author/added-author.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import {PaginationModule} from "ngx-bootstrap";
     ListBooksComponent,
     UpdateAuthorComponent,
     UpdateBookComponent,
-    DisplayBookComponent
+    DisplayBookComponent,
+    AddedAuthorComponent
   ],
   imports: [
     BrowserModule,
@@ -39,6 +41,7 @@ import {PaginationModule} from "ngx-bootstrap";
     AppRoutingModule,
     HttpClientModule,
     ModalModule.forRoot(),
+    AlertModule.forRoot(),
     TooltipModule.forRoot(),
     PaginationModule.forRoot(),
     NgProgressModule.forRoot(),

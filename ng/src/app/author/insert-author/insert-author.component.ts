@@ -10,6 +10,7 @@ import {AuthorService} from '../author.service';
 export class InsertAuthorComponent implements OnInit {
 
   public author: Author;
+  public lastSavedAuthor: Author;
   @ViewChild('inputAuthor')
   private input: ElementRef;
 
@@ -24,6 +25,7 @@ export class InsertAuthorComponent implements OnInit {
   insert(): void {
     this.authorService.insert(this.author).subscribe(author => {
       this.authorService.addedAuthor();
+      this.lastSavedAuthor = author;
       this.author = new Author();
       this.input.nativeElement.focus();
     });

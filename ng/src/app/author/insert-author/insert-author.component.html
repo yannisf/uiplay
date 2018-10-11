@@ -18,5 +18,7 @@
   </div>
 </form>
 
+<app-added-author *ngIf="lastSavedAuthor" [author]="lastSavedAuthor"></app-added-author>
+
 <app-list-authors></app-list-authors>
 
