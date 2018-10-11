@@ -2,14 +2,14 @@ package fraglab.library.valueobject;
 
 import java.util.List;
 
-public class PagedValue<T> {
+public final class PagedValue<T> {
 
     private List<T> values;
     private long totalElements;
     private int totalPages;
 
-    public static final <T> PagedValue<T> of(long totalElements, int totalPages, List<T> values) {
-        PagedValue pagedValue = new PagedValue();
+    public static <T> PagedValue<T> of(long totalElements, int totalPages, List<T> values) {
+        PagedValue<T> pagedValue = new PagedValue<>();
         pagedValue.totalElements = totalElements;
         pagedValue.totalPages = totalPages;
         pagedValue.values = values;
