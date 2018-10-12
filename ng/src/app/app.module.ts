@@ -18,10 +18,11 @@ import {UpdateBookComponent} from './author/book/list-books/update-book/update-b
 import {DisplayBookComponent} from './author/book/list-books/display-book/display-book.component';
 import {NgProgressModule} from "@ngx-progressbar/core";
 import {NgProgressHttpModule} from "@ngx-progressbar/http";
-import {AlertModule, PaginationModule, TypeaheadModule} from "ngx-bootstrap";
+import {AlertModule, PaginationModule, PopoverModule, TypeaheadModule} from "ngx-bootstrap";
 import {AddedAuthorComponent} from './author/insert-author/added-author/added-author.component';
 import {SortableControlComponent} from './author/sortable-control/sortable-control.component';
 import { AuthorTypeaheadComponent } from './author/author-typeahead/author-typeahead.component';
+import { FilterControlComponent } from './author/filter-control/filter-control.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { AuthorTypeaheadComponent } from './author/author-typeahead/author-typea
     DisplayBookComponent,
     AddedAuthorComponent,
     SortableControlComponent,
-    AuthorTypeaheadComponent
+    AuthorTypeaheadComponent,
+    FilterControlComponent
   ],
   imports: [
     BrowserModule,
@@ -46,11 +48,12 @@ import { AuthorTypeaheadComponent } from './author/author-typeahead/author-typea
     HttpClientModule,
     ModalModule.forRoot(),
     AlertModule.forRoot(),
-    TypeaheadModule.forRoot(),
+    PopoverModule.forRoot(),
     TooltipModule.forRoot(),
+    TypeaheadModule.forRoot(),
     PaginationModule.forRoot(),
     NgProgressModule.forRoot(),
-    NgProgressHttpModule.forRoot()
+    NgProgressHttpModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

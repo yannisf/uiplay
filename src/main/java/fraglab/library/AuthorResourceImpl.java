@@ -39,9 +39,10 @@ public class AuthorResourceImpl implements AuthorResource {
     public PagedValue<AuthorValue> pageAllAuthors(
             @PathVariable int pageNumber,
             @RequestParam(defaultValue = "10") int pageSize,
-            @RequestParam String sort) {
+            @RequestParam (required = false) String sort,
+            @RequestParam (required = false) String filter) {
         LOG.debug("Finding Authors page[{},{}]", pageNumber, sort);
-        return authorService.findPageValue(pageNumber, pageSize, sort);
+        return authorService.findPageValue(pageNumber, pageSize, sort, filter);
     }
 
     @Override

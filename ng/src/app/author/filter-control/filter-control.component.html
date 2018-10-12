@@ -1,0 +1,19 @@
+<span>
+  <i class="fas fa-filter"
+     [popover]="filterPopover" #pop="bs-popover"></i>
+</span>
+
+<ng-template #filterPopover>
+  <div class="row">
+    <div class="col-12">
+      <input type="text" placeholder="filter" [(ngModel)]="filter"/>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <button class="btn btn-sm" (click)="onOk($event)">OK</button>
+      <button class="btn btn-sm" (click)="onCancel($event)">Cancel</button>
+      <button class="btn btn-sm" (click)="onClear($event)">Clear</button>
+    </div>
+  </div>
+</ng-template>

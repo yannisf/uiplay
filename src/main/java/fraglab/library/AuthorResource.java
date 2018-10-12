@@ -20,7 +20,8 @@ public interface AuthorResource {
     PagedValue<AuthorValue> pageAllAuthors(
             @PathVariable int pageNumber,
             @RequestParam(defaultValue = "10") int pageSize,
-            @RequestParam String sort);
+            @RequestParam String sort,
+            @RequestParam String filter);
 
     @GetMapping(value = "/{authorId}", produces = "application/json")
     AuthorValue findAuthor(@PathVariable Long authorId);

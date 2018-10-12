@@ -65,4 +65,8 @@ export class ListAuthorsComponent implements OnInit, OnDestroy {
     this.page();
   }
 
+  onFilterUpdated($event) {
+    console.log("onFilterUpdated:", $event);
+    this.page();
+  }
 }

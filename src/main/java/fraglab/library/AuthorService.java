@@ -38,9 +38,14 @@ public class AuthorService {
         return authorMapperService.toValue(author);
     }
 
-    public PagedValue<AuthorValue> findPageValue(int page, int pageSize, String sort) {
+    public PagedValue<AuthorValue> findPageValue(int page, int pageSize, String sort, String filter) {
         PageRequest pageable = createPageRequest(page, pageSize, sort);
-        Page<Author> authorPage = authorRepository.findAll(pageable);
+        Page<Author> authorPage;
+        if (StringUtils.isNotBlank(filter)) {
+            authorPage = authorRepository.findByNameContainingIgnoreCase(filter, pageable);
+        } else {
+            authorPage = authorRepository.findAll(pageable);
+        }
         List<AuthorValue> authorValues = authorPage.getContent().stream()
                 .map(authorMapperService::toValue)
                 .collect(toList());

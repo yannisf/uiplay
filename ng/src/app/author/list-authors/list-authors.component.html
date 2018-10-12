@@ -13,6 +13,7 @@
       <tr>
         <th>
           <app-sortable-control label="Name" (updatedSort)="onChangedSort($event)"></app-sortable-control>
+          <app-filter-control (updated)="onFilterUpdated($event)"></app-filter-control>
         </th>
       </tr>
       </thead>
