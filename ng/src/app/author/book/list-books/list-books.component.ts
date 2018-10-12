@@ -9,7 +9,7 @@ import {AuthorService} from "../../author.service";
 })
 export class ListBooksComponent implements OnInit {
 
-  @Input() authorId: number;
+  private _authorId: number;
   books: Book[];
   editBookId: number;
 
@@ -17,11 +17,21 @@ export class ListBooksComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  @Input()
+  set authorId(authorId: number) {
+    this._authorId = authorId;
     this.fetchBooks();
   }
 
+  get authorId() {
+    return this._authorId;
+  }
+
   fetchBooks() {
-    this.authorService.fetchBooks(this.authorId).subscribe(books => this.books = books);
+    this.authorService.fetchBooks(this._authorId)
+      .subscribe(books => this.books = books);
   }
 
   onSave($event: string) {
@@ -46,4 +56,5 @@ export class ListBooksComponent implements OnInit {
       this.fetchBooks();
     }
   }
+
 }

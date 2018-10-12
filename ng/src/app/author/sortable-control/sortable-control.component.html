@@ -1,5 +1,5 @@
 <a routerLink="" (click)="clickedHeader($event)" title="Change sort order">
   {{label}}
-  <i *ngIf="selectedSort === 1 || selectedSort === 0" class="fas fa-caret-up"></i>
-  <i *ngIf="selectedSort === 2 || selectedSort === 0" class="fas fa-caret-down"></i>
+  <i *ngIf="selectedSort !== 1" class="fas fa-caret-up"></i>
+  <i *ngIf="selectedSort !== 2" class="fas fa-caret-down"></i>
 </a>

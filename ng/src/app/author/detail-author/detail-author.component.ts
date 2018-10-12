@@ -21,6 +21,7 @@ export class DetailAuthorComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    //Trick to watch for updates on the same route
     this.subscription = this.route.params.subscribe(params => {
       this.getAuthor(params['id']);
     });
