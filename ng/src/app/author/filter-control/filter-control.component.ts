@@ -9,13 +9,22 @@ import {AuthorService} from "../author.service";
 })
 export class FilterControlComponent implements OnInit {
 
-  // isOpen = false;
   @Output() updated = new EventEmitter<string>();
-  _el : PopoverDirective;
+  private _el: PopoverDirective;
 
   @ViewChild('pop')
   set el(el: PopoverDirective) {
     this._el = el;
+  }
+
+  @ViewChild('inputFilter')
+  set inputElement(inputElement: ElementRef<HTMLInputElement>) {
+    console.log('@ViewChild(\'inputFilter\')');
+    if (inputElement) {
+      inputElement.nativeElement.focus();
+    } else {
+      console.log('noop');
+    }
   }
 
   constructor(private authorService: AuthorService) {
@@ -35,11 +44,6 @@ export class FilterControlComponent implements OnInit {
   onOk($event) {
     console.log('onOk:', $event);
     this.updated.emit(this.filter);
-    this._el.hide();
-  }
-
-  onCancel($event) {
-    console.log('onCancel:', $event);
     this._el.hide();
   }
 

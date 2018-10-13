@@ -1,19 +1,19 @@
-<span>
-  <i class="fas fa-filter"
-     [popover]="filterPopover" #pop="bs-popover"></i>
+<span [popover]="filterPopover" #pop="bs-popover">
+  <i class="fas fa-filter" [ngClass]="{'filtered': filter}"
+     title="{{filter? 'Applied filter: ' + filter : 'Apply filter'}}"></i>
 </span>
 
 <ng-template #filterPopover>
-  <div class="row">
-    <div class="col-12">
-      <input type="text" placeholder="filter" [(ngModel)]="filter"/>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-12">
-      <button class="btn btn-sm" (click)="onOk($event)">OK</button>
-      <button class="btn btn-sm" (click)="onCancel($event)">Cancel</button>
-      <button class="btn btn-sm" (click)="onClear($event)">Clear</button>
+  <div class="input-group input-group-sm mb-1 mt-1">
+    <input #inputFilter type="text" class="form-control" placeholder="Name filter"
+           [(ngModel)]="filter" (keydown.enter)="onOk()" (keydown.esc)="onClear()">
+    <div class="input-group-append">
+      <button class="btn btn-default" title="Clear" (click)="onClear($event)">
+        <i class="fas fa-times"></i>
+      </button>
+      <button class="btn btn-success" title="Apply" (click)="onOk($event)">
+        <i class="fas fa-check"></i>
+      </button>
     </div>
   </div>
 </ng-template>
