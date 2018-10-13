@@ -1,20 +1,20 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {AddedAuthorComponent} from './added-author.component';
+import {AddedAuthorAlertComponent} from './added-author-alert.component';
 
-describe('AddedAuthorComponent', () => {
-  let component: AddedAuthorComponent;
-  let fixture: ComponentFixture<AddedAuthorComponent>;
+describe('AddedAuthorAlertComponent', () => {
+  let component: AddedAuthorAlertComponent;
+  let fixture: ComponentFixture<AddedAuthorAlertComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AddedAuthorComponent]
+      declarations: [AddedAuthorAlertComponent]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddedAuthorComponent);
+    fixture = TestBed.createComponent(AddedAuthorAlertComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

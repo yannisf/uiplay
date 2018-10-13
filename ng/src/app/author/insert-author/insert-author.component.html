@@ -1,24 +1,22 @@
 <form>
   <div class="form-row mt-5 mb-2">
-    <div class="col-8">
+    <div class="col-md-8 col-12 mt-md-0 mt-1">
       <label class="sr-only" for="inputAuthor"> Add author </label>
       <input #inputAuthor id="inputAuthor" type="text" class="form-control" name="name"
              placeholder="author name" autocomplete="off" [(ngModel)]="author.name"/>
       <small class="form-text text-muted">This will be the author name</small>
     </div>
-    <div class="col-2">
-      <button type="submit" title="Insert author" class="btn btn-primary btn-block mr-3" (click)="insert()">Insert
-      </button>
+    <div class="col-md-3 col-12 mt-md-0 mt-2">
+      <button type="submit" title="Insert author" class="btn btn-primary btn-block" (click)="insert()">Insert</button>
     </div>
-    <div class="col-2 pl-3 pt-2">
-      <i class="far fa-question-circle" style="color: grey; font-size: larger"
+    <div class="col-md-1 mt-md-0 pt-2 pl-3 d-none d-md-block">
+      <i class="far fa-question-circle text-muted"
          tooltip="Type the author name in the text box and click the Insert button to register it."
          container="body"></i>
     </div>
   </div>
 </form>
 
-<app-added-author *ngIf="lastSavedAuthor" [author]="lastSavedAuthor"></app-added-author>
+<app-added-author-alert *ngIf="lastSavedAuthor" [author]="lastSavedAuthor"></app-added-author-alert>
 
 <app-list-authors></app-list-authors>
-

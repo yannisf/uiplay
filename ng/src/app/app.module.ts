@@ -19,11 +19,11 @@ import {DisplayBookComponent} from './author/book/list-books/display-book/displa
 import {NgProgressModule} from "@ngx-progressbar/core";
 import {NgProgressHttpModule} from "@ngx-progressbar/http";
 import {AlertModule, CollapseModule, PaginationModule, PopoverModule, TypeaheadModule} from "ngx-bootstrap";
-import {AddedAuthorComponent} from './author/insert-author/added-author/added-author.component';
 import {SortableControlComponent} from './author/sortable-control/sortable-control.component';
 import {AuthorTypeaheadComponent} from './author/author-typeahead/author-typeahead.component';
 import {FilterControlComponent} from './author/filter-control/filter-control.component';
 import {NavbarComponent} from './navbar/navbar.component';
+import {AddedAuthorAlertComponent} from "./author/insert-author/added-author-alert/added-author-alert.component";
 
 @NgModule({
   declarations: [
@@ -36,7 +36,7 @@ import {NavbarComponent} from './navbar/navbar.component';
     UpdateAuthorComponent,
     UpdateBookComponent,
     DisplayBookComponent,
-    AddedAuthorComponent,
+    AddedAuthorAlertComponent,
     SortableControlComponent,
     AuthorTypeaheadComponent,
     FilterControlComponent,
@@ -61,4 +61,5 @@ import {NavbarComponent} from './navbar/navbar.component';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
