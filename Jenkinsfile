@@ -15,6 +15,7 @@ node {
         stage('Backend/test') {
             sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore test"
             step([$class: 'Publisher', reportFilenamePattern: '**/testng-results.xml'])
+            step([$class: 'JacocoPublisher'])
         }
 
         stage('Backend/package') {
