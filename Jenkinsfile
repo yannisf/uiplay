@@ -33,6 +33,7 @@ node {
             sh "'${mvnHome}/bin/mvn' pmd:pmd"
             pmd canComputeNew: false, defaultEncoding: '', healthy: '', pattern: 'target/pmd.xml', unHealthy: ''
         }
+        step([$class: 'AnalysisPublisher'])
     }, 'Frontend': {
         dir('ng') {
             nodejs('NodeJS 8.11.4') {
