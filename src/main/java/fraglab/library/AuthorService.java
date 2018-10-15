@@ -53,7 +53,7 @@ public class AuthorService {
         return PagedValue.of(authorPage.getTotalElements(), authorPage.getTotalPages(), authorValues);
     }
 
-    private PageRequest createPageRequest(int page, int pageSize, String sort) {
+    PageRequest createPageRequest(int page, int pageSize, String sort) {
         PageRequest pageable;
         if (StringUtils.equalsAnyIgnoreCase(sort, ASC.name(), DESC.name())) {
             pageable = PageRequest.of(page, pageSize, new Sort(Sort.Direction.fromString(sort.toUpperCase()), "name"));
