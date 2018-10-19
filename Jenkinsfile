@@ -8,6 +8,7 @@ node {
     }
 
     parallel 'Backend': {
+
         stage('Backend/build') {
             sh "'${mvnHome}/bin/mvn' clean compile"
         }
@@ -21,20 +22,7 @@ node {
         stage('Backend/package') {
             sh "'${mvnHome}/bin/mvn' package -Dmaven.main.skip -Dmaven.test.skip"
         }
-    }, 'Code analysis': {
-        stage('Checkstyle') {
-            sh "'${mvnHome}/bin/mvn' checkstyle:checkstyle"
-            checkstyle canComputeNew: false, defaultEncoding: '', healthy: '', pattern: 'target/checkstyle-result.xml', unHealthy: ''
-        }
-        stage('Findbugs') {
-            sh "'${mvnHome}/bin/mvn' findbugs:findbugs"
-            findbugs canComputeNew: false, defaultEncoding: '', excludePattern: '', healthy: '', includePattern: '', pattern: 'target/findbugsXml.xml', unHealthy: ''
-        }
-        stage('PMD') {
-            sh "'${mvnHome}/bin/mvn' pmd:pmd"
-            pmd canComputeNew: false, defaultEncoding: '', healthy: '', pattern: 'target/pmd.xml', unHealthy: ''
-        }
-        step([$class: 'AnalysisPublisher'])
+
     }, 'Frontend': {
         dir('ng') {
             nodejs('NodeJS 8.11.4') {
@@ -47,4 +35,20 @@ node {
             }
         }
     }
+
+    parallel 'Checkstyle': {
+        sh "'${mvnHome}/bin/mvn' checkstyle:checkstyle"
+        checkstyle canComputeNew: false, defaultEncoding: '', healthy: '', pattern: 'target/checkstyle-result.xml', unHealthy: ''
+    }, 'Findbugs': {
+        sh "'${mvnHome}/bin/mvn' findbugs:findbugs"
+        findbugs canComputeNew: false, defaultEncoding: '', excludePattern: '', healthy: '', includePattern: '', pattern: 'target/findbugsXml.xml', unHealthy: ''
+    }, 'PMD': {
+        sh "'${mvnHome}/bin/mvn' pmd:pmd"
+        pmd canComputeNew: false, defaultEncoding: '', healthy: '', pattern: 'target/pmd.xml', unHealthy: ''
+    }
+
+    stage('Publishing reports') {
+        step([$class: 'AnalysisPublisher'])
+    }
+
 }
