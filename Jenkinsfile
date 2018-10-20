@@ -51,4 +51,6 @@ node {
         step([$class: 'AnalysisPublisher'])
     }
 
+    archiveArtifacts artifacts: '**/*.war'
+
 }
