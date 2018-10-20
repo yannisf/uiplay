@@ -16,6 +16,7 @@ pipeline {
                     sh 'node --version'
                     sh 'npm --version'
                 }
+                git 'https://github.com/yannisf/uiplay.git'
             }
         }
         stage('Build') {
@@ -44,8 +45,8 @@ pipeline {
                     steps {
                         dir('ng') {
                             nodejs('NodeJS 8.11.4') {
-                                sh "npm install"
-                                sh "npm run build"
+                                sh 'npm install'
+                                sh 'npm run build'
                             }
                         }
                     }
@@ -56,19 +57,19 @@ pipeline {
             parallel {
                 stage('Checkstyle') {
                     steps {
-                        sh "mvn checkstyle:checkstyle"
+                        sh 'mvn checkstyle:checkstyle'
                         checkstyle canComputeNew: false, defaultEncoding: '', healthy: '', pattern: 'target/checkstyle-result.xml', unHealthy: ''
                     }
                 }
                 stage('Findbugs') {
                     steps {
-                        sh "mvn findbugs:findbugs"
+                        sh 'mvn findbugs:findbugs'
                         findbugs canComputeNew: false, defaultEncoding: '', excludePattern: '', healthy: '', includePattern: '', pattern: 'target/findbugsXml.xml', unHealthy: ''
                     }
                 }
                 stage('PMD') {
                     steps {
-                        sh "mvn pmd:pmd"
+                        sh 'mvn pmd:pmd'
                         pmd canComputeNew: false, defaultEncoding: '', healthy: '', pattern: 'target/pmd.xml', unHealthy: ''
                     }
                 }
