@@ -1,6 +1,6 @@
 <FindBugsFilter>
     <Match>
-        <Package name="fraglab.library"/>
-        <Bug pattern=" UUF_UNUSED_PUBLIC_OR_PROTECTED_FIELD"/>
+        <Class name="~.*_"/>
+        <Bug pattern="UUF_UNUSED_PUBLIC_OR_PROTECTED_FIELD"/>
     </Match>
 </FindBugsFilter>
