@@ -30,13 +30,13 @@ pipeline {
                         }
                         stage('test') {
                             steps {
-                                sh 'mvn test'
+                                sh 'mvn test -Pcoverage'
                                 jacoco()
                             }
                         }
                         stage('package') {
                             steps {
-                                sh 'mvn package'
+                                sh 'mvn package -Dmaven.test.skip'
                             }
                         }
                     }
