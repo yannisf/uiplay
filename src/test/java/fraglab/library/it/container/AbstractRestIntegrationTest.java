@@ -1,8 +1,9 @@
 package fraglab.library.it.container;
 
-import fraglab.library.it.container.embedded.EmbeddedJetty;
 import fraglab.library.it.container.embedded.EmbeddedServer;
 import fraglab.library.it.container.embedded.EmbeddedTomcat;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.client.RestTemplate;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -11,8 +12,9 @@ import java.util.UUID;
 
 public abstract class AbstractRestIntegrationTest {
 
+    private static final Logger LOG = LoggerFactory.getLogger(AbstractRestIntegrationTest.class);
     private static final EmbeddedServer EMBEDDED_SERVER = new EmbeddedTomcat();
-    protected RestTemplate restTemplate = new RestTemplate();
+    private RestTemplate restTemplate = new RestTemplate();
 
     {
         restTemplate.setErrorHandler(new RestErrorHandler());
@@ -20,6 +22,8 @@ public abstract class AbstractRestIntegrationTest {
 
     @BeforeClass
     public void startServer() throws Exception {
+        LOG.info("Embedded server: [{}]", EMBEDDED_SERVER.serverName());
+        LOG.info("Embedded server port: [{}]", EMBEDDED_SERVER.PORT);
         EMBEDDED_SERVER.start();
     }
 

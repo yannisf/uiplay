@@ -7,14 +7,18 @@ import fraglab.library.it.container.embedded.EmbeddedServer;
 import fraglab.library.valueobject.AuthorValue;
 import fraglab.library.valueobject.BookValue;
 import fraglab.library.valueobject.PagedValue;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
+import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.springframework.http.HttpMethod.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
@@ -32,6 +36,9 @@ public class AuthorResourceClient implements AuthorResource {
     private static final ParameterizedTypeReference<List<AuthorValue>> LIST_AUTHOR_VALUE =
             new ParameterizedTypeReference<List<AuthorValue>>() {
             };
+    private static final ParameterizedTypeReference<PagedValue<AuthorValue>> PAGE_AUTHOR_VALUE =
+            new ParameterizedTypeReference<PagedValue<AuthorValue>>() {
+            };
 
     @Override
     public List<AuthorValue> findAllAuthors() {
@@ -41,15 +48,27 @@ public class AuthorResourceClient implements AuthorResource {
 
     @Override
     public List<AuthorValue> findByName(String query) {
-        return null;
+        String url = String.format("%s/search?q=%s", AUTHOR_URL, Optional.ofNullable(query).orElse(EMPTY));
+        return restTemplate.exchange(url, GET, justHeadersEmptyEntity(), LIST_AUTHOR_VALUE).getBody();
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public PagedValue<AuthorValue> pageAllAuthors(int pageNumber, int pageSize, String sort, String filter) {
-        //TODO: Needs update implementation
-        String url = String.format("%s/page/%s", AUTHOR_URL, pageNumber);
-        return restTemplate.exchange(url, GET, justHeadersEmptyEntity(), PagedValue.class).getBody();
+    public PagedValue<AuthorValue> pageAllAuthors(Integer pageNumber, Integer pageSize, String sort, String filter) {
+        List<String> queryStringParams = new ArrayList<>();
+        if (pageSize != null) {
+            queryStringParams.add(String.format("pageSize=%s", pageSize));
+        }
+        if (StringUtils.isNotBlank(sort)) {
+            queryStringParams.add(String.format("sort=%s", sort));
+        }
+        if (StringUtils.isNotBlank(filter)) {
+            queryStringParams.add(String.format("filter=%s", filter));
+        }
+
+        String queryString = String.join("&", queryStringParams);
+        String url = String.format("%s/page/%s?%s", AUTHOR_URL, pageNumber, queryString);
+        return restTemplate.exchange(url, GET, justHeadersEmptyEntity(), PAGE_AUTHOR_VALUE).getBody();
     }
 
     @Override

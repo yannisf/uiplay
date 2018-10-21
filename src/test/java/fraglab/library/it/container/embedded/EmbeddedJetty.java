@@ -16,11 +16,16 @@ public class EmbeddedJetty implements EmbeddedServer {
     private Server server;
 
     @Override
+    public String serverName() {
+        return "JETTY";
+    }
+
+    @Override
     public void start() throws Exception {
         server = new Server(PORT);
         WebAppContext context = new WebAppContext();
         context.setContextPath("/");
-        context.setResourceBase("src/main/webapp");
+        context.setResourceBase(WEBAPP_DIR);
         context.setParentLoaderPriority(true);
         context.setConfigurations(new Configuration[]{
                 new WebXmlConfiguration(),

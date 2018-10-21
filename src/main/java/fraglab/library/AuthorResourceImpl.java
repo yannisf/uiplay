@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/author")
@@ -37,12 +38,12 @@ public class AuthorResourceImpl implements AuthorResource {
     @Override
     @GetMapping(value = "/page/{pageNumber}", produces = "application/json")
     public PagedValue<AuthorValue> pageAllAuthors(
-            @PathVariable int pageNumber,
-            @RequestParam(defaultValue = "10") int pageSize,
+            @PathVariable Integer pageNumber,
+            @RequestParam(required = false) Integer pageSize,
             @RequestParam (required = false) String sort,
             @RequestParam (required = false) String filter) {
         LOG.debug("Finding Authors page[{},{}]", pageNumber, sort);
-        return authorService.findPageValue(pageNumber, pageSize, sort, filter);
+        return authorService.findPageValue(pageNumber, Optional.ofNullable(pageSize).orElse(10), sort, filter);
     }
 
     @Override

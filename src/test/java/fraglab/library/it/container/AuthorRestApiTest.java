@@ -3,10 +3,12 @@ package fraglab.library.it.container;
 import fraglab.library.AuthorResource;
 import fraglab.library.valueobject.AuthorValue;
 import fraglab.library.valueobject.BookValue;
+import fraglab.library.valueobject.PagedValue;
 import org.testng.annotations.Test;
 
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class AuthorRestApiTest extends AbstractRestIntegrationTest {
@@ -14,7 +16,7 @@ public class AuthorRestApiTest extends AbstractRestIntegrationTest {
     private AuthorResource client = new AuthorResourceClient();
 
     @Test
-    public void testPost() {
+    public void addRemoveAuthorAndBooks() {
         String authorName = getRandomString();
         AuthorValue authorValue = new AuthorValue(authorName);
         AuthorValue postAuthor = client.saveAuthor(authorValue);
@@ -51,6 +53,69 @@ public class AuthorRestApiTest extends AbstractRestIntegrationTest {
         client.deleteAuthor(authorId);
         List<AuthorValue> authorValues = client.findAllAuthors();
         assertThat(authorValues).isEmpty();
+    }
+
+    @Test
+    public void pageFilterSortAndQuery() {
+        client.saveAuthor(new AuthorValue("a"));
+        client.saveAuthor(new AuthorValue("b"));
+        client.saveAuthor(new AuthorValue("c"));
+        client.saveAuthor(new AuthorValue("d"));
+        client.saveAuthor(new AuthorValue("e"));
+        client.saveAuthor(new AuthorValue("aa"));
+
+        PagedValue<AuthorValue> authorsPage = client.pageAllAuthors(0, null, null, null);
+        assertThat(authorsPage.getTotalElements()).isEqualTo(6);
+        assertThat(authorsPage.getTotalPages()).isEqualTo(1);
+        assertThat(authorsPage.getValues()).hasSize(6);
+
+        authorsPage = client.pageAllAuthors(0, 3, null, null);
+        assertThat(authorsPage.getTotalElements()).isEqualTo(6);
+        assertThat(authorsPage.getTotalPages()).isEqualTo(2);
+        assertThat(authorsPage.getValues()).hasSize(3);
+        assertThat(getAuthorNames(authorsPage)).containsExactlyInAnyOrder("a", "b", "c");
+
+        authorsPage = client.pageAllAuthors(1, 3, null, null);
+        assertThat(authorsPage.getTotalElements()).isEqualTo(6);
+        assertThat(authorsPage.getTotalPages()).isEqualTo(2);
+        assertThat(authorsPage.getValues()).hasSize(3);
+        assertThat(getAuthorNames(authorsPage)).containsExactlyInAnyOrder("d", "e", "aa");
+
+        authorsPage = client.pageAllAuthors(0, null, null, "a");
+        assertThat(authorsPage.getTotalElements()).isEqualTo(2);
+        assertThat(authorsPage.getTotalPages()).isEqualTo(1);
+        assertThat(authorsPage.getValues()).hasSize(2);
+        assertThat(getAuthorNames(authorsPage)).containsExactlyInAnyOrder("a", "aa");
+
+        authorsPage = client.pageAllAuthors(0, null, "ASC", null);
+        assertThat(getAuthorNames(authorsPage)).containsExactly("a", "aa", "b", "c", "d", "e");
+
+        authorsPage = client.pageAllAuthors(0, null, "DESC", null);
+        assertThat(getAuthorNames(authorsPage)).containsExactly("e", "d", "c", "b", "aa", "a");
+
+        List<AuthorValue> authors = client.findByName("a");
+        assertThat(authors).hasSize(2);
+        assertThat(getAuthorNames(authors)).containsExactlyInAnyOrder("a", "aa");
+
+        authors = client.findByName("b");
+        assertThat(authors).hasSize(1);
+        assertThat(getAuthorNames(authors)).containsExactlyInAnyOrder("b");
+
+        authors = client.findByName("z");
+        assertThat(authors).isEmpty();
+
+        authors = client.findByName(null);
+        assertThat(authors).isEmpty();
+    }
+
+    private List<String> getAuthorNames(PagedValue<AuthorValue> authors) {
+        return getAuthorNames(authors.getValues());
+    }
+
+    private List<String> getAuthorNames(List<AuthorValue> authors) {
+        return authors.stream()
+                .map(AuthorValue::getName)
+                .collect(toList());
     }
 
 }
