@@ -25,7 +25,7 @@ pipeline {
                     stages {
                         stage('compile') {
                             steps {
-                                sh 'mvn clean compile'
+                                sh 'mvn clean compile -Dmaven.compiler.failOnWarning=false'
                             }
                         }
                         stage('test') {
