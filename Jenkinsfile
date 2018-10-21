@@ -34,11 +34,6 @@ pipeline {
                                 jacoco()
                             }
                         }
-                        stage('package') {
-                            steps {
-                                sh 'mvn package -Dmaven.test.skip'
-                            }
-                        }
                     }
                 }
                 stage('client') {
@@ -47,12 +42,22 @@ pipeline {
                             nodejs('NodeJS 8.11.4') {
                                 sh 'npm install'
                                 sh 'npm run build'
+                                sh 'mvn'
                             }
                         }
                     }
                 }
             }
         }
+
+        stage('Package') {
+            steps {
+                steps {
+                    sh 'mvn package -Dmaven.test.skip'
+                }
+            }
+        }
+
         stage('Code Analysis') {
             parallel {
                 stage('Checkstyle') {

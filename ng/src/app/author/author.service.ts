@@ -6,7 +6,7 @@ import {Book} from "./book/book";
 import {PagedAuthor} from "./paged-author";
 import {Sort} from "./sort";
 
-const RESOURCE_AUTHOR = "/api/author";
+const RESOURCE_AUTHOR = "api/author";
 
 @Injectable({
   providedIn: 'root'
