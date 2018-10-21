@@ -25,7 +25,7 @@ pipeline {
                     stages {
                         stage('compile') {
                             steps {
-                                sh 'mvn clean compile -Dmaven.compiler.failOnWarning=false'
+                                sh 'mvn clean compile'
                             }
                         }
                         stage('test') {
@@ -79,6 +79,7 @@ pipeline {
             }
         }
     }
+
     post {
         always {
             archiveArtifacts artifacts: 'target/uiplay.war'
@@ -86,4 +87,5 @@ pipeline {
             step([$class: 'Publisher', reportFilenamePattern: '**/testng-results.xml'])
         }
     }
+
 }
