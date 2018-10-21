@@ -52,9 +52,7 @@ pipeline {
 
         stage('Package') {
             steps {
-                steps {
-                    sh 'mvn package -Dmaven.test.skip'
-                }
+                sh 'mvn package -Dmaven.test.skip'
             }
         }
 
@@ -80,18 +78,12 @@ pipeline {
                 }
             }
         }
-
-        stage('Publishing reports') {
-            steps {
-                step([$class: 'AnalysisPublisher'])
-            }
+    }
+    post {
+        always {
+            archiveArtifacts artifacts: 'target/uiplay.war'
+            step([$class: 'AnalysisPublisher'])
+            step([$class: 'Publisher', reportFilenamePattern: '**/testng-results.xml'])
         }
-
-        stage('Archiving artifact') {
-            steps {
-                archiveArtifacts artifacts: '**/*.war'
-            }
-        }
-
     }
 }
