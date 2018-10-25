@@ -9,6 +9,7 @@ pipeline {
     }
     parameters {
         booleanParam(name: 'RUN_TESTS', defaultValue: false, description: 'Run tests')
+        booleanParam(name: 'RUN_CODE_ANALYSIS', defaultValue: false, description: 'Run code analysis')
     }
 
     stages {
@@ -66,6 +67,11 @@ pipeline {
         }
 
         stage('Code Analysis') {
+            when {
+                expression {
+                    return params.RUN_CODE_ANALYSIS
+                }
+            }
             parallel {
                 stage('Checkstyle') {
                     steps {
