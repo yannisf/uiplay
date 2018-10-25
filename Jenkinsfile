@@ -7,6 +7,10 @@ pipeline {
         jdk 'Java 10'
         maven 'Maven 3.5.4'
     }
+    parameters {
+        booleanParam(name: 'RUN_TESTS', defaultValue: false, description: 'Run tests')
+    }
+
     stages {
         stage('Initialize') {
             steps {
@@ -32,6 +36,11 @@ pipeline {
                             steps {
                                 sh 'mvn test -Pcoverage'
                                 jacoco()
+                            }
+                            when {
+                                expression {
+                                    return params.RUN_TESTS
+                                }
                             }
                         }
                     }
@@ -85,6 +94,7 @@ pipeline {
             archiveArtifacts artifacts: 'target/uiplay.war'
             step([$class: 'AnalysisPublisher'])
             step([$class: 'Publisher', reportFilenamePattern: '**/testng-results.xml'])
+//            step([$class: 'JavadocArchiver', javadocDir: 'target/site/apidocs'])
         }
     }
 
