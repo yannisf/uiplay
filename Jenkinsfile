@@ -109,8 +109,7 @@ pipeline {
 
     post {
         always {
-            archiveArtifacts artifacts: 'target/uiplay.war', 'target/uiplay-javadoc.jar'
-            archiveArtifacts artifacts: 'target/uiplay.war'
+            archiveArtifacts (artifacts: ['target/uiplay.war', 'target/uiplay-javadoc.jar'])
             step([$class: 'AnalysisPublisher'])
             step([$class: 'Publisher', reportFilenamePattern: '**/testng-results.xml'])
             step([$class: 'JavadocArchiver', javadocDir: 'target/site/apidocs'])
