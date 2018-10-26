@@ -125,10 +125,14 @@ pipeline {
 
     post {
         always {
+            script {
+                if (params.RUN_TESTS == 'true') {
+                    junit 'target/surefire-reports/junitreports/**.xml'
+                    step([$class: 'Publisher', reportFilenamePattern: '**/testng-results.xml'])
+                }
+            }
             archiveArtifacts artifacts: 'target/uiplay.war, target/uiplay-javadoc.jar'
-            junit 'target/surefire-reports/junitreports/**.xml'
             step([$class: 'AnalysisPublisher'])
-            step([$class: 'Publisher', reportFilenamePattern: '**/testng-results.xml'])
             step([$class: 'JavadocArchiver', javadocDir: 'target/apidocs'])
         }
     }
