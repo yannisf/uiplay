@@ -66,15 +66,19 @@ pipeline {
             }
         }
 
-        stage('Javadoc') {
-            steps {
-                sh 'mvn javadoc:jar'
-            }
-        }
 
         stage('Package') {
-            steps {
-                sh 'mvn package -Dmaven.test.skip'
+            parallel {
+                stage('Application') {
+                    steps {
+                        sh 'mvn package -Dmaven.test.skip'
+                    }
+                }
+                stage('Javadoc') {
+                    steps {
+                        sh 'mvn javadoc:jar'
+                    }
+                }
             }
         }
 
