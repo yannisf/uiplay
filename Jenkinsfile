@@ -13,6 +13,7 @@ pipeline {
         MY_VAR = "xx"
     }
     parameters {
+        booleanParam(name: 'BUILD_UI', defaultValue: false, description: 'Build UI')
         booleanParam(name: 'RUN_TESTS', defaultValue: false, description: 'Run tests')
         booleanParam(name: 'RUN_CODE_ANALYSIS', defaultValue: false, description: 'Run code analysis')
     }
@@ -53,6 +54,11 @@ pipeline {
                     }
                 }
                 stage('client') {
+                    when {
+                        expression {
+                            return params.BUILD_UI
+                        }
+                    }
                     steps {
                         dir('ng') {
                             nodejs('NodeJS 8.11.4') {
@@ -71,7 +77,13 @@ pipeline {
             parallel {
                 stage('Application') {
                     steps {
-                        sh 'mvn package -Dmaven.test.skip'
+                        script {
+                            if (params.BUILD_UI == 'true') {
+                                sh 'mvn package -Dmaven.test.skip -Pui'
+                            } else {
+                                sh 'mvn package -Dmaven.test.skip'
+                            }
+                        }
                     }
                 }
                 stage('Javadoc') {

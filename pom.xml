@@ -12,6 +12,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <boot-bom.version>2.0.6.RELEASE</boot-bom.version>
+        <uiplay-ng.version>1.0-SNAPSHOT</uiplay-ng.version>
     </properties>
 
     <build>
@@ -80,6 +81,18 @@
 
     <profiles>
         <profile>
+            <id>ui</id>
+            <dependencies>
+                <dependency>
+                    <groupId>fraglab</groupId>
+                    <artifactId>uiplay-ng</artifactId>
+                    <version>${uiplay-ng.version}</version>
+                    <type>war</type>
+                    <scope>runtime</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
             <id>coverage</id>
             <build>
                 <plugins>
@@ -120,13 +133,6 @@
     </dependencyManagement>
 
     <dependencies>
-        <dependency>
-            <groupId>fraglab</groupId>
-            <artifactId>uiplay-ng</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <type>war</type>
-            <scope>runtime</scope>
-        </dependency>
 
         <dependency>
             <groupId>javax.servlet</groupId>
