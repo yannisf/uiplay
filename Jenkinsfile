@@ -114,6 +114,7 @@ pipeline {
     post {
         always {
             archiveArtifacts artifacts: 'target/uiplay.war, target/uiplay-javadoc.jar'
+            junit 'target/surefire-reports/junitreports/**.xml'
             step([$class: 'AnalysisPublisher'])
             step([$class: 'Publisher', reportFilenamePattern: '**/testng-results.xml'])
             step([$class: 'JavadocArchiver', javadocDir: 'target/apidocs'])
