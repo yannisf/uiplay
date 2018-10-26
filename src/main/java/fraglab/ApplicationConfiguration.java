@@ -23,6 +23,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
+/**
+ * <p>ApplicationConfiguration class.</p>
+ *
+ * @author yannis
+ * @version $Id: $Id
+ */
 @Configuration
 @EnableWebMvc
 @EnableTransactionManagement
@@ -44,6 +50,11 @@ public class ApplicationConfiguration implements WebMvcConfigurer {
     @Value("${jdbc.password}")
     private String password;
 
+    /**
+     * <p>dataSource.</p>
+     *
+     * @return a DataSource object.
+     */
     @Bean
     public DataSource dataSource() {
         HikariDataSource dataSource = new HikariDataSource();
@@ -55,6 +66,12 @@ public class ApplicationConfiguration implements WebMvcConfigurer {
         return dataSource;
     }
 
+    /**
+     * <p>entityManagerFactory.</p>
+     *
+     * @param dataSource a DataSource object.
+     * @return a {@link org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean} object.
+     */
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
@@ -62,6 +79,12 @@ public class ApplicationConfiguration implements WebMvcConfigurer {
         return entityManagerFactoryBean;
     }
 
+    /**
+     * <p>transactionManager.</p>
+     *
+     * @param entityManagerFactory a {@link javax.persistence.EntityManagerFactory} object.
+     * @return a {@link org.springframework.transaction.PlatformTransactionManager} object.
+     */
     @Bean
     public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
         JpaTransactionManager platformTransactionManager = new JpaTransactionManager();
@@ -69,16 +92,29 @@ public class ApplicationConfiguration implements WebMvcConfigurer {
         return platformTransactionManager;
     }
 
+    /**
+     * <p>cacheManager.</p>
+     *
+     * @return a {@link org.springframework.cache.CacheManager} object.
+     */
     @Bean
     public CacheManager cacheManager() {
         return new ConcurrentMapCacheManager("authors");
     }
 
+    /**
+     * <p>dozerMapper.</p>
+     *
+     * @return a {@link com.github.dozermapper.core.Mapper} object.
+     */
     @Bean
     public Mapper dozerMapper() {
         return DozerBeanMapperBuilder.buildDefault();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**").allowedMethods("*");

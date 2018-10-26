@@ -20,6 +20,12 @@ import static java.util.stream.Collectors.toList;
 import static org.springframework.data.domain.Sort.Direction.ASC;
 import static org.springframework.data.domain.Sort.Direction.DESC;
 
+/**
+ * <p>AuthorService class.</p>
+ *
+ * @author yannis
+ * @version $Id: $Id
+ */
 @Service
 @Transactional
 public class AuthorService {
@@ -30,15 +36,36 @@ public class AuthorService {
     @Autowired
     private AuthorMapperService authorMapperService;
 
+    /**
+     * <p>find.</p>
+     *
+     * @param id a {@link java.lang.Long} object.
+     * @return a {@link fraglab.library.Author} object.
+     */
     public Author find(Long id) {
         return authorRepository.findById(id).orElseThrow(IllegalStateException::new);
     }
 
+    /**
+     * <p>findValue.</p>
+     *
+     * @param id a {@link java.lang.Long} object.
+     * @return a {@link fraglab.library.valueobject.AuthorValue} object.
+     */
     public AuthorValue findValue(Long id) {
         Author author = authorRepository.findById(id).orElseThrow(IllegalStateException::new);
         return authorMapperService.toValue(author);
     }
 
+    /**
+     * <p>findPageValue.</p>
+     *
+     * @param page     a int.
+     * @param pageSize a int.
+     * @param sort     a {@link java.lang.String} object.
+     * @param filter   a {@link java.lang.String} object.
+     * @return a {@link fraglab.library.valueobject.PagedValue} object.
+     */
     public PagedValue<AuthorValue> findPageValue(int page, int pageSize, String sort, String filter) {
         PageRequest pageable = createPageRequest(page, pageSize, sort);
         Page<Author> authorPage;
@@ -64,6 +91,11 @@ public class AuthorService {
         return pageable;
     }
 
+    /**
+     * <p>findAllValues.</p>
+     *
+     * @return a {@link java.util.List} object.
+     */
     @Cacheable({"authors"})
     public List<AuthorValue> findAllValues() {
         return authorRepository.findAll().stream()
@@ -71,31 +103,66 @@ public class AuthorService {
                 .collect(toList());
     }
 
+    /**
+     * <p>save.</p>
+     *
+     * @param author a {@link fraglab.library.Author} object.
+     * @return a {@link fraglab.library.Author} object.
+     */
     @CacheEvict(value = "authors", allEntries = true)
     public Author save(Author author) {
         return authorRepository.save(author);
     }
 
+    /**
+     * <p>delete.</p>
+     *
+     * @param authorId a {@link java.lang.Long} object.
+     */
     @CacheEvict(value = "authors", allEntries = true)
     public void delete(Long authorId) {
         authorRepository.deleteById(authorId);
     }
 
+    /**
+     * <p>findWithBooks.</p>
+     *
+     * @param id a {@link java.lang.Long} object.
+     * @return a {@link fraglab.library.Author} object.
+     */
     public Author findWithBooks(Long id) {
         return authorRepository.getById(id);
     }
 
+    /**
+     * <p>findBooksValues.</p>
+     *
+     * @param id a {@link java.lang.Long} object.
+     * @return a {@link java.util.List} object.
+     */
     public List<BookValue> findBooksValues(Long id) {
         return authorRepository.getById(id).getBooks().stream()
                 .map(authorMapperService::toBookValue)
                 .collect(toList());
     }
 
+    /**
+     * <p>addBook.</p>
+     *
+     * @param authorId a {@link java.lang.Long} object.
+     * @param book a {@link fraglab.library.Book} object.
+     */
     public void addBook(Long authorId, Book book) {
         Author author = find(authorId);
         author.addBook(book);
     }
 
+    /**
+     * <p>addBookValue.</p>
+     *
+     * @param authorId a {@link java.lang.Long} object.
+     * @param bookValue a {@link fraglab.library.valueobject.BookValue} object.
+     */
     public void addBookValue(Long authorId, BookValue bookValue) {
         Author author = find(authorId);
         if (bookValue.getId() != null) {
@@ -109,12 +176,24 @@ public class AuthorService {
         }
     }
 
+    /**
+     * <p>deleteBook.</p>
+     *
+     * @param authorId a {@link java.lang.Long} object.
+     * @param bookId a {@link java.lang.Long} object.
+     */
     public void deleteBook(Long authorId, Long bookId) {
         Author author = find(authorId);
         author.getBooks().removeIf(b -> b.getId().equals(bookId));
     }
 
 
+    /**
+     * <p>saveValue.</p>
+     *
+     * @param authorValue a {@link fraglab.library.valueobject.AuthorValue} object.
+     * @return a {@link fraglab.library.valueobject.AuthorValue} object.
+     */
     @CacheEvict(value = "authors", allEntries = true)
     public AuthorValue saveValue(AuthorValue authorValue) {
         Author author;
@@ -128,6 +207,12 @@ public class AuthorService {
         return authorMapperService.toValue(author);
     }
 
+    /**
+     * <p>findTop10ByNameContainingIgnoreCase.</p>
+     *
+     * @param query a {@link java.lang.String} object.
+     * @return a {@link java.util.List} object.
+     */
     public List<AuthorValue> findTop10ByNameContainingIgnoreCase(String query) {
         if (StringUtils.isBlank(query)) {
             return Collections.emptyList();

@@ -1,11 +1,16 @@
 pipeline {
+
     agent any
     options {
         timestamps()
+        buildDiscarder(logRotator(numToKeepStr: '5'))
     }
     tools {
         jdk 'Java 10'
         maven 'Maven 3.5.4'
+    }
+    environment {
+        MY_VAR = "xx"
     }
     parameters {
         booleanParam(name: 'RUN_TESTS', defaultValue: false, description: 'Run tests')
@@ -22,6 +27,7 @@ pipeline {
                     sh 'npm --version'
                 }
                 git 'https://github.com/yannisf/uiplay.git'
+                echo "Checked out ${GIT_BRANCH} (${GIT_COMMIT})"
             }
         }
         stage('Build') {
@@ -34,14 +40,14 @@ pipeline {
                             }
                         }
                         stage('test') {
-                            steps {
-                                sh 'mvn test -Pcoverage'
-                                jacoco()
-                            }
                             when {
                                 expression {
                                     return params.RUN_TESTS
                                 }
+                            }
+                            steps {
+                                sh 'mvn test -Pcoverage'
+                                jacoco()
                             }
                         }
                     }
@@ -57,6 +63,12 @@ pipeline {
                         }
                     }
                 }
+            }
+        }
+
+        stage('Javadoc') {
+            steps {
+                sh 'mvn javadoc:jar'
             }
         }
 
@@ -97,10 +109,11 @@ pipeline {
 
     post {
         always {
+            archiveArtifacts artifacts: 'target/uiplay.war', 'target/uiplay-javadoc.jar'
             archiveArtifacts artifacts: 'target/uiplay.war'
             step([$class: 'AnalysisPublisher'])
             step([$class: 'Publisher', reportFilenamePattern: '**/testng-results.xml'])
-//            step([$class: 'JavadocArchiver', javadocDir: 'target/site/apidocs'])
+            step([$class: 'JavadocArchiver', javadocDir: 'target/site/apidocs'])
         }
     }
 

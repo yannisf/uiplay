@@ -8,10 +8,19 @@ import org.springframework.web.servlet.DispatcherServlet;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRegistration;
 
+/**
+ * <p>ApplicationInitializer class.</p>
+ *
+ * @author yannis
+ * @version $Id: $Id
+ */
 public class ApplicationInitializer implements WebApplicationInitializer {
 
     private static final String API_CONTEXT = "/api/*";
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onStartup(ServletContext container) {
         AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();

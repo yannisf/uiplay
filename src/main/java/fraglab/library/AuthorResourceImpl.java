@@ -7,11 +7,25 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * <p>AuthorResourceImpl class.</p>
+ *
+ * @author yannis
+ * @version $Id: $Id
+ */
 @RestController
 @RequestMapping("/author")
 public class AuthorResourceImpl implements AuthorResource {
@@ -21,6 +35,9 @@ public class AuthorResourceImpl implements AuthorResource {
     @Autowired
     private AuthorService authorService;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @GetMapping(produces = "application/json")
     public List<AuthorValue> findAllAuthors() {
@@ -28,6 +45,7 @@ public class AuthorResourceImpl implements AuthorResource {
         return authorService.findAllValues();
     }
 
+    /** {@inheritDoc} */
     @Override
     @GetMapping(value = "/search", produces = "application/json")
     public List<AuthorValue> findByName(@RequestParam(value = "q") String query) {
@@ -35,6 +53,7 @@ public class AuthorResourceImpl implements AuthorResource {
         return authorService.findTop10ByNameContainingIgnoreCase(query);
     }
 
+    /** {@inheritDoc} */
     @Override
     @GetMapping(value = "/page/{pageNumber}", produces = "application/json")
     public PagedValue<AuthorValue> pageAllAuthors(
@@ -46,6 +65,7 @@ public class AuthorResourceImpl implements AuthorResource {
         return authorService.findPageValue(pageNumber, Optional.ofNullable(pageSize).orElse(10), sort, filter);
     }
 
+    /** {@inheritDoc} */
     @Override
     @GetMapping(value = "/{authorId}", produces = "application/json")
     public AuthorValue findAuthor(@PathVariable Long authorId) {
@@ -53,6 +73,7 @@ public class AuthorResourceImpl implements AuthorResource {
         return authorService.findValue(authorId);
     }
 
+    /** {@inheritDoc} */
     @Override
     @PostMapping(consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
@@ -61,6 +82,7 @@ public class AuthorResourceImpl implements AuthorResource {
         return authorService.saveValue(authorValue);
     }
 
+    /** {@inheritDoc} */
     @Override
     @DeleteMapping(value = "/{authorId}")
     @ResponseStatus(HttpStatus.ACCEPTED)
@@ -69,6 +91,7 @@ public class AuthorResourceImpl implements AuthorResource {
         authorService.delete(authorId);
     }
 
+    /** {@inheritDoc} */
     @Override
     @PostMapping(value = "/{authorId}/book", consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.ACCEPTED)
@@ -77,6 +100,7 @@ public class AuthorResourceImpl implements AuthorResource {
         authorService.addBookValue(authorId, bookValue);
     }
 
+    /** {@inheritDoc} */
     @Override
     @DeleteMapping(value = "/{authorId}/book/{bookId}")
     @ResponseStatus(HttpStatus.ACCEPTED)
@@ -85,6 +109,7 @@ public class AuthorResourceImpl implements AuthorResource {
         authorService.deleteBook(authorId, bookId);
     }
 
+    /** {@inheritDoc} */
     @Override
     @GetMapping(value = "/{authorId}/book", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
