@@ -78,11 +78,13 @@ pipeline {
                 stage('Application') {
                     steps {
                         script {
+                            def cmd = 'mvn package -Dmaven.test.skip'
                             if (params.BUILD_UI == 'true') {
-                                sh 'mvn package -Dmaven.test.skip -Pui'
+                                cmd += ' -Pui'
                             } else {
-                                sh 'mvn package -Dmaven.test.skip'
+                                println 'Building without UI!'
                             }
+                            sh cmd
                         }
                     }
                 }
@@ -126,7 +128,7 @@ pipeline {
     post {
         always {
             script {
-                if (params.RUN_TESTS == 'true') {
+                if (params.RUN_TESTS) {
                     junit 'target/surefire-reports/junitreports/**.xml'
                     step([$class: 'Publisher', reportFilenamePattern: '**/testng-results.xml'])
                 }
