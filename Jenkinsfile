@@ -79,7 +79,7 @@ pipeline {
                     steps {
                         script {
                             def cmd = 'mvn package -Dmaven.test.skip'
-                            if (params.BUILD_UI == 'true') {
+                            if (params.BUILD_UI) {
                                 cmd += ' -Pui'
                             } else {
                                 println 'Building without UI!'
