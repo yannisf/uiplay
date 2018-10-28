@@ -1,6 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 
 import {ModalModule} from 'ngx-bootstrap/modal';
@@ -46,7 +46,6 @@ import {AddedAuthorAlertComponent} from "./author/insert-author/added-author-ale
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    AppRoutingModule,
     HttpClientModule,
     ModalModule.forRoot(),
     AlertModule.forRoot(),
@@ -56,7 +55,8 @@ import {AddedAuthorAlertComponent} from "./author/insert-author/added-author-ale
     PaginationModule.forRoot(),
     NgProgressModule.forRoot(),
     NgProgressHttpModule.forRoot(),
-    CollapseModule.forRoot()
+    CollapseModule.forRoot(),
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
