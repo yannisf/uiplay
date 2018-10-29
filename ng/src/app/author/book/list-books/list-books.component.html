@@ -1,4 +1,4 @@
-<h3>Books</h3>
+<h3>Books <span *ngIf="books?.length" class="badge badge-pill badge-primary">{{books.length}}</span></h3>
 
 <div class="alert alert-primary" role="alert" *ngIf="!books?.length">
   Author does not have any books registered.
