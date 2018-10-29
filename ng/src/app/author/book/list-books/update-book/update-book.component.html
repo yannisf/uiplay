@@ -1,10 +1,18 @@
-<div class="input-group">
-  <input #input type="text" class="form-control" placeholder="book title"
-         [(ngModel)]="updatedBook.title" (keydown.enter)="saveEdit()" (keydown.esc)="cancelEdit()"/>
-  <div class="input-group-append">
-    <button class="btn btn-success" title="Save" (click)="saveEdit()">
-      <i class="fas fa-check"></i>
-    </button>
+<form #updateBookForm="ngForm">
+  <div class="input-group">
+    <input #input type="text" class="form-control" placeholder="book title" required minlength="2" name="title"
+           [(ngModel)]="updatedBook.title" #updateBookModel="ngModel" (keydown.esc)="cancelEdit()"/>
+    <div class="input-group-append">
+      <button type="submit" class="btn btn-success" title="Save" (click)="saveEdit()"
+              [disabled]="!updateBookForm.form.valid">
+        <i class="fas fa-check"></i>
+      </button>
+    </div>
+    <button class="btn btn-link" title="Cancel" (click)="cancelEdit()">Cancel</button>
   </div>
-  <button class="btn btn-link" title="Cancel" (click)="cancelEdit()">Cancel</button>
-</div>
+  <div *ngIf="updateBookModel.invalid">
+    <div *ngIf="updateBookModel.errors.required" class="text-danger">Book title is required</div>
+    <div *ngIf="updateBookModel.errors.minlength" class="text-danger">Book title must have minimum length 2</div>
+  </div>
+
+</form>

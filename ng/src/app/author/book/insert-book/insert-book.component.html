@@ -2,11 +2,21 @@
   <i class="fas fa-plus"></i> New book
 </button>
 
-<div *ngIf="book" class="input-group">
-  <input #inputBook type="text" class="form-control" placeholder="book title"
-         [(ngModel)]="book.title" (keydown.enter)="save()" (keydown.esc)="cancel()"/>
-  <div class="input-group-append">
-    <button class="btn btn-success" title="Save" (click)="save()"><i class="fas fa-check"></i></button>
+<form *ngIf="book" #bookForm="ngForm">
+  <div class="input-group">
+    <input type="text" class="form-control" placeholder="book title" name="title" required minlength="2"
+           #inputBook #inputBookModel="ngModel" [(ngModel)]="book.title" (keydown.esc)="cancel()"/>
+    <div class="input-group-append">
+      <button type="submit" class="btn btn-success" title="Save" [disabled]="!bookForm.form.valid" (click)="save()">
+        <i class="fas fa-check"></i>
+      </button>
+    </div>
+    <button class="btn btn-link" title="Cancel" (click)="cancel()">Cancel</button>
   </div>
-  <button class="btn btn-link" title="Cancel" (click)="cancel()">Cancel</button>
-</div>
+
+  <div *ngIf="inputBookModel.invalid">
+    <div *ngIf="inputBookModel.errors.required" class="text-danger">Book title is required</div>
+    <div *ngIf="inputBookModel.errors.minlength" class="text-danger">Book title must have minimum length 2</div>
+  </div>
+
+</form>

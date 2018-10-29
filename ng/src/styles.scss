@@ -1,4 +1,6 @@
 $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
+$input-focus-box-shadow: none;
+
 @import "~@fortawesome/fontawesome-free/scss/fontawesome";
 @import "~@fortawesome/fontawesome-free/scss/brands";
 @import "~@fortawesome/fontawesome-free/scss/regular";
@@ -8,3 +10,10 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
 @import '~bootstrap/scss/bootstrap';
 @import "~bootswatch/dist/cosmo/bootswatch";
 
+.ng-valid[required], .ng-valid.required {
+  border-left: 5px solid #42A948; /* green */
+}
+
+.ng-invalid:not(form) {
+  border-left: 5px solid #a94442 !important; /* red */
+}
