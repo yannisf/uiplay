@@ -11,8 +11,8 @@
     <button class="btn btn-link" title="Cancel" (click)="cancelEdit()">Cancel</button>
   </div>
   <div *ngIf="updateBookModel.invalid">
-    <div *ngIf="updateBookModel.errors.required" class="text-danger">Book title is required</div>
-    <div *ngIf="updateBookModel.errors.minlength" class="text-danger">Book title must have minimum length 2</div>
+    <div *ngIf="updateBookModel.errors['required']" class="text-danger">Book title is required</div>
+    <div *ngIf="updateBookModel.errors['minlength']" class="text-danger">Book title must have minimum length 2</div>
   </div>
 
 </form>
