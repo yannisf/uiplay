@@ -4,8 +4,10 @@
       <label class="sr-only" for="inputAuthor">Add author</label>
       <input id="inputAuthor" type="text" class="form-control" placeholder="author name" autocomplete="off" required
              #inputAuthor formControlName="name"/>
-      <small class="form-text text-muted">This will be the author name</small>
-      {{author.name}}
+      <div *ngIf="name.invalid && name.dirty" class="text-danger">
+        <div *ngIf="name.errors['required']">Name is required.</div>
+        <div *ngIf="name.errors['minlength']">Author name must have minimum length 2.</div>
+      </div>
     </div>
     <div class="col-md-3 col-12 mt-md-0 mt-2">
       <button type="submit" title="Insert author" class="btn btn-primary btn-block" [disabled]="!authorForm.valid">

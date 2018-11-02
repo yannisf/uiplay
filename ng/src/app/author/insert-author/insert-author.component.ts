@@ -10,7 +10,6 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 })
 export class InsertAuthorComponent implements OnInit {
 
-  author = new Author();
   authorForm = new FormGroup({
     name: new FormControl('', [
       Validators.required,
@@ -26,11 +25,17 @@ export class InsertAuthorComponent implements OnInit {
     this.input.nativeElement.focus();
   }
 
+  get name() {
+    return this.authorForm.get('name');
+  }
+
   insert(): void {
-    this.authorService.insert(this.author).subscribe(author => {
+    const author = new Author();
+    author.name = this.authorForm.value.name;
+    this.authorService.insert(author).subscribe(author => {
       this.authorService.addedAuthor();
       this.lastSavedAuthor = author;
-      // this.authorName.setValue('');
+      this.authorForm.reset();
       this.input.nativeElement.focus();
     });
   }

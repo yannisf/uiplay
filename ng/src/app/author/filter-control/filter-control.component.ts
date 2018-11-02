@@ -19,11 +19,8 @@ export class FilterControlComponent implements OnInit {
 
   @ViewChild('inputFilter')
   set inputElement(inputElement: ElementRef<HTMLInputElement>) {
-    console.log('@ViewChild(\'inputFilter\')');
     if (inputElement) {
       inputElement.nativeElement.focus();
-    } else {
-      console.log('noop');
     }
   }
 
@@ -42,15 +39,14 @@ export class FilterControlComponent implements OnInit {
   }
 
   onOk($event) {
-    console.log('onOk:', $event);
     this.updated.emit(this.filter);
     this._el.hide();
   }
 
   onClear($event) {
-    console.log('onClear:', $event);
     this.filter = '';
     this.updated.emit(this.filter);
     this._el.hide();
   }
+
 }
