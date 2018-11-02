@@ -45,6 +45,7 @@ import {AddedAuthorAlertComponent} from "./author/insert-author/added-author-ale
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     HttpClientModule,
     ModalModule.forRoot(),

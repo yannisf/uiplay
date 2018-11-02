@@ -1,13 +1,16 @@
-<form>
+<form [formGroup]="authorForm" (ngSubmit)="insert()">
   <div class="form-row mt-5 mb-2">
     <div class="col-md-8 col-12 mt-md-0 mt-1">
-      <label class="sr-only" for="inputAuthor"> Add author </label>
-      <input #inputAuthor id="inputAuthor" type="text" class="form-control" name="name"
-             placeholder="author name" autocomplete="off" [(ngModel)]="author.name"/>
+      <label class="sr-only" for="inputAuthor">Add author</label>
+      <input id="inputAuthor" type="text" class="form-control" placeholder="author name" autocomplete="off" required
+             #inputAuthor formControlName="name"/>
       <small class="form-text text-muted">This will be the author name</small>
+      {{author.name}}
     </div>
     <div class="col-md-3 col-12 mt-md-0 mt-2">
-      <button type="submit" title="Insert author" class="btn btn-primary btn-block" (click)="insert()">Insert</button>
+      <button type="submit" title="Insert author" class="btn btn-primary btn-block" [disabled]="!authorForm.valid">
+        Insert
+      </button>
     </div>
     <div class="col-md-1 mt-md-0 pt-2 pl-3 d-none d-md-block">
       <i class="far fa-question-circle text-muted"

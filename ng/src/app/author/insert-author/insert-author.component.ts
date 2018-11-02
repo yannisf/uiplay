@@ -1,6 +1,7 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Author} from '../author';
 import {AuthorService} from '../author.service';
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-insert-author',
@@ -9,16 +10,19 @@ import {AuthorService} from '../author.service';
 })
 export class InsertAuthorComponent implements OnInit {
 
-  public author: Author;
-  public lastSavedAuthor: Author;
-  @ViewChild('inputAuthor')
-  private input: ElementRef;
+  author = new Author();
+  authorForm = new FormGroup({
+    name: new FormControl('', [
+      Validators.required,
+      Validators.minLength(2)])
+  });
+  lastSavedAuthor: Author;
+  @ViewChild('inputAuthor') private input: ElementRef;
 
   constructor(private authorService: AuthorService) {
   }
 
   ngOnInit() {
-    this.author = new Author();
     this.input.nativeElement.focus();
   }
 
@@ -26,7 +30,7 @@ export class InsertAuthorComponent implements OnInit {
     this.authorService.insert(this.author).subscribe(author => {
       this.authorService.addedAuthor();
       this.lastSavedAuthor = author;
-      this.author = new Author();
+      // this.authorName.setValue('');
       this.input.nativeElement.focus();
     });
   }
