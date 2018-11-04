@@ -11,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -19,7 +20,9 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.apache.commons.lang3.StringUtils.EMPTY;
-import static org.springframework.http.HttpMethod.*;
+import static org.springframework.http.HttpMethod.DELETE;
+import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 public class AuthorResourceClient implements AuthorResource {
@@ -78,7 +81,7 @@ public class AuthorResourceClient implements AuthorResource {
     }
 
     @Override
-    public AuthorValue saveAuthor(AuthorValue author) {
+    public AuthorValue saveAuthor(AuthorValue author, BindingResult bindingResult) {
         String authorJson = getAsJson(author);
         HttpEntity<String> authorEntity = new HttpEntity<>(authorJson, justHeaders());
         return restTemplate.exchange(AUTHOR_URL, POST, authorEntity, AuthorValue.class).getBody();

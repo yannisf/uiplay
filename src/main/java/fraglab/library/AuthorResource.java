@@ -3,6 +3,7 @@ package fraglab.library;
 import fraglab.library.valueobject.AuthorValue;
 import fraglab.library.valueobject.BookValue;
 import fraglab.library.valueobject.PagedValue;
+import org.springframework.validation.BindingResult;
 
 import java.util.List;
 
@@ -52,9 +53,10 @@ public interface AuthorResource {
      * <p>saveAuthor.</p>
      *
      * @param authorValue a {@link fraglab.library.valueobject.AuthorValue} object.
+     * @param bindingResult
      * @return a {@link fraglab.library.valueobject.AuthorValue} object.
      */
-    AuthorValue saveAuthor(AuthorValue authorValue);
+    AuthorValue saveAuthor(AuthorValue authorValue, BindingResult bindingResult);
 
     /**
      * <p>deleteAuthor.</p>

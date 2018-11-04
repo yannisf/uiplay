@@ -19,7 +19,7 @@ public class AuthorRestApiTest extends AbstractRestIntegrationTest {
     public void addRemoveAuthorAndBooks() {
         String authorName = getRandomString();
         AuthorValue authorValue = new AuthorValue(authorName);
-        AuthorValue postAuthor = client.saveAuthor(authorValue);
+        AuthorValue postAuthor = client.saveAuthor(authorValue, null);
         Long authorId = postAuthor.getId();
         AuthorValue getAuthor = client.findAuthor(authorId);
         assertThat(getAuthor.getName()).isEqualTo(authorName);
@@ -57,12 +57,12 @@ public class AuthorRestApiTest extends AbstractRestIntegrationTest {
 
     @Test
     public void pageFilterSortAndQuery() {
-        client.saveAuthor(new AuthorValue("a"));
-        client.saveAuthor(new AuthorValue("b"));
-        client.saveAuthor(new AuthorValue("c"));
-        client.saveAuthor(new AuthorValue("d"));
-        client.saveAuthor(new AuthorValue("e"));
-        client.saveAuthor(new AuthorValue("aa"));
+        client.saveAuthor(new AuthorValue("a"), null);
+        client.saveAuthor(new AuthorValue("b"), null);
+        client.saveAuthor(new AuthorValue("c"), null);
+        client.saveAuthor(new AuthorValue("d"), null);
+        client.saveAuthor(new AuthorValue("e"), null);
+        client.saveAuthor(new AuthorValue("aa"), null);
 
         PagedValue<AuthorValue> authorsPage = client.pageAllAuthors(0, null, null, null);
         assertThat(authorsPage.getTotalElements()).isEqualTo(6);

@@ -1,5 +1,7 @@
 package fraglab.library.valueobject;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 /**
@@ -9,7 +11,11 @@ import java.util.Objects;
  * @version $Id: $Id
  */
 public class AuthorValue {
+
     private Long id;
+
+    @NotNull
+    @Size(min = 2)
     private String name;
 
     /**
@@ -74,7 +80,9 @@ public class AuthorValue {
         this.name = name;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -84,13 +92,17 @@ public class AuthorValue {
                 Objects.equals(name, value.name);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode() {
         return Objects.hash(id, name);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return "AuthorValue{" +

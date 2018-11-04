@@ -6,7 +6,9 @@ import fraglab.library.valueobject.PagedValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,8 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+import javax.validation.ValidationException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * <p>AuthorResourceImpl class.</p>
@@ -77,8 +82,13 @@ public class AuthorResourceImpl implements AuthorResource {
     @Override
     @PostMapping(consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
-    public AuthorValue saveAuthor(@RequestBody AuthorValue authorValue) {
+    public AuthorValue saveAuthor(@RequestBody @Valid AuthorValue authorValue, BindingResult bindingResult) {
         LOG.debug("Saving Author[{}]", authorValue);
+        if (Optional.ofNullable(bindingResult).isPresent() && bindingResult.hasErrors()) {
+            throw new ValidationException(bindingResult.getAllErrors().stream()
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                    .collect(Collectors.joining("\n")));
+        }
         return authorService.saveValue(authorValue);
     }
 
