@@ -73,27 +73,23 @@ pipeline {
         }
 
 
-        stage('Package') {
-            parallel {
-                stage('Application') {
-                    steps {
-                        script {
-                            def cmd = 'mvn package -Dmaven.test.skip'
-                            if (params.BUILD_UI) {
-                                cmd += ' -Pui'
-                            } else {
-                                println 'Building without UI!'
-                            }
-                            sh cmd
-                        }
+        stage('Package & Install') {
+            steps {
+                script {
+                    def cmd = 'mvn install -Dmaven.test.skip'
+                    if (params.BUILD_UI) {
+                        cmd += ' -Pui'
+                    } else {
+                        println 'Building without UI!'
                     }
+                    sh cmd
                 }
-                stage('Javadoc') {
-                    steps {
-//                        sh 'mvn javadoc:jar'
-                        echo 'Javadoc stub'
-                    }
-                }
+            }
+        }
+        stage('Javadoc') {
+            steps {
+                sh 'mvn javadoc:aggregate'
+                echo 'Javadoc stub'
             }
         }
 
@@ -136,8 +132,7 @@ pipeline {
             }
             archiveArtifacts artifacts: 'application/target/uiplay.war'
             step([$class: 'AnalysisPublisher'])
-//            step([$class: 'JavadocArchiver', javadocDir: 'target/apidocs'])
+            step([$class: 'JavadocArchiver', javadocDir: 'target/site/apidocs'])
         }
     }
-
 }
