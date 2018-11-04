@@ -2,7 +2,7 @@
 *.db
 /.idea
 /logs
-/target
+target/
 /tomcat.*
 /overlays
 /out

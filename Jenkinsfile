@@ -106,19 +106,19 @@ pipeline {
             parallel {
                 stage('Checkstyle') {
                     steps {
-                        sh 'mvn checkstyle:checkstyle'
+                        sh 'mvn test-compile checkstyle:checkstyle'
                         checkstyle canComputeNew: false, defaultEncoding: '', healthy: '', pattern: '**/target/checkstyle-result.xml', unHealthy: ''
                     }
                 }
                 stage('Findbugs') {
                     steps {
-                        sh 'mvn findbugs:findbugs'
+                        sh 'mvn test-compile findbugs:findbugs'
                         findbugs canComputeNew: false, defaultEncoding: '', excludePattern: '', healthy: '', includePattern: '', pattern: '**/target/findbugsXml.xml', unHealthy: ''
                     }
                 }
                 stage('PMD') {
                     steps {
-                        sh 'mvn pmd:pmd'
+                        sh 'mvn test-compile pmd:pmd'
                         pmd canComputeNew: false, defaultEncoding: '', healthy: '', pattern: '**/target/pmd.xml', unHealthy: ''
                     }
                 }
