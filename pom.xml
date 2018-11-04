@@ -78,18 +78,6 @@
 
     <profiles>
         <profile>
-            <id>ui</id>
-            <dependencies>
-                <dependency>
-                    <groupId>fraglab</groupId>
-                    <artifactId>uiplay-ng</artifactId>
-                    <version>${uiplay-ng.version}</version>
-                    <type>war</type>
-                    <scope>runtime</scope>
-                </dependency>
-            </dependencies>
-        </profile>
-        <profile>
             <id>coverage</id>
             <build>
                 <plugins>
@@ -159,8 +147,6 @@
                 <artifactId>domain</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
-
-
         </dependencies>
     </dependencyManagement>
 

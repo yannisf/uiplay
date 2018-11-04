@@ -2,9 +2,6 @@ package fraglab.library;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +13,7 @@ import java.util.List;
  * @version $Id: $Id
  */
 @Entity
-public class Author {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+public class Author extends BaseEntity {
 
     private String name;
 
@@ -40,24 +33,6 @@ public class Author {
      */
     public Author(String name) {
         this.name = name;
-    }
-
-    /**
-     * <p>Getter for the field <code>id</code>.</p>
-     *
-     * @return a {@link java.lang.Long} object.
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * <p>Setter for the field <code>id</code>.</p>
-     *
-     * @param id a {@link java.lang.Long} object.
-     */
-    public void setId(Long id) {
-        this.id = id;
     }
 
     /**

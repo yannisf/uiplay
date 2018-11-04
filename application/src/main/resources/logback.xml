@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-    <contextName>Registry</contextName>
+    <contextName>UIPlay</contextName>
     <jmxConfigurator/>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
@@ -11,9 +11,9 @@
     </appender>
 
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>logs/registry.log</file>
+        <file>logs/uiplay.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>logs/registry.log-%d{yyyy-MM-dd}</fileNamePattern>
+            <fileNamePattern>logs/uiplay.log-%d{yyyy-MM-dd}</fileNamePattern>
             <maxHistory>10</maxHistory>
         </rollingPolicy>
         <encoder>
@@ -21,7 +21,6 @@
         </encoder>
     </appender>
 
-    <logger name="org.hibernate" level="warn"/>
     <logger name="org.springframework" level="info"/>
 
     <logger name="fraglab" level="debug"/>

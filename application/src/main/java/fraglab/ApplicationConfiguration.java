@@ -35,7 +35,7 @@ import javax.sql.DataSource;
 @EnableCaching
 @ComponentScan(basePackages = {"fraglab"})
 @EnableJpaRepositories(basePackages = "fraglab")
-@PropertySource("jdbc.properties")
+@PropertySource("classpath:/jdbc.properties")
 public class ApplicationConfiguration implements WebMvcConfigurer {
 
     @Value("${jdbc.driver}")

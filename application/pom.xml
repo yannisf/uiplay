@@ -28,20 +28,31 @@
         </plugins>
     </build>
 
-    <dependencies>
+    <profiles>
+        <profile>
+            <id>ui</id>
+            <dependencies>
+                <dependency>
+                    <groupId>fraglab</groupId>
+                    <artifactId>uiplay-ng</artifactId>
+                    <version>${uiplay-ng.version}</version>
+                    <type>war</type>
+                    <scope>runtime</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 
+    <dependencies>
         <dependency>
             <groupId>fraglab.uiplay</groupId>
             <artifactId>resources</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
@@ -50,7 +61,5 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
         </dependency>
-
     </dependencies>
-
 </project>

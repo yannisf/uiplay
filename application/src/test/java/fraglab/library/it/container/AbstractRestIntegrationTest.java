@@ -16,7 +16,7 @@ public abstract class AbstractRestIntegrationTest {
     private static final EmbeddedServer EMBEDDED_SERVER = new EmbeddedTomcat();
     private RestTemplate restTemplate = new RestTemplate();
 
-    {
+    public AbstractRestIntegrationTest() {
         restTemplate.setErrorHandler(new RestErrorHandler());
     }
 

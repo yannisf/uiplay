@@ -1,5 +1,7 @@
 package fraglab.library.it.context;
 
+import fraglab.library.Author;
+import fraglab.library.Book;
 import org.testng.annotations.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

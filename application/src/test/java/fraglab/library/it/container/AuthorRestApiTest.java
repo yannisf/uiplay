@@ -57,12 +57,12 @@ public class AuthorRestApiTest extends AbstractRestIntegrationTest {
 
     @Test
     public void pageFilterSortAndQuery() {
-        client.saveAuthor(new AuthorValue("a"), null);
-        client.saveAuthor(new AuthorValue("b"), null);
-        client.saveAuthor(new AuthorValue("c"), null);
-        client.saveAuthor(new AuthorValue("d"), null);
-        client.saveAuthor(new AuthorValue("e"), null);
         client.saveAuthor(new AuthorValue("aa"), null);
+        client.saveAuthor(new AuthorValue("bb"), null);
+        client.saveAuthor(new AuthorValue("cc"), null);
+        client.saveAuthor(new AuthorValue("dd"), null);
+        client.saveAuthor(new AuthorValue("ee"), null);
+        client.saveAuthor(new AuthorValue("aaa"), null);
 
         PagedValue<AuthorValue> authorsPage = client.pageAllAuthors(0, null, null, null);
         assertThat(authorsPage.getTotalElements()).isEqualTo(6);
@@ -73,33 +73,33 @@ public class AuthorRestApiTest extends AbstractRestIntegrationTest {
         assertThat(authorsPage.getTotalElements()).isEqualTo(6);
         assertThat(authorsPage.getTotalPages()).isEqualTo(2);
         assertThat(authorsPage.getValues()).hasSize(3);
-        assertThat(getAuthorNames(authorsPage)).containsExactlyInAnyOrder("a", "b", "c");
+        assertThat(getAuthorNames(authorsPage)).containsExactlyInAnyOrder("aa", "bb", "cc");
 
         authorsPage = client.pageAllAuthors(1, 3, null, null);
         assertThat(authorsPage.getTotalElements()).isEqualTo(6);
         assertThat(authorsPage.getTotalPages()).isEqualTo(2);
         assertThat(authorsPage.getValues()).hasSize(3);
-        assertThat(getAuthorNames(authorsPage)).containsExactlyInAnyOrder("d", "e", "aa");
+        assertThat(getAuthorNames(authorsPage)).containsExactlyInAnyOrder("dd", "ee", "aaa");
 
         authorsPage = client.pageAllAuthors(0, null, null, "a");
         assertThat(authorsPage.getTotalElements()).isEqualTo(2);
         assertThat(authorsPage.getTotalPages()).isEqualTo(1);
         assertThat(authorsPage.getValues()).hasSize(2);
-        assertThat(getAuthorNames(authorsPage)).containsExactlyInAnyOrder("a", "aa");
+        assertThat(getAuthorNames(authorsPage)).containsExactlyInAnyOrder("aa", "aaa");
 
         authorsPage = client.pageAllAuthors(0, null, "ASC", null);
-        assertThat(getAuthorNames(authorsPage)).containsExactly("a", "aa", "b", "c", "d", "e");
+        assertThat(getAuthorNames(authorsPage)).containsExactly("aa", "aaa", "bb", "cc", "dd", "ee");
 
         authorsPage = client.pageAllAuthors(0, null, "DESC", null);
-        assertThat(getAuthorNames(authorsPage)).containsExactly("e", "d", "c", "b", "aa", "a");
+        assertThat(getAuthorNames(authorsPage)).containsExactly("ee", "dd", "cc", "bb", "aaa", "aa");
 
         List<AuthorValue> authors = client.findByName("a");
         assertThat(authors).hasSize(2);
-        assertThat(getAuthorNames(authors)).containsExactlyInAnyOrder("a", "aa");
+        assertThat(getAuthorNames(authors)).containsExactlyInAnyOrder("aa", "aaa");
 
         authors = client.findByName("b");
         assertThat(authors).hasSize(1);
-        assertThat(getAuthorNames(authors)).containsExactlyInAnyOrder("b");
+        assertThat(getAuthorNames(authors)).containsExactlyInAnyOrder("bb");
 
         authors = client.findByName("z");
         assertThat(authors).isEmpty();

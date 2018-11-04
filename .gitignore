@@ -6,3 +6,4 @@
 /tomcat.*
 /overlays
 /out
+/application/logs
