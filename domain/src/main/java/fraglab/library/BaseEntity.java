@@ -28,19 +28,19 @@ public class BaseEntity {
     }
 
     public Date getCreatedDate() {
-        return createdDate;
+        return new Date(createdDate.getTime());
     }
 
     public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
+        this.createdDate = new Date(createdDate.getTime());
     }
 
     public Date getUpdatedDate() {
-        return updatedDate;
+        return new Date(updatedDate.getTime());
     }
 
     public void setUpdatedDate(Date updatedDate) {
-        this.updatedDate = updatedDate;
+        this.updatedDate = new Date(updatedDate.getTime());
     }
 
     @PrePersist
