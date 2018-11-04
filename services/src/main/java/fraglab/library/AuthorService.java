@@ -1,5 +1,6 @@
 package fraglab.library;
 
+import fraglab.library.valueobject.AuthorMapperService;
 import fraglab.library.valueobject.AuthorValue;
 import fraglab.library.valueobject.BookValue;
 import fraglab.library.valueobject.PagedValue;

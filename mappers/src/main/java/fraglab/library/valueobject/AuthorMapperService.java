@@ -1,8 +1,8 @@
-package fraglab.library;
+package fraglab.library.valueobject;
 
 import com.github.dozermapper.core.Mapper;
-import fraglab.library.valueobject.AuthorValue;
-import fraglab.library.valueobject.BookValue;
+import fraglab.library.Author;
+import fraglab.library.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -64,7 +64,7 @@ public class AuthorMapperService {
      * <p>toBookEntity.</p>
      *
      * @param bookValue a {@link fraglab.library.valueobject.BookValue} object.
-     * @param book a {@link fraglab.library.Book} object.
+     * @param book      a {@link fraglab.library.Book} object.
      * @return a {@link fraglab.library.Book} object.
      */
     public Book toBookEntity(BookValue bookValue, Book book) {

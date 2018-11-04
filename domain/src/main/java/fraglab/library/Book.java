@@ -1,7 +1,5 @@
 package fraglab.library;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,7 +21,6 @@ public class Book {
 
     private String title;
 
-    @JsonIgnore
     @ManyToOne(optional = false)
     private Author author;
 
