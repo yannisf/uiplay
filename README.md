@@ -15,11 +15,16 @@ The backend application depends on the UI artifact, and includes it into its war
     
 ### Building the Spring application
 
-    $ mvn clean package -Pui    
+    $ mvn clean package -Pui
+    
+**NOTE**: Adding `-Pui` enables the `ui` profile, which includes into the build the angular application from the previous step 
+as an overlay. In user interface development mode, you may choose not to include it, to support a faster development cycle. 
 
 ### Database
 
-Run an H2 database using
+The application by default uses an in memory H2 database. Data are not maintained between restarts. It is fairly easy to use
+a different database mode by editing `jdbc.properties`. Typically one will use the H2 server mode. In that case start an H2
+instance before starting the application as below:
     
     java -cp h2.jar org.h2.tools.Server -tcp
     
