@@ -37,3 +37,54 @@ serve mode as following:
     $ npm run proxy
     
 The proxy configuration used is in `proxy.conf.json`.
+
+## Running UIPlay in production
+
+UIPlay is suggested to be run within a container. The container should be based
+on the `tomcat:9` docker image and created with the supplied `Dockerfile`.
+
+### Create the image
+
+From within the directory that has the Dockerfile create an image issuing the
+following command:
+
+    sudo docker build -t frlab:2.0 .
+
+The purpose of the container creation is to customize the default `tomcat:9`
+configuration with the frlab SSL certificates. Thus within the directory
+the necessary keystores should be available as well.
+
+**NOTE**: Update the image version accordingly
+
+### Directory setup
+
+UIPlay takes advantage of docker volumes to support seamless upgrade without
+the loss of the database files.  Also for easier monitoring the logs are
+externalized.
+
+The following directory structure is expected on the host:
+
+```
+./uiplay
+  /app/uiplay.war <1>
+  /db/uiplay.mv.db <2>
+  /logs <3>
+```
+
+1. Application to deploy. Hot deployment is supported. Just copy the updated war ontop.
+2. Current database
+3. Log directory
+
+### Start the container
+
+```
+$ sudo docker run \
+    --name frlab \
+    --restart unless-stopped \
+    -p 8080:8080 \
+    -p 443:8443 \
+    -v /home/yannis/uiplay/app/uiplay.war:/usr/local/tomcat/webapps/ROOT.war \
+    -v /home/yannis/uiplay/db/uiplay.mv.db:/usr/local/tomcat/uiplay.mv.db \
+    -v /home/yannis/uiplay/logs:/usr/local/tomcat/logs \
+    -d frlab:2.0
+```
