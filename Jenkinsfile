@@ -16,9 +16,11 @@ pipeline {
         booleanParam(name: 'BUILD_UI', defaultValue: false, description: 'Build UI')
         booleanParam(name: 'RUN_TESTS', defaultValue: false, description: 'Run tests')
         booleanParam(name: 'RUN_CODE_ANALYSIS', defaultValue: false, description: 'Run code analysis')
+        booleanParam(name: 'DEPLOY_ON_AZURE', defaultValue: false, description: 'Deploy on Azure')
     }
 
     stages {
+
         stage('Initialize') {
             steps {
                 sh 'java -version'
@@ -31,6 +33,7 @@ pipeline {
                 echo "Checked out ${GIT_BRANCH} (${GIT_COMMIT})"
             }
         }
+
         stage('Build') {
             parallel {
                 stage('server') {
@@ -53,6 +56,7 @@ pipeline {
                         }
                     }
                 }
+
                 stage('client') {
                     when {
                         expression {
@@ -86,6 +90,34 @@ pipeline {
                 }
             }
         }
+
+        stage('Deploy on Azure') {
+            when {
+                allOf {
+                    expression {
+                        return params.RUN_TESTS
+                    }
+                    expression {
+                        return params.DEPLOY_ON_AZURE
+                    }
+                }
+            }
+            steps {
+                script {
+                    def remote = [:]
+                    remote.name = "FRLAB"
+                    remote.host = "frlab.eu"
+                    remote.allowAnyHosts = true
+                    withCredentials([sshUserPrivateKey(credentialsId: 'e578d1d8-5891-4b37-8039-7bd1a80407c7', keyFileVariable: 'identity', passphraseVariable: 'passphrase', usernameVariable: 'username')]) {
+                        remote.user = username
+                        remote.passphrase = passphrase
+                        remote.identityFile = identity
+                        sshPut remote: remote, from: 'application/target/uiplay.war', into: 'fresh.war', failOnError: true
+                    }
+                }
+            }
+        }
+
         stage('Javadoc') {
             steps {
                 sh 'mvn javadoc:aggregate'
