@@ -67,7 +67,7 @@ pipeline {
                         dir('ng') {
                             nodejs('NodeJS 8.11.4') {
                                 sh 'npm install'
-                                sh 'npm run build'
+                                sh 'npm run buildProd'
                                 sh 'mvn'
                             }
                         }
