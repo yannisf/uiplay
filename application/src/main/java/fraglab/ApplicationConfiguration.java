@@ -3,6 +3,7 @@ package fraglab;
 import com.github.dozermapper.core.DozerBeanMapperBuilder;
 import com.github.dozermapper.core.Mapper;
 import com.zaxxer.hikari.HikariDataSource;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
@@ -22,6 +23,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * <p>ApplicationConfiguration class.</p>
@@ -35,7 +39,7 @@ import javax.sql.DataSource;
 @EnableCaching
 @ComponentScan(basePackages = {"fraglab"})
 @EnableJpaRepositories(basePackages = "fraglab")
-@PropertySource("classpath:/jdbc.properties")
+@PropertySource({"classpath:/jdbc.properties", "classpath:/application.properties"})
 public class ApplicationConfiguration implements WebMvcConfigurer {
 
     @Value("${jdbc.driver}")
@@ -49,6 +53,12 @@ public class ApplicationConfiguration implements WebMvcConfigurer {
 
     @Value("${jdbc.password}")
     private String password;
+
+    @Value("${x.git.hash}")
+    private String gitHash;
+
+    @Value("${x.build.timestamp}")
+    private String buildTimestamp;
 
     /**
      * <p>dataSource.</p>
@@ -110,6 +120,23 @@ public class ApplicationConfiguration implements WebMvcConfigurer {
     @Bean
     public Mapper dozerMapper() {
         return DozerBeanMapperBuilder.buildDefault();
+    }
+
+    @Bean
+    public BuildInfo buildInfo() {
+        BuildInfo buildInfo = new BuildInfo();
+        if (StringUtils.isBlank(gitHash) || gitHash.startsWith("$")) {
+            buildInfo.setGitHash("N/A");
+        } else {
+            buildInfo.setGitHash(gitHash);
+        }
+        if (StringUtils.isBlank(buildTimestamp) || buildTimestamp.startsWith("$")) {
+            DateFormat format = new SimpleDateFormat("yyyyMMddHHmm");
+            buildInfo.setTimeStamp(format.format(new Date()));
+        } else {
+            buildInfo.setTimeStamp(buildTimestamp);
+        }
+        return buildInfo;
     }
 
     /**

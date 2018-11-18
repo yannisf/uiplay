@@ -112,7 +112,9 @@ pipeline {
                         remote.user = username
                         remote.passphrase = passphrase
                         remote.identityFile = identity
-                        sshPut remote: remote, from: 'application/target/uiplay.war', into: 'fresh.war', failOnError: true
+                        sshCommand remote: remote, command: "echo \"Starting upload: \$(date)\" >> jenkins.log"
+                        sshPut remote: remote, from: 'application/target/uiplay.war', into: '/home/yannis/uiplay/app', failOnError: true
+                        sshCommand remote: remote, command: "echo \"Finished upload: \$(date)\" >> jenkins.log"
                     }
                 }
             }

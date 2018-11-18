@@ -16,6 +16,12 @@
 
     <build>
         <finalName>uiplay</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -24,6 +30,24 @@
                     <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+                <configuration>
+                    <timestampPropertyName>build.timestamp</timestampPropertyName>
+                    <timestampFormat>{0,date,yyyyMMdd}{0,time,HHmm}</timestampFormat>
+                    <buildNumberPropertyName>git.hash</buildNumberPropertyName>
+                    <shortRevisionLength>8</shortRevisionLength>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

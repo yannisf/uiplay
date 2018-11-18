@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {AppInfoService, BuildInfo} from "../app-info.service";
 
 @Component({
   selector: 'app-navbar',
@@ -8,10 +9,13 @@ import {Component, OnInit} from '@angular/core';
 export class NavbarComponent implements OnInit {
   isCollapsed = false;
 
-  constructor() {
+  buildInfo: BuildInfo;
+
+  constructor(private appInfoService: AppInfoService) {
   }
 
   ngOnInit() {
+    this.appInfoService.buildInfo().subscribe(buildInfo => this.buildInfo = buildInfo);
   }
 
 }
