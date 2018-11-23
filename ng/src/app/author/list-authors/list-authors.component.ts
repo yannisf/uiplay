@@ -73,4 +73,8 @@ export class ListAuthorsComponent implements OnInit, OnDestroy {
     this.authorService.filter = '';
     this.page();
   }
+
+  hasFilter() {
+    return !!this.authorService.filter;
+  }
 }

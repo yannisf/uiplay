@@ -1,5 +1,5 @@
 <span [popover]="filterPopover" #pop="bs-popover">
-  <i class="fas fa-filter" [ngClass]="{'filtered': filter}" style="font-size: smaller"
+  <i class="fas fa-filter" [ngClass]="{'text-muted':!filter}" style="font-size: smaller"
      title="{{filter? 'Applied filter: ' + filter : 'Apply filter'}}"></i>
 </span>
 

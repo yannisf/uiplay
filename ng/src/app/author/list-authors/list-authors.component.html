@@ -5,7 +5,7 @@
   <div class="col-12">
 
     <div class="alert alert-primary" role="alert" *ngIf="!authors?.length">
-      No authors. <a routerLink="" (click)="clearFilter()">Clear filter</a>
+      No authors. <a routerLink="" *ngIf="hasFilter()" (click)="clearFilter()">Clear filter</a>
     </div>
 
     <table *ngIf="authors?.length > 0" class="table table-borderless table-hover">
