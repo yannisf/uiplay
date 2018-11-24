@@ -1,227 +1,35 @@
 package fraglab.library;
 
-import fraglab.library.valueobject.AuthorMapperService;
 import fraglab.library.valueobject.AuthorValue;
 import fraglab.library.valueobject.BookValue;
 import fraglab.library.valueobject.PagedValue;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.List;
 
-import static java.util.stream.Collectors.toList;
-import static org.springframework.data.domain.Sort.Direction.ASC;
-import static org.springframework.data.domain.Sort.Direction.DESC;
+public interface AuthorService {
+    Author find(Long id);
 
-/**
- * <p>AuthorService class.</p>
- *
- * @author yannis
- * @version $Id: $Id
- */
-@Service
-@Transactional
-public class AuthorService {
+    AuthorValue findValue(Long id);
 
-    @Autowired
-    private AuthorRepository authorRepository;
+    PagedValue<AuthorValue> findPageValue(int page, int pageSize, String sort, String filter);
 
-    @Autowired
-    private AuthorMapperService authorMapperService;
+    List<AuthorValue> findAllValues();
 
-    /**
-     * <p>find.</p>
-     *
-     * @param id a {@link java.lang.Long} object.
-     * @return a {@link fraglab.library.Author} object.
-     */
-    public Author find(Long id) {
-        return authorRepository.findById(id).orElseThrow(IllegalStateException::new);
-    }
+    Author save(Author author);
 
-    /**
-     * <p>findValue.</p>
-     *
-     * @param id a {@link java.lang.Long} object.
-     * @return a {@link fraglab.library.valueobject.AuthorValue} object.
-     */
-    public AuthorValue findValue(Long id) {
-        Author author = authorRepository.findById(id).orElseThrow(IllegalStateException::new);
-        return authorMapperService.toValue(author);
-    }
+    void delete(Long authorId);
 
-    /**
-     * <p>findPageValue.</p>
-     *
-     * @param page     a int.
-     * @param pageSize a int.
-     * @param sort     a {@link java.lang.String} object.
-     * @param filter   a {@link java.lang.String} object.
-     * @return a {@link fraglab.library.valueobject.PagedValue} object.
-     */
-    public PagedValue<AuthorValue> findPageValue(int page, int pageSize, String sort, String filter) {
-        PageRequest pageable = createPageRequest(page, pageSize, sort);
-        Page<Author> authorPage;
-        if (StringUtils.isNotBlank(filter)) {
-            authorPage = authorRepository.findByNameContainingIgnoreCase(filter, pageable);
-        } else {
-            authorPage = authorRepository.findAll(pageable);
-        }
-        List<AuthorValue> authorValues = authorPage.getContent().stream()
-                .map(authorMapperService::toValue)
-                .collect(toList());
+    Author findWithBooks(Long id);
 
-        return PagedValue.of(authorPage.getTotalElements(), authorPage.getTotalPages(), authorValues);
-    }
+    List<BookValue> findBooksValues(Long id);
 
-    PageRequest createPageRequest(int page, int pageSize, String sort) {
-        PageRequest pageable;
-        if (StringUtils.equalsAnyIgnoreCase(sort, ASC.name(), DESC.name())) {
-            pageable = PageRequest.of(page, pageSize, new Sort(Sort.Direction.fromString(sort.toUpperCase()), "name"));
-        } else {
-            pageable = PageRequest.of(page, pageSize);
-        }
-        return pageable;
-    }
+    void addBook(Long authorId, Book book);
 
-    /**
-     * <p>findAllValues.</p>
-     *
-     * @return a {@link java.util.List} object.
-     */
-    @Cacheable({"authors"})
-    public List<AuthorValue> findAllValues() {
-        return authorRepository.findAll().stream()
-                .map(authorMapperService::toValue)
-                .collect(toList());
-    }
+    void addBookValue(Long authorId, BookValue bookValue);
 
-    /**
-     * <p>save.</p>
-     *
-     * @param author a {@link fraglab.library.Author} object.
-     * @return a {@link fraglab.library.Author} object.
-     */
-    @CacheEvict(value = "authors", allEntries = true)
-    public Author save(Author author) {
-        return authorRepository.save(author);
-    }
+    void deleteBook(Long authorId, Long bookId);
 
-    /**
-     * <p>delete.</p>
-     *
-     * @param authorId a {@link java.lang.Long} object.
-     */
-    @CacheEvict(value = "authors", allEntries = true)
-    public void delete(Long authorId) {
-        authorRepository.deleteById(authorId);
-    }
+    AuthorValue saveValue(AuthorValue authorValue);
 
-    /**
-     * <p>findWithBooks.</p>
-     *
-     * @param id a {@link java.lang.Long} object.
-     * @return a {@link fraglab.library.Author} object.
-     */
-    public Author findWithBooks(Long id) {
-        return authorRepository.getById(id);
-    }
-
-    /**
-     * <p>findBooksValues.</p>
-     *
-     * @param id a {@link java.lang.Long} object.
-     * @return a {@link java.util.List} object.
-     */
-    public List<BookValue> findBooksValues(Long id) {
-        return authorRepository.getById(id).getBooks().stream()
-                .map(authorMapperService::toBookValue)
-                .collect(toList());
-    }
-
-    /**
-     * <p>addBook.</p>
-     *
-     * @param authorId a {@link java.lang.Long} object.
-     * @param book a {@link fraglab.library.Book} object.
-     */
-    public void addBook(Long authorId, Book book) {
-        Author author = find(authorId);
-        author.addBook(book);
-    }
-
-    /**
-     * <p>addBookValue.</p>
-     *
-     * @param authorId a {@link java.lang.Long} object.
-     * @param bookValue a {@link fraglab.library.valueobject.BookValue} object.
-     */
-    public void addBookValue(Long authorId, BookValue bookValue) {
-        Author author = find(authorId);
-        if (bookValue.getId() != null) {
-            Book book = author.getBooks().stream()
-                    .filter(b -> b.getId().equals(bookValue.getId()))
-                    .findFirst().orElseThrow(IllegalStateException::new);
-            authorMapperService.toBookEntity(bookValue, book);
-        } else {
-            Book book = authorMapperService.toBookEntity(bookValue);
-            author.addBook(book);
-        }
-    }
-
-    /**
-     * <p>deleteBook.</p>
-     *
-     * @param authorId a {@link java.lang.Long} object.
-     * @param bookId a {@link java.lang.Long} object.
-     */
-    public void deleteBook(Long authorId, Long bookId) {
-        Author author = find(authorId);
-        author.getBooks().removeIf(b -> b.getId().equals(bookId));
-    }
-
-
-    /**
-     * <p>saveValue.</p>
-     *
-     * @param authorValue a {@link fraglab.library.valueobject.AuthorValue} object.
-     * @return a {@link fraglab.library.valueobject.AuthorValue} object.
-     */
-    @CacheEvict(value = "authors", allEntries = true)
-    public AuthorValue saveValue(AuthorValue authorValue) {
-        Author author;
-        if (authorValue.getId() != null) {
-            author = find(authorValue.getId());
-            author = authorMapperService.toEntity(authorValue, author);
-        } else {
-            author = authorMapperService.toEntity(authorValue);
-        }
-        author = save(author);
-        return authorMapperService.toValue(author);
-    }
-
-    /**
-     * <p>findTop10ByNameContainingIgnoreCase.</p>
-     *
-     * @param query a {@link java.lang.String} object.
-     * @return a {@link java.util.List} object.
-     */
-    public List<AuthorValue> findTop10ByNameContainingIgnoreCase(String query) {
-        if (StringUtils.isBlank(query)) {
-            return Collections.emptyList();
-        } else {
-            return authorRepository.findTop10ByNameContainingIgnoreCase(query).stream()
-                    .map(authorMapperService::toValue)
-                    .collect(toList());
-        }
-    }
-
+    List<AuthorValue> findTop10ByNameContainingIgnoreCase(String query);
 }
