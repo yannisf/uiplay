@@ -29,6 +29,7 @@ public class EmbeddedTomcat implements EmbeddedServer {
     public void start() throws Exception {
         tomcat = new Tomcat();
         tomcat.setPort(PORT);
+        tomcat.getConnector();
         String webAppDirPath = new File(WEBAPP_DIR).getAbsolutePath();
         StandardContext context = (StandardContext) tomcat.addWebapp(CONTEXT_PATH, webAppDirPath);
         StandardJarScanner jarScanner = (StandardJarScanner) context.getJarScanner();
