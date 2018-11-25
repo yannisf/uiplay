@@ -5,18 +5,22 @@ pipeline {
         timestamps()
         buildDiscarder(logRotator(numToKeepStr: '5'))
     }
-    tools {
-        jdk 'Java 10'
-        maven 'Maven 3.5.4'
-    }
     environment {
         MY_VAR = "xx"
     }
     parameters {
+        string(name: 'JAVA', defaultValue: 'openjdk11', description: 'Java')
+        string(name: 'MAVEN', defaultValue: 'maven3', description: 'Maven')
+        string(name: 'NODEJS', defaultValue: 'nodejs10', description: 'NodeJS')
+        string(name: 'SSH_KEY_ID', defaultValue: 'azure', description: 'SSH key id')
         booleanParam(name: 'BUILD_UI', defaultValue: false, description: 'Build UI')
         booleanParam(name: 'RUN_TESTS', defaultValue: false, description: 'Run tests')
         booleanParam(name: 'RUN_CODE_ANALYSIS', defaultValue: false, description: 'Run code analysis')
         booleanParam(name: 'DEPLOY_ON_AZURE', defaultValue: false, description: 'Deploy on Azure')
+    }
+    tools {
+        jdk params.JAVA
+        maven params.MAVEN
     }
 
     stages {
@@ -25,7 +29,7 @@ pipeline {
             steps {
                 sh 'java -version'
                 sh 'mvn --version'
-                nodejs('NodeJS 8.11.4') {
+                nodejs(params.NODEJS) {
                     sh 'node --version'
                     sh 'npm --version'
                 }
@@ -65,7 +69,7 @@ pipeline {
                     }
                     steps {
                         dir('ng') {
-                            nodejs('NodeJS 8.11.4') {
+                            nodejs(params.NODEJS) {
                                 sh 'npm install'
                                 sh 'npm run buildProd'
                                 sh 'mvn'
@@ -108,7 +112,7 @@ pipeline {
                     remote.name = "FRLAB"
                     remote.host = "frlab.eu"
                     remote.allowAnyHosts = true
-                    withCredentials([sshUserPrivateKey(credentialsId: 'e578d1d8-5891-4b37-8039-7bd1a80407c7', keyFileVariable: 'identity', passphraseVariable: 'passphrase', usernameVariable: 'username')]) {
+                    withCredentials([sshUserPrivateKey(credentialsId: params.SSH_KEY_ID, keyFileVariable: 'identity', passphraseVariable: 'passphrase', usernameVariable: 'username')]) {
                         remote.user = username
                         remote.passphrase = passphrase
                         remote.identityFile = identity
