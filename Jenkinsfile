@@ -6,8 +6,8 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '5'))
     }
     tools {
-        jdk 'Java 10'
-        maven 'Maven 3.5.4'
+        jdk 'openjdk11'
+        maven 'maven3'
     }
     environment {
         MY_VAR = "xx"
@@ -25,7 +25,7 @@ pipeline {
             steps {
                 sh 'java -version'
                 sh 'mvn --version'
-                nodejs('NodeJS 8.11.4') {
+                nodejs('nodejs10') {
                     sh 'node --version'
                     sh 'npm --version'
                 }
@@ -65,7 +65,7 @@ pipeline {
                     }
                     steps {
                         dir('ng') {
-                            nodejs('NodeJS 8.11.4') {
+                            nodejs('nodejs10') {
                                 sh 'npm install'
                                 sh 'npm run buildProd'
                                 sh 'mvn'
@@ -108,7 +108,7 @@ pipeline {
                     remote.name = "FRLAB"
                     remote.host = "frlab.eu"
                     remote.allowAnyHosts = true
-                    withCredentials([sshUserPrivateKey(credentialsId: 'e578d1d8-5891-4b37-8039-7bd1a80407c7', keyFileVariable: 'identity', passphraseVariable: 'passphrase', usernameVariable: 'username')]) {
+                    withCredentials([sshUserPrivateKey(credentialsId: 'azure', keyFileVariable: 'identity', passphraseVariable: 'passphrase', usernameVariable: 'username')]) {
                         remote.user = username
                         remote.passphrase = passphrase
                         remote.identityFile = identity
