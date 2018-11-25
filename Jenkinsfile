@@ -9,10 +9,10 @@ pipeline {
         MY_VAR = "xx"
     }
     parameters {
-        text(name: 'JAVA', defaultValue: 'openjdk11', description: 'Java')
-        text(name: 'MAVEN', defaultValue: 'maven3', description: 'Maven')
-        text(name: 'NODEJS', defaultValue: 'nodejs10', description: 'NodeJS')
-        text(name: 'SSH_KEY_ID', defaultValue: 'azure', description: 'SSH key id')
+        string(name: 'JAVA', defaultValue: 'openjdk11', description: 'Java')
+        string(name: 'MAVEN', defaultValue: 'maven3', description: 'Maven')
+        string(name: 'NODEJS', defaultValue: 'nodejs10', description: 'NodeJS')
+        string(name: 'SSH_KEY_ID', defaultValue: 'azure', description: 'SSH key id')
         booleanParam(name: 'BUILD_UI', defaultValue: false, description: 'Build UI')
         booleanParam(name: 'RUN_TESTS', defaultValue: false, description: 'Run tests')
         booleanParam(name: 'RUN_CODE_ANALYSIS', defaultValue: false, description: 'Run code analysis')
