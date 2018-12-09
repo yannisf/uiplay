@@ -4,15 +4,22 @@ import fraglab.library.AuthorResource;
 import fraglab.library.valueobject.AuthorValue;
 import fraglab.library.valueobject.BookValue;
 import fraglab.library.valueobject.PagedValue;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.Test;
 
 import java.util.List;
+import java.util.UUID;
 
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class AuthorRestApiTest extends AbstractRestIntegrationTest {
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+public class AuthorRestApiTest extends AbstractTestNGSpringContextTests {
 
+    private static final Logger LOG = LoggerFactory.getLogger(AuthorRestApiTest.class);
     private AuthorResource client = new AuthorResourceClient();
 
     @Test
@@ -117,5 +124,10 @@ public class AuthorRestApiTest extends AbstractRestIntegrationTest {
                 .map(AuthorValue::getName)
                 .collect(toList());
     }
+
+    private String getRandomString() {
+        return UUID.randomUUID().toString();
+    }
+
 
 }
