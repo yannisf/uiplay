@@ -1,16 +1,12 @@
 package fraglab.library.it.context;
 
-import fraglab.ApplicationConfiguration;
 import fraglab.library.AuthorRepository;
 import fraglab.library.AuthorService;
 import fraglab.library.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestExecutionListeners;
-import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.context.WebApplicationContext;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -19,12 +15,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.UUID;
 
-@ContextConfiguration(classes = {ApplicationConfiguration.class})
-@WebAppConfiguration
-@TestExecutionListeners({
-        DependencyInjectionTestExecutionListener.class,
-        TransactionalTestExecutionListener.class
-})
+@SpringBootTest
+@AutoConfigureMockMvc
 public abstract class AbstractContextIntegrationTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
