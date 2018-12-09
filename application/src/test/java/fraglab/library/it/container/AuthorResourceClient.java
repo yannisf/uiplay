@@ -3,7 +3,6 @@ package fraglab.library.it.container;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fraglab.library.AuthorResource;
-import fraglab.library.it.container.embedded.EmbeddedServer;
 import fraglab.library.valueobject.AuthorValue;
 import fraglab.library.valueobject.BookValue;
 import fraglab.library.valueobject.PagedValue;
@@ -29,7 +28,7 @@ public class AuthorResourceClient implements AuthorResource {
 
     private RestTemplate restTemplate = new RestTemplate();
 
-    private static final String API_BASE = String.format("http://localhost:%s/api", EmbeddedServer.PORT);
+    private static final String API_BASE = String.format("http://localhost:%s/api", 55455);
     private static final String AUTHOR_URL = String.format("%s/author", API_BASE);
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
@@ -56,7 +55,6 @@ public class AuthorResourceClient implements AuthorResource {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public PagedValue<AuthorValue> pageAllAuthors(Integer pageNumber, Integer pageSize, String sort, String filter) {
         List<String> queryStringParams = new ArrayList<>();
         if (pageSize != null) {

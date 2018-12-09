@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
  * @version $Id: $Id
  */
 @RestController
-@RequestMapping("/author")
+@RequestMapping("/api/author")
 public class AuthorResourceImpl implements AuthorResource {
 
     private static final Logger LOG = LoggerFactory.getLogger(AuthorResourceImpl.class);
