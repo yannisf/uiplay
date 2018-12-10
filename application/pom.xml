@@ -75,7 +75,6 @@
         <dependency>
             <groupId>fraglab.uiplay</groupId>
             <artifactId>resources</artifactId>
-            <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
