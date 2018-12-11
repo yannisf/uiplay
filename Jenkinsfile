@@ -13,7 +13,6 @@ pipeline {
         string(name: 'MAVEN', defaultValue: 'maven3', description: 'Maven')
         string(name: 'NODEJS', defaultValue: 'nodejs10', description: 'NodeJS')
         string(name: 'SSH_KEY_ID', defaultValue: 'azure', description: 'SSH key id')
-        booleanParam(name: 'BUILD_UI', defaultValue: false, description: 'Build UI')
         booleanParam(name: 'RUN_TESTS', defaultValue: false, description: 'Run tests')
         booleanParam(name: 'RUN_CODE_ANALYSIS', defaultValue: false, description: 'Run code analysis')
         booleanParam(name: 'DEPLOY_ON_AZURE', defaultValue: false, description: 'Deploy on Azure')
@@ -72,7 +71,6 @@ pipeline {
                             nodejs(params.NODEJS) {
                                 sh 'npm install'
                                 sh 'npm run buildProd'
-                                sh 'mvn'
                             }
                         }
                     }
@@ -80,18 +78,9 @@ pipeline {
             }
         }
 
-
         stage('Package & Install') {
             steps {
-                script {
-                    def cmd = 'mvn install -Dmaven.test.skip'
-                    if (params.BUILD_UI) {
-                        cmd += ' -Pui'
-                    } else {
-                        println 'Building without UI!'
-                    }
-                    sh cmd
-                }
+                sh 'mvn install -Dmaven.test.skip'
             }
         }
 

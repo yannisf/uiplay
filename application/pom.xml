@@ -56,29 +56,25 @@
         </plugins>
     </build>
 
-    <profiles>
-        <profile>
-            <id>ui</id>
-            <dependencies>
-                <dependency>
-                    <groupId>fraglab</groupId>
-                    <artifactId>uiplay-ng</artifactId>
-                    <version>${uiplay-ng.version}</version>
-                    <type>war</type>
-                    <scope>runtime</scope>
-                </dependency>
-            </dependencies>
-        </profile>
-    </profiles>
-
     <dependencies>
         <dependency>
             <groupId>fraglab.uiplay</groupId>
             <artifactId>resources</artifactId>
         </dependency>
         <dependency>
+            <groupId>fraglab.uiplay</groupId>
+            <artifactId>ng-app</artifactId>
+            <type>war</type>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
