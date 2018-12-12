@@ -17,6 +17,8 @@ public class Author extends BaseEntity {
 
     private String name;
 
+    private String yearOfBirth;
+
     @OneToMany(mappedBy = "author", cascade = {CascadeType.ALL}, orphanRemoval = true)
     private List<Book> books;
 
@@ -51,6 +53,14 @@ public class Author extends BaseEntity {
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getYearOfBirth() {
+        return yearOfBirth;
+    }
+
+    public void setYearOfBirth(String yearOfBirth) {
+        this.yearOfBirth = yearOfBirth;
     }
 
     /**

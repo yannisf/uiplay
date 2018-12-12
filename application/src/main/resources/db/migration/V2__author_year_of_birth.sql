@@ -1,0 +1,1 @@
+alter table AUTHOR add column YEAROFBIRTH varchar (12);
