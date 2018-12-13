@@ -3,6 +3,7 @@ package fraglab.library;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class Author extends BaseEntity {
     private String yearOfBirth;
 
     @OneToMany(mappedBy = "author", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @OrderColumn(name = "POSITION")
     private List<Book> books;
 
     /**

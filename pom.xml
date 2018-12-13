@@ -31,6 +31,7 @@
         <module>mappers</module>
         <module>services</module>
         <module>resources</module>
+        <module>migrations</module>
         <module>ng-app</module>
         <module>application</module>
     </modules>
@@ -127,6 +128,11 @@
             <dependency>
                 <groupId>fraglab.uiplay</groupId>
                 <artifactId>resources</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>fraglab.uiplay</groupId>
+                <artifactId>migrations</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
