@@ -1,12 +1,11 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-
-import {InsertAuthorComponent} from "./author/insert-author/insert-author.component";
-import {DetailAuthorComponent} from "./author/detail-author/detail-author.component";
+import {DetailAuthorComponent} from "./author/containers/detail-author/detail-author.component";
+import {AuthorShellComponent} from "./author/containers/author-shell/author-shell.component";
 
 const routes: Routes = [
   {path: '', redirectTo: '/author/insert', pathMatch: 'full'},
-  {path: 'author/insert', component: InsertAuthorComponent},
+  {path: 'author/insert', component: AuthorShellComponent},
   {path: 'author/:id', component: DetailAuthorComponent}
 ];
 

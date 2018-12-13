@@ -1,0 +1,26 @@
+<h3>Books <span *ngIf="books?.length" class="badge badge-pill badge-primary">{{books.length}}</span></h3>
+
+<div class="alert alert-primary" role="alert" *ngIf="!books?.length">
+  Author does not have any books registered.
+</div>
+
+<div *ngIf="books?.length">
+  <table class="table table-borderless table-hover">
+    <tbody>
+    <tr *ngFor="let book of books">
+      <td>
+        <app-display-book *ngIf="editBookId !== book.id" [book]="book" [authorId]="authorId"
+                          (editingBook)="onEditBook($event)" (deletedBook)="onDeleteBook($event)"></app-display-book>
+        <app-update-book *ngIf="editBookId == book.id" [book]="book" [authorId]="authorId"
+                         (updated)="updated($event)"></app-update-book>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<app-insert-book [authorId]="authorId" (saved)="onSave($event)"></app-insert-book>
+
+<div class="mt-3">
+  <a routerLink="/">Back</a>
+</div>

@@ -1,0 +1,21 @@
+<app-insert-author (authorSubmitted)="insertAuthor($event)"></app-insert-author>
+
+<app-added-author-alert
+  *ngIf="createdAuthor"
+  [author]="createdAuthor"
+  (authorCreatedClear)="authorCreatedClear()">
+</app-added-author-alert>
+
+<app-list-authors
+  [currentPage]="currentPage"
+  [filter]="filter"
+  [sort]="sort"
+  [authors]="authors"
+  [totalItems]="totalItems"
+  [createdAuthor]="createdAuthor"
+  (filterChange)="onFilterChange($event)"
+  (filterClear)="onClearFilter()"
+  (sortChange)="onSortChange()"
+  (pageChange)="onPageChange($event)"
+  (authorDelete)="onAuthorsDelete($event)">
+</app-list-authors>

@@ -7,15 +7,15 @@ import {ModalModule} from 'ngx-bootstrap/modal';
 import {TooltipModule} from 'ngx-bootstrap/tooltip';
 
 import {AppComponent} from './app.component';
-import {InsertAuthorComponent} from './author/insert-author/insert-author.component';
-import {ListAuthorsComponent} from './author/list-authors/list-authors.component';
+import {InsertAuthorComponent} from './author/components/insert-author/insert-author.component';
+import {ListAuthorsComponent} from './author/components/list-authors/list-authors.component';
 import {AppRoutingModule} from './app-routing.module';
-import {DetailAuthorComponent} from './author/detail-author/detail-author.component';
-import {InsertBookComponent} from './author/book/insert-book/insert-book.component';
-import {ListBooksComponent} from './author/book/list-books/list-books.component';
-import {UpdateAuthorComponent} from './author/detail-author/update-author/update-author.component';
-import {UpdateBookComponent} from './author/book/list-books/update-book/update-book.component';
-import {DisplayBookComponent} from './author/book/list-books/display-book/display-book.component';
+import {DetailAuthorComponent} from './author/containers/detail-author/detail-author.component';
+import {InsertBookComponent} from './book/insert-book/insert-book.component';
+import {ListBooksComponent} from './book/list-books/list-books.component';
+import {UpdateAuthorComponent} from './author/components/update-author/update-author.component';
+import {UpdateBookComponent} from './book/update-book/update-book.component';
+import {DisplayBookComponent} from './book/display-book/display-book.component';
 import {NgProgressModule} from "@ngx-progressbar/core";
 import {NgProgressHttpModule} from "@ngx-progressbar/http";
 import {
@@ -26,11 +26,18 @@ import {
   PopoverModule,
   TypeaheadModule
 } from "ngx-bootstrap";
-import {SortableControlComponent} from './author/sortable-control/sortable-control.component';
+import {SortableControlComponent} from './generic/sortable-control/sortable-control.component';
 import {AuthorTypeaheadComponent} from './author/author-typeahead/author-typeahead.component';
-import {FilterControlComponent} from './author/filter-control/filter-control.component';
-import {NavbarComponent} from './navbar/navbar.component';
-import {AddedAuthorAlertComponent} from "./author/insert-author/added-author-alert/added-author-alert.component";
+import {FilterControlComponent} from './generic/filter-control/filter-control.component';
+import {NavbarComponent} from './generic/navbar/navbar.component';
+import {AddedAuthorAlertComponent} from "./author/components/added-author-alert/added-author-alert.component";
+import {StoreModule} from "@ngrx/store";
+import {reducer} from "./author/state/author.reducer";
+import {StoreDevtoolsModule} from "@ngrx/store-devtools";
+import {environment} from "../environments/environment";
+import {EffectsModule} from "@ngrx/effects";
+import {AuthorsEffects} from "./author/state/authors.effects";
+import {AuthorShellComponent} from './author/containers/author-shell/author-shell.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +54,8 @@ import {AddedAuthorAlertComponent} from "./author/insert-author/added-author-ale
     SortableControlComponent,
     AuthorTypeaheadComponent,
     FilterControlComponent,
-    NavbarComponent
+    NavbarComponent,
+    AuthorShellComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,6 +74,15 @@ import {AddedAuthorAlertComponent} from "./author/insert-author/added-author-ale
     NgProgressHttpModule.forRoot(),
     CollapseModule.forRoot(),
     AppRoutingModule,
+    StoreModule.forRoot(reducer),
+    StoreModule.forFeature('authors', reducer),
+    EffectsModule.forRoot([]),
+    EffectsModule.forFeature([AuthorsEffects]),
+    StoreDevtoolsModule.instrument({
+      name: 'UIPlay Devtools',
+      maxAge: 25,
+      logOnly: environment.production
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

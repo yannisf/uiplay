@@ -2,9 +2,11 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable, Subject} from 'rxjs';
 import {Author} from './author';
-import {Book} from "./book/book";
-import {PagedAuthor} from "./paged-author";
-import {Sort} from "./sort";
+import {Book} from "../book/book";
+import {PagedAuthors} from "./paged-authors";
+import {Sort} from "../generic/sort";
+import {Store} from "@ngrx/store";
+import {AppState} from "../state/app.state";
 
 const RESOURCE_AUTHOR = "api/author";
 
@@ -13,24 +15,23 @@ const RESOURCE_AUTHOR = "api/author";
 })
 export class AuthorService {
 
-  currentPage = 0;
-  sort: string = Sort[Sort.NONE];
-  filter = '';
   private subject = new Subject<any>();
 
-  constructor(private http: HttpClient) {
+  constructor(private store: Store<AppState>,
+              private http: HttpClient) {
   }
 
   list(): Observable<Author[]> {
     return this.http.get<Author[]>(RESOURCE_AUTHOR);
   }
 
-  page(pageNumber: number, pageSize = 10): Observable<PagedAuthor> {
-    return this.http.get<PagedAuthor>(`${RESOURCE_AUTHOR}/page/${pageNumber}?pageSize=${pageSize}&sort=${this.sort}&filter=${this.filter}`);
+  page(page: number, filter: string, sort: Sort, pageSize = 10): Observable<PagedAuthors> {
+    const url = `${RESOURCE_AUTHOR}/page/${page}?pageSize=${pageSize}&sort=${Sort[sort]}&filter=${filter}`;
+    return this.http.get<PagedAuthors>(url);
   }
 
-  search(query: string): Observable<PagedAuthor> {
-    return this.http.get<PagedAuthor>(`${RESOURCE_AUTHOR}/search?q=${query}`);
+  search(query: string): Observable<PagedAuthors> {
+    return this.http.get<PagedAuthors>(`${RESOURCE_AUTHOR}/search?q=${query}`);
   }
 
   insert(author: Author): Observable<Author> {
@@ -43,14 +44,6 @@ export class AuthorService {
 
   fetch(authorId: number): Observable<Author> {
     return this.http.get<Author>(`${RESOURCE_AUTHOR}/${authorId}`)
-  }
-
-  addedAuthor() {
-    this.subject.next({added: true});
-  }
-
-  receiveAddedAuthor(): Observable<any> {
-    return this.subject.asObservable();
   }
 
   fetchBooks(authorId: number) {
