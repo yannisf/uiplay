@@ -1,4 +1,6 @@
-<app-insert-author (authorSubmitted)="insertAuthor($event)"></app-insert-author>
+<app-insert-author
+  (authorSubmitted)="insertAuthor($event)">
+</app-insert-author>
 
 <app-added-author-alert
   *ngIf="createdAuthor"
@@ -7,15 +9,18 @@
 </app-added-author-alert>
 
 <app-list-authors
-  [currentPage]="currentPage"
   [filter]="filter"
   [sort]="sort"
   [authors]="authors"
-  [totalItems]="totalItems"
   [createdAuthor]="createdAuthor"
   (filterChange)="onFilterChange($event)"
   (filterClear)="onClearFilter()"
   (sortChange)="onSortChange()"
-  (pageChange)="onPageChange($event)"
   (authorDelete)="onAuthorsDelete($event)">
 </app-list-authors>
+
+<app-paginate-authors
+  [currentPage]="currentPage"
+  [totalItems]="totalItems"
+  (pageChanged)="onPageChange($event)">
+</app-paginate-authors>

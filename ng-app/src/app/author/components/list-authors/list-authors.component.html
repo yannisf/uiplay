@@ -1,13 +1,10 @@
 <h2 class="mt-lg-5">Authors</h2>
 
 <div class="row">
-
   <div class="col-12">
-
     <div class="alert alert-primary" role="alert" *ngIf="!authors?.length">
       No authors. <a routerLink="" *ngIf="!!filter" (click)="onClearFilter()">Clear filter</a>
     </div>
-
     <table *ngIf="authors?.length > 0" class="table table-borderless table-hover">
       <thead>
       <tr>
@@ -28,13 +25,8 @@
       </tr>
       </tbody>
     </table>
-
   </div>
-
 </div>
-
-<pagination *ngIf="totalItems > 10" [totalItems]="totalItems" [itemsPerPage]="10"
-            (pageChanged)="onPageChange($event)" [ngModel]="currentPage"></pagination>
 
 <ng-template #template>
   <div class="modal-header">

@@ -4,8 +4,7 @@ import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-added-author-alert',
-  templateUrl: './added-author-alert.component.html',
-  styleUrls: ['./added-author-alert.component.scss']
+  templateUrl: './added-author-alert.component.html'
 })
 export class AddedAuthorAlertComponent {
 

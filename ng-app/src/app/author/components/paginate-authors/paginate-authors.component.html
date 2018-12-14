@@ -1,0 +1,6 @@
+<pagination *ngIf="totalItems > 10"
+            [totalItems]="totalItems"
+            [itemsPerPage]="10"
+            (pageChanged)="onPageChanged($event)"
+            [ngModel]="currentPage">
+</pagination>

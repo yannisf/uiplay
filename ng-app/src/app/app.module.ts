@@ -38,6 +38,7 @@ import {environment} from "../environments/environment";
 import {EffectsModule} from "@ngrx/effects";
 import {AuthorsEffects} from "./author/state/authors.effects";
 import {AuthorShellComponent} from './author/containers/author-shell/author-shell.component';
+import { PaginateAuthorsComponent } from './author/components/paginate-authors/paginate-authors.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import {AuthorShellComponent} from './author/containers/author-shell/author-shel
     FilterControlComponent,
     NavbarComponent,
     AuthorShellComponent,
+    PaginateAuthorsComponent,
   ],
   imports: [
     BrowserModule,

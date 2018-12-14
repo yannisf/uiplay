@@ -3,7 +3,6 @@ import {BsModalService} from 'ngx-bootstrap/modal';
 import {BsModalRef} from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import {Sort} from "../../../generic/sort";
 import {Author} from "../../author";
-import {PageChangedEvent} from "ngx-bootstrap";
 
 @Component({
   selector: 'app-list-authors',
@@ -12,16 +11,13 @@ import {PageChangedEvent} from "ngx-bootstrap";
 })
 export class ListAuthorsComponent {
 
-  @Input() currentPage: number;
   @Input() filter: string;
   @Input() sort: Sort;
   @Input() authors: Author[];
-  @Input() totalItems: number;
   @Input() createdAuthor: Author;
   @Output() filterChange = new EventEmitter<string>();
   @Output() filterClear = new EventEmitter<void>();
   @Output() sortChange = new EventEmitter<void>();
-  @Output() pageChange = new EventEmitter<PageChangedEvent>();
   @Output() authorDelete = new EventEmitter<number>();
 
   modalRef: BsModalRef;
@@ -45,10 +41,6 @@ export class ListAuthorsComponent {
 
   onSortChange() {
     this.sortChange.emit();
-  }
-
-  onPageChange($event) {
-    this.pageChange.emit($event);
   }
 
   onAuthorDelete() {
