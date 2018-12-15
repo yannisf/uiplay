@@ -15,7 +15,7 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class DetailAuthorComponent implements OnInit, OnDestroy {
 
-  author: Author = new Author();
+  author: Author = null;
   editMode: boolean = false;
   private componentActive = true;
 
@@ -23,11 +23,13 @@ export class DetailAuthorComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // this.route.params.pipe(takeWhile(() => this.componentActive))
-    this.route.params.pipe(take(1)).subscribe(params => {
-      this.store.dispatch(new LoadAuthorDetails(+params['id']));
-    });
-    this.store.pipe(select(getSelectedAuthor), takeWhile(() => this.componentActive))
+    this.route.params.pipe(
+      take(1))
+      .subscribe(params => {
+        this.store.dispatch(new LoadAuthorDetails(+params['id']));
+      });
+    this.store.pipe(select(getSelectedAuthor),
+      takeWhile(() => this.componentActive))
       .subscribe(author => this.author = author);
   }
 

@@ -1,18 +1,18 @@
-<form #updateBookForm="ngForm">
+<form (ngSubmit)="submit()" [formGroup]="bookForm">
   <div class="input-group">
     <input #input type="text" class="form-control" placeholder="book title" required minlength="2" name="title"
-           [(ngModel)]="updatedBook.title" #updateBookModel="ngModel" (keydown.esc)="cancelEdit()"/>
+           formControlName="title" (keydown.esc)="cancel()"/>
     <div class="input-group-append">
-      <button type="submit" class="btn btn-success" title="Save" (click)="saveEdit()"
-              [disabled]="!updateBookForm.form.valid">
+      <button type="submit" class="btn btn-success" title="Save" (click)="submit()"
+              [disabled]="!bookForm.valid">
         <i class="fas fa-check"></i>
       </button>
     </div>
-    <button class="btn btn-link" title="Cancel" (click)="cancelEdit()">Cancel</button>
+    <button class="btn btn-link" title="Cancel" (click)="cancel()">Cancel</button>
   </div>
-  <div *ngIf="updateBookModel.invalid">
-    <div *ngIf="updateBookModel.errors['required']" class="text-danger">Book title is required</div>
-    <div *ngIf="updateBookModel.errors['minlength']" class="text-danger">Book title must have minimum length 2</div>
+  <div *ngIf="title.invalid && title.dirty">
+    <div *ngIf="title.errors['required']" class="text-danger">Book title is required</div>
+    <div *ngIf="title.errors['minlength']" class="text-danger">Book title must have minimum length 2</div>
   </div>
 
 </form>

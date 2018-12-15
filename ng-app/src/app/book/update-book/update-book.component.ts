@@ -1,38 +1,43 @@
-import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {Book} from "../book";
-import {AuthorService} from "../../author/author.service";
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {AuthorBook, Book} from "../book";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-update-book',
   templateUrl: './update-book.component.html',
   styleUrls: ['./update-book.component.scss']
 })
-export class UpdateBookComponent implements OnInit, AfterViewInit {
+export class UpdateBookComponent implements OnInit {
 
   @Input() book: Book;
   @Input() authorId: number;
-  @Output() updated = new EventEmitter<string>();
-  updatedBook: Book;
+  @Output() submitted = new EventEmitter<AuthorBook>();
   @ViewChild('input') private input: ElementRef;
+  bookForm = new FormGroup({
+    title: new FormControl('', [
+      Validators.required,
+      Validators.minLength(2)])
+  });
 
-  constructor(private authorService: AuthorService) { }
-
-  ngOnInit() {
-    this.updatedBook = JSON.parse(JSON.stringify(this.book));
-  }
-
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
+    this.bookForm.setValue({'title': this.book.title});
     this.input.nativeElement.focus();
   }
 
-  cancelEdit() {
-    this.updated.emit('cancel');
+  get title() {
+    return this.bookForm.get('title');
   }
 
-  saveEdit(){
-    this.authorService.addBook(this.authorId, this.updatedBook).subscribe(book => {
-      this.updated.emit('success');
-    });
+  submit() {
+    this.book.title = this.bookForm.value.title;
+    const authorBook = new AuthorBook();
+    authorBook.authorId = this.authorId;
+    authorBook.book = this.book;
+    this.submitted.emit(authorBook);
+  }
+
+  cancel() {
+    this.submitted.emit();
   }
 
 }

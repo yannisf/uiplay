@@ -1,48 +1,54 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Book} from "../book";
-import {AuthorService} from "../../author/author.service";
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AuthorBook, AuthorIdBookId, Book} from "../book";
+import {select, Store} from "@ngrx/store";
+import {AppState} from "../../state/app.state";
+import {takeWhile} from "rxjs/operators";
+import {getBooks} from "../state/book.reducer";
+import {DeleteBook, LoadBooks, SaveBook} from "../state/books.actions";
+import {getSelectedAuthor} from "../../author/state/author.reducer";
 
 @Component({
   selector: 'app-list-books',
   templateUrl: './list-books.component.html',
   styleUrls: ['./list-books.component.scss']
 })
-export class ListBooksComponent implements OnInit {
+export class ListBooksComponent implements OnInit, OnDestroy {
 
-  private _authorId: number;
+  authorId: number;
   books: Book[];
   editBookId: number;
+  componentActive = true;
 
-  constructor(private authorService: AuthorService) {
+  constructor(private store: Store<AppState>) {
   }
 
   ngOnInit() {
+    this.store.pipe(
+      select(getSelectedAuthor),
+      takeWhile(() => this.componentActive))
+      .subscribe(author => {
+        this.authorId = author.id;
+        this.store.dispatch(new LoadBooks(author.id));
+      });
+    this.store.pipe(
+      select(getBooks),
+      takeWhile(() => this.componentActive))
+      .subscribe((books) => {
+        this.books = books;
+      });
   }
 
-  @Input()
-  set authorId(authorId: number) {
-    this._authorId = authorId;
-    this.fetchBooks();
+  ngOnDestroy(): void {
+    this.componentActive = false;
   }
 
-  get authorId() {
-    return this._authorId;
+  onSubmit($event: AuthorBook) {
+    this.store.dispatch(new SaveBook($event));
   }
 
-  fetchBooks() {
-    this.authorService.fetchBooks(this._authorId)
-      .subscribe(books => this.books = books);
-  }
-
-  onSave($event: string) {
-    if ($event === 'success') {
-      this.fetchBooks();
-    }
-  }
-
-  updated($event: string) {
-    if ($event === 'success') {
-      this.fetchBooks();
+  onUpdateBook($event: AuthorBook) {
+    if ($event) {
+      this.store.dispatch(new SaveBook($event));
     }
     this.editBookId = null;
   }
@@ -51,10 +57,8 @@ export class ListBooksComponent implements OnInit {
     this.editBookId = $event;
   }
 
-  onDeleteBook($event: boolean) {
-    if ($event) {
-      this.fetchBooks();
-    }
+  onDeleteBook($event: AuthorIdBookId) {
+    this.store.dispatch(new DeleteBook($event));
   }
 
 }

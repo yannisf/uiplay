@@ -7,7 +7,7 @@ import {AppInfoService, BuildInfo} from "../../app-info.service";
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  isCollapsed = true;
+  isCollapsed = false;
 
   buildInfo: BuildInfo;
 

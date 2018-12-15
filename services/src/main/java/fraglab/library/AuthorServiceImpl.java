@@ -35,6 +35,9 @@ public class AuthorServiceImpl implements AuthorService {
     private AuthorRepository authorRepository;
 
     @Autowired
+    private BookRepository bookRepository;
+
+    @Autowired
     private AuthorMapperService authorMapperService;
 
     /**
@@ -174,17 +177,21 @@ public class AuthorServiceImpl implements AuthorService {
      * @param bookValue a {@link fraglab.library.valueobject.BookValue} object.
      */
     @Override
-    public void addBookValue(Long authorId, BookValue bookValue) {
+    public BookValue addBookValue(Long authorId, BookValue bookValue) {
         Author author = find(authorId);
+        Book book = null;
         if (bookValue.getId() != null) {
-            Book book = author.getBooks().stream()
+            book = author.getBooks().stream()
                     .filter(b -> b.getId().equals(bookValue.getId()))
                     .findFirst().orElseThrow(IllegalStateException::new);
             authorMapperService.toBookEntity(bookValue, book);
         } else {
-            Book book = authorMapperService.toBookEntity(bookValue);
+            book = authorMapperService.toBookEntity(bookValue);
+            book.setAuthor(author);
+            book = bookRepository.save(book);
             author.addBook(book);
         }
+        return authorMapperService.toBookValue(book);
     }
 
     /**

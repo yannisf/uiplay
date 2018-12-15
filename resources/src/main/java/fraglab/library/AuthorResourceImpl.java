@@ -105,9 +105,9 @@ public class AuthorResourceImpl implements AuthorResource {
     @Override
     @PostMapping(value = "/{authorId}/book", consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void saveBook(@PathVariable Long authorId, @RequestBody BookValue bookValue) {
+    public BookValue saveBook(@PathVariable Long authorId, @RequestBody BookValue bookValue) {
         LOG.debug("Adding Book[{}] to Author[{}]", bookValue, authorId);
-        authorService.addBookValue(authorId, bookValue);
+        return authorService.addBookValue(authorId, bookValue);
     }
 
     /** {@inheritDoc} */

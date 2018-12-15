@@ -28,7 +28,7 @@ const initialState: AuthorsState = {
   totalElements: 0,
   totalPages: 0,
   authors: [],
-  selectedAuthor: new Author(),
+  selectedAuthor: null,
   createdAuthor: null,
   error: ''
 };
@@ -39,7 +39,7 @@ export const getSelectedAuthor = createSelector(getAuthorsState, state => state.
 export const getCreatedAuthor = createSelector(getAuthorsState, state => state.createdAuthor);
 export const getError = createSelector(getAuthorsState, state => state.error);
 
-export function reducer(state = initialState, action: AuthorsActions): AuthorsState {
+export function authorsReducer(state = initialState, action: AuthorsActions): AuthorsState {
 
   switch (action.type) {
 
@@ -68,6 +68,7 @@ export function reducer(state = initialState, action: AuthorsActions): AuthorsSt
         totalElements: action.payload.totalElements,
         totalPages: action.payload.totalPages,
         authors: action.payload.values,
+        selectedAuthor: null,
         error: ''
       };
     }
@@ -78,6 +79,7 @@ export function reducer(state = initialState, action: AuthorsActions): AuthorsSt
         totalElements: 0,
         totalPages: 0,
         authors: [],
+        selectedAuthor: null,
         error: action.payload
       };
 

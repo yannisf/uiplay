@@ -32,13 +32,15 @@ import {FilterControlComponent} from './generic/filter-control/filter-control.co
 import {NavbarComponent} from './generic/navbar/navbar.component';
 import {AddedAuthorAlertComponent} from "./author/components/added-author-alert/added-author-alert.component";
 import {StoreModule} from "@ngrx/store";
-import {reducer} from "./author/state/author.reducer";
+import {authorsReducer} from "./author/state/author.reducer";
+import {booksReducer} from "./book/state/book.reducer";
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 import {environment} from "../environments/environment";
 import {EffectsModule} from "@ngrx/effects";
 import {AuthorsEffects} from "./author/state/authors.effects";
 import {AuthorShellComponent} from './author/containers/author-shell/author-shell.component';
 import { PaginateAuthorsComponent } from './author/components/paginate-authors/paginate-authors.component';
+import {BooksEffects} from "./book/state/books.effects";
 
 @NgModule({
   declarations: [
@@ -76,10 +78,12 @@ import { PaginateAuthorsComponent } from './author/components/paginate-authors/p
     NgProgressHttpModule.forRoot(),
     CollapseModule.forRoot(),
     AppRoutingModule,
-    StoreModule.forRoot(reducer),
-    StoreModule.forFeature('authors', reducer),
+    StoreModule.forRoot(authorsReducer),
+    StoreModule.forRoot(booksReducer),
+    StoreModule.forFeature('authors', authorsReducer),
+    StoreModule.forFeature('books', booksReducer),
     EffectsModule.forRoot([]),
-    EffectsModule.forFeature([AuthorsEffects]),
+    EffectsModule.forFeature([AuthorsEffects, BooksEffects]),
     StoreDevtoolsModule.instrument({
       name: 'UIPlay Devtools',
       maxAge: 25,

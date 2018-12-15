@@ -71,7 +71,7 @@ public interface AuthorResource {
      * @param authorId a {@link java.lang.Long} object.
      * @param bookValue a {@link fraglab.library.valueobject.BookValue} object.
      */
-    void saveBook(Long authorId, BookValue bookValue);
+    BookValue saveBook(Long authorId, BookValue bookValue);
 
     /**
      * <p>deleteBook.</p>

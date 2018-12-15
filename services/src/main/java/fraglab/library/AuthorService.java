@@ -25,7 +25,7 @@ public interface AuthorService {
 
     void addBook(Long authorId, Book book);
 
-    void addBookValue(Long authorId, BookValue bookValue);
+    BookValue addBookValue(Long authorId, BookValue bookValue);
 
     void deleteBook(Long authorId, Long bookId);
 

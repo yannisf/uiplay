@@ -93,11 +93,11 @@ public class AuthorResourceClient implements AuthorResource {
     }
 
     @Override
-    public void saveBook(Long authorId, BookValue book) {
+    public BookValue saveBook(Long authorId, BookValue book) {
         String bookJson = getAsJson(book);
         HttpEntity<String> bookEntity = new HttpEntity<>(bookJson, justHeaders());
         String url = String.format("%s/%s/book", AUTHOR_URL, authorId);
-        restTemplate.exchange(url, POST, bookEntity, Void.class);
+        return restTemplate.exchange(url, POST, bookEntity, BookValue.class).getBody();
     }
 
     @Override
