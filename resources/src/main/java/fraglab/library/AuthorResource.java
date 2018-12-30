@@ -89,4 +89,6 @@ public interface AuthorResource {
      */
     List<BookValue> getAuthorBooks(Long authorId);
 
+    void reorderAuthorBooks(Long authorId, Long[] bookIds);
+
 }

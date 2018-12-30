@@ -62,7 +62,7 @@ export function booksReducer(state = initialState, action: BooksActions): BooksS
       };
 
     case BooksActionTypes.DeleteBookSuccess:
-      const books = state.books.filter(b => b.id !== action.payload);
+      let books = state.books.filter(b => b.id !== action.payload);
       return {
         ...state,
         books,
@@ -75,8 +75,29 @@ export function booksReducer(state = initialState, action: BooksActions): BooksS
         error: action.payload
       };
 
+    case BooksActionTypes.ReorderBooksSuccess:
+      return {
+        ...state,
+        books: sortBooks(state.books, action.payload),
+        error: ''
+      };
+
+    case BooksActionTypes.ReorderBooksFail:
+      return {
+        ...state,
+        error: action.payload
+      };
+
     default:
       return state;
   }
 
+}
+
+export function sortBooks(books: Book[], key: number[]): Book[] {
+  let booksMap = {};
+  books.forEach(b => {
+    booksMap[b.id] = b;
+  });
+  return key.map(k => booksMap[k]);
 }

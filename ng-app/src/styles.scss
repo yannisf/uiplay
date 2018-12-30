@@ -10,10 +10,40 @@ $input-focus-box-shadow: none;
 @import '~bootstrap/scss/bootstrap';
 @import "~bootswatch/dist/cosmo/bootswatch";
 
+@import "dragula";
+
 .ng-valid[required], .ng-valid.required {
   border-left: 5px solid #42A948; /* green */
 }
 
 .ng-invalid:not(form) {
   border-left: 5px solid #a94442 !important; /* red */
+}
+
+.ico-grip {
+  @extend .fas;
+  @extend .fa-grip-lines;
+  @extend .text-muted;
+  @extend .mr-3;
+  cursor: grab;
+}
+
+.ico-grip:hover  {
+  color: black;
+}
+
+.ico-remove {
+  @extend .fas;
+  @extend .fa-backspace;
+}
+
+.ico-edit {
+  @extend .far;
+  @extend .fa-edit;
+}
+
+.ico-filter {
+  @extend .fas;
+  @extend .fa-filter;
+  font-size: smaller;
 }

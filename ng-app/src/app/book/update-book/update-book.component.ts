@@ -4,8 +4,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-update-book',
-  templateUrl: './update-book.component.html',
-  styleUrls: ['./update-book.component.scss']
+  templateUrl: './update-book.component.html'
 })
 export class UpdateBookComponent implements OnInit {
 

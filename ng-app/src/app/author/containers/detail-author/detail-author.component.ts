@@ -10,8 +10,7 @@ import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-detail-author',
-  templateUrl: './detail-author.component.html',
-  styleUrls: ['./detail-author.component.scss']
+  templateUrl: './detail-author.component.html'
 })
 export class DetailAuthorComponent implements OnInit, OnDestroy {
 

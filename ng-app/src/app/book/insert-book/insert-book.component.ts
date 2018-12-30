@@ -4,8 +4,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-insert-book',
-  templateUrl: './insert-book.component.html',
-  styleUrls: ['./insert-book.component.scss']
+  templateUrl: './insert-book.component.html'
 })
 export class InsertBookComponent {
 

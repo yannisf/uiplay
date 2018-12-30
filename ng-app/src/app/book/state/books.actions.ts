@@ -11,6 +11,9 @@ export enum BooksActionTypes {
   DeleteBook = '[Books] Delete',
   DeleteBookSuccess = '[Books] Delete success',
   DeleteBookFail = '[Books] Delete fail',
+  ReorderBooks = '[Books] Reorder',
+  ReorderBooksSuccess = '[Books] Reorder success',
+  ReorderBooksFail = '[Books] Reorder fail'
 }
 
 export class LoadBooks implements Action {
@@ -76,6 +79,27 @@ export class DeleteBookFail implements Action {
   }
 }
 
+export class ReorderBooks implements Action {
+  readonly type = BooksActionTypes.ReorderBooks;
+
+  constructor(public payload: number[]) {
+  }
+}
+
+export class ReorderBooksSuccess implements Action {
+  readonly type = BooksActionTypes.ReorderBooksSuccess;
+
+  constructor(public payload: number[]) {
+  }
+}
+
+export class ReorderBooksFail implements Action {
+  readonly type = BooksActionTypes.ReorderBooksFail;
+
+  constructor(public payload: string) {
+  }
+}
+
 export type BooksActions = LoadBooks |
   LoadBooksSuccess |
   LoadBooksFail |
@@ -84,6 +108,9 @@ export type BooksActions = LoadBooks |
   SaveBookFail |
   DeleteBook |
   DeleteBookSuccess |
-  DeleteBookFail;
+  DeleteBookFail |
+  ReorderBooks |
+  ReorderBooksSuccess |
+  ReorderBooksFail;
 
 

@@ -32,4 +32,6 @@ public interface AuthorService {
     AuthorValue saveValue(AuthorValue authorValue);
 
     List<AuthorValue> findTop10ByNameContainingIgnoreCase(String query);
+
+    void reorderAuthorBooks(Long authorId, Long...bookIds);
 }

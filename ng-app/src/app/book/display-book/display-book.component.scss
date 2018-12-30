@@ -1,7 +1,18 @@
-:host-context(tr) .hover-show {
+$hover-opacity: 0.8;
+$unhover-opacity: 0.2;
+
+:host-context(li) .hover-show {
   display: none;
 }
 
-:host-context(tr:hover) .hover-show {
+:host-context(li:hover) .hover-show {
   display: inline-block;
+}
+
+.link-hover {
+  opacity: $hover-opacity;
+}
+
+.link-unhover {
+  opacity: $unhover-opacity;
 }

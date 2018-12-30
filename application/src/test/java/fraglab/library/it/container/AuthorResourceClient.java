@@ -112,6 +112,11 @@ public class AuthorResourceClient implements AuthorResource {
         return restTemplate.exchange(url, GET, justHeadersEmptyEntity(), LIST_BOOK_VALUE).getBody();
     }
 
+    @Override
+    public void reorderAuthorBooks(Long authorId, Long[] bookIds) {
+        //TODO: Implement this
+    }
+
     private HttpHeaders justHeaders() {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Collections.singletonList(APPLICATION_JSON));

@@ -128,4 +128,10 @@ public class AuthorResourceImpl implements AuthorResource {
         return authorService.findBooksValues(authorId);
     }
 
+    @Override
+    @PostMapping(value = "/{authorId}/book/reorder")
+    public void reorderAuthorBooks(@PathVariable Long authorId, @RequestBody Long[] bookIds) {
+        authorService.reorderAuthorBooks(authorId, bookIds);
+    }
+
 }

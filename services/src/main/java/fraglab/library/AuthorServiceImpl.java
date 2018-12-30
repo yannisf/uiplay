@@ -16,6 +16,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toList;
 import static org.springframework.data.domain.Sort.Direction.ASC;
@@ -179,7 +184,7 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public BookValue addBookValue(Long authorId, BookValue bookValue) {
         Author author = find(authorId);
-        Book book = null;
+        Book book;
         if (bookValue.getId() != null) {
             book = author.getBooks().stream()
                     .filter(b -> b.getId().equals(bookValue.getId()))
@@ -241,6 +246,19 @@ public class AuthorServiceImpl implements AuthorService {
             return authorRepository.findTop10ByNameContainingIgnoreCase(query).stream()
                     .map(authorMapperService::toValue)
                     .collect(toList());
+        }
+    }
+
+    @Override
+    public void reorderAuthorBooks(Long authorId, Long... bookIds) {
+        Author author = authorRepository.getById(authorId);
+        List<Book> books = author.getBooks();
+        Map<Long, Book> booksMap = books.stream().collect(Collectors.toMap(Book::getId, Function.identity()));
+        if (booksMap.keySet().equals(Set.of(bookIds))) {
+            IntStream.range(0, books.size()).forEach(i -> books.set(i, booksMap.get(bookIds[i])));
+            authorRepository.save(author);
+        } else {
+            throw new IllegalStateException("Inconsistent reordering operation");
         }
     }
 

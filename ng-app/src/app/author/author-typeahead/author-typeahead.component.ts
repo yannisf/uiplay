@@ -7,8 +7,7 @@ import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-author-typeahead',
-  templateUrl: './author-typeahead.component.html',
-  styleUrls: ['./author-typeahead.component.scss']
+  templateUrl: './author-typeahead.component.html'
 })
 export class AuthorTypeaheadComponent implements OnInit {
 

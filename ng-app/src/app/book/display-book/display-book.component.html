@@ -1,8 +1,20 @@
-<div>
-  <span class="mr-3">{{book.title}}</span>
-  <a [routerLink]="" class="mr-2 hover-show" title="Edit title" (click)="editBook()"><i class="far fa-edit"></i></a>
-  <a [routerLink]="" class="mr-2 hover-show" title="Delete book" (click)="openModal(template, authorId, book.id)"><i class="fas fa-backspace"></i></a>
-</div>
+<i class="ico-grip" title="Drag to move"
+   onmouseover="this.style='color: black !important'" onmouseout="this.style=''"></i>
+
+<span class="mr-3">{{book.title}}</span>
+
+<a [routerLink]="" class="mr-2 hover-show link-unhover" title="Edit title" (click)="editBook()"
+   onmouseover="this.classList.add('link-hover'); this.classList.remove('link-unhover')"
+   onmouseout="this.classList.remove('link-hover'); this.classList.add('link-unhover')">
+  <i class="ico-edit"></i>
+</a>
+
+<a [routerLink]="" class="mr-2 hover-show link-unhover" title="Delete book"
+   (click)="openModal(template, authorId, book.id)"
+   onmouseover="this.classList.add('link-hover'); this.classList.remove('link-unhover')"
+   onmouseout="this.classList.remove('link-hover'); this.classList.add('link-unhover')">
+  <i class="ico-remove"></i>
+</a>
 
 <ng-template #template>
   <div class="modal-header">

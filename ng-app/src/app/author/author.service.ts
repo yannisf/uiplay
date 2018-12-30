@@ -58,4 +58,8 @@ export class AuthorService {
     return this.http.delete<void>(`${RESOURCE_AUTHOR}/${authorId}/book/${bookId}`);
   }
 
+  reorderBooks(authorId: number, bookIds: number[]) {
+    return this.http.post<void>(`${RESOURCE_AUTHOR}/${authorId}/book/reorder`, bookIds);
+  }
+
 }

@@ -41,6 +41,7 @@ import {AuthorsEffects} from "./author/state/authors.effects";
 import {AuthorShellComponent} from './author/containers/author-shell/author-shell.component';
 import { PaginateAuthorsComponent } from './author/components/paginate-authors/paginate-authors.component';
 import {BooksEffects} from "./book/state/books.effects";
+import {DragulaModule} from "ng2-dragula";
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import {BooksEffects} from "./book/state/books.effects";
     ReactiveFormsModule,
     HttpClientModule,
     HttpClientModule,
+    DragulaModule.forRoot(),
     ModalModule.forRoot(),
     AlertModule.forRoot(),
     PopoverModule.forRoot(),

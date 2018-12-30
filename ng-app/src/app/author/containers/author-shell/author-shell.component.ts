@@ -18,8 +18,7 @@ import {Sort} from "../../../generic/sort";
 
 @Component({
   selector: 'app-author-shell',
-  templateUrl: './author-shell.component.html',
-  styleUrls: ['./author-shell.component.scss']
+  templateUrl: './author-shell.component.html'
 })
 export class AuthorShellComponent implements OnInit {
 

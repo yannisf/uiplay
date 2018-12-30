@@ -4,8 +4,7 @@ import {Author} from "../../author";
 
 @Component({
   selector: 'app-insert-author',
-  templateUrl: './insert-author.component.html',
-  styleUrls: ['./insert-author.component.scss']
+  templateUrl: './insert-author.component.html'
 })
 export class InsertAuthorComponent implements OnInit {
 

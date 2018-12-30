@@ -5,8 +5,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-update-author',
-  templateUrl: './update-author.component.html',
-  styleUrls: ['./update-author.component.scss']
+  templateUrl: './update-author.component.html'
 })
 export class UpdateAuthorComponent implements OnInit {
 

@@ -4,27 +4,21 @@
   Author does not have any books registered.
 </div>
 
-<div *ngIf="books?.length">
-  <table class="table table-borderless table-hover">
-    <tbody>
-    <tr *ngFor="let book of books">
-      <td>
-        <app-display-book *ngIf="editBookId !== book.id"
-                          [book]="book"
-                          [authorId]="authorId"
-                          (editingBook)="onEditBook($event)"
-                          (deletedBook)="onDeleteBook($event)">
-        </app-display-book>
-        <app-update-book *ngIf="editBookId == book.id"
-                         [book]="book"
-                         [authorId]="authorId"
-                         (submitted)="onUpdateBook($event)">
-        </app-update-book>
-      </td>
-    </tr>
-    </tbody>
-  </table>
-</div>
+<ul *ngIf="books?.length" dragula="BOOKS" [(dragulaModel)]="books">
+  <li *ngFor="let book of books">
+    <app-display-book *ngIf="editBookId !== book.id"
+                      [book]="book"
+                      [authorId]="authorId"
+                      (editingBook)="onEditBook($event)"
+                      (deletedBook)="onDeleteBook($event)">
+    </app-display-book>
+    <app-update-book *ngIf="editBookId == book.id"
+                     [book]="book"
+                     [authorId]="authorId"
+                     (submitted)="onUpdateBook($event)">
+    </app-update-book>
+  </li>
+</ul>
 
 <app-insert-book [authorId]="authorId" (submitted)="onSubmit($event)"></app-insert-book>
 
