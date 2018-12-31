@@ -13,6 +13,7 @@ pipeline {
         string(name: 'MAVEN', defaultValue: 'maven3', description: 'Maven')
         string(name: 'NODEJS', defaultValue: 'nodejs10', description: 'NodeJS')
         string(name: 'SSH_KEY_ID', defaultValue: 'azure', description: 'SSH key id')
+        booleanParam(name: 'BUILD_UI', defaultValue: true, description: 'Build UI')
         booleanParam(name: 'RUN_TESTS', defaultValue: false, description: 'Run tests')
         booleanParam(name: 'RUN_CODE_ANALYSIS', defaultValue: false, description: 'Run code analysis')
         booleanParam(name: 'DEPLOY_ON_AZURE', defaultValue: false, description: 'Deploy on Azure')
@@ -67,7 +68,7 @@ pipeline {
                         }
                     }
                     steps {
-                        dir('ng') {
+                        dir('ng-app') {
                             nodejs(params.NODEJS) {
                                 sh 'npm install'
                                 sh 'npm run buildProd'
