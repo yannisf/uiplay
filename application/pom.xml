@@ -68,7 +68,6 @@
         <dependency>
             <groupId>fraglab.uiplay</groupId>
             <artifactId>ng-app</artifactId>
-            <type>war</type>
             <scope>runtime</scope>
         </dependency>
         <dependency>

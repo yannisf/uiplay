@@ -12,8 +12,12 @@ import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.resource.PathResourceResolver;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -56,10 +60,6 @@ public class Application extends SpringBootServletInitializer {
         return buildInfo;
     }
 
-    public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
-    }
-
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
@@ -72,9 +72,32 @@ public class Application extends SpringBootServletInitializer {
         };
     }
 
+    @Bean
+    public WebMvcConfigurer resourceHandlersConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addResourceHandlers(ResourceHandlerRegistry registry) {
+                registry
+                        .addResourceHandler("/app", "/app/", "/app/**", "/app/**/*")
+                        .addResourceLocations("classpath:/META-INF/resources/")
+                        .resourceChain(true)
+                        .addResolver(new PathResourceResolver() {
+                            @Override
+                            protected Resource getResource(String resourcePath, Resource location) {
+                                return new ClassPathResource("/META-INF/resources/index.html");
+                            }
+                        });
+            }
+        };
+    }
+
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(Application.class);
+    }
+
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
     }
 
 }

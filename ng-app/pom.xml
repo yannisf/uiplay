@@ -11,18 +11,29 @@
     <relativePath>../</relativePath>
   </parent>
   <artifactId>ng-app</artifactId>
-  <packaging>war</packaging>
-  <name>Angular UI</name>
+  <name>Angular UI webjar</name>
 
   <build>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-war-plugin</artifactId>
-        <configuration>
-          <webappDirectory>dist/ng</webappDirectory>
-          <failOnMissingWebXml>false</failOnMissingWebXml>
-        </configuration>
+        <artifactId>maven-resources-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy-resources</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.outputDirectory}/META-INF/resources</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>dist/ng</directory>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
