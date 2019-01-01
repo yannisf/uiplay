@@ -13,7 +13,7 @@
       <li class="nav-item dropdown active" dropdown>
         <a class="nav-link dropdown-toggle" href="" (click)="false" dropdownToggle>About</a>
         <div class="dropdown-menu" *dropdownMenu aria-labelledby="navbarDropdown">
-          <span class="dropdown-item">Build: {{buildInfo.timeStamp}}</span>
+          <span class="dropdown-item">Build: {{buildInfo.timeStamp}} ({{build}})</span>
           <span class="dropdown-item">Commit: {{buildInfo.gitHash}}</span>
         </div>
       </li>

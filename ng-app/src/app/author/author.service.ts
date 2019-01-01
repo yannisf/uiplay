@@ -7,6 +7,7 @@ import {PagedAuthors} from "./paged-authors";
 import {Sort} from "../generic/sort";
 import {Store} from "@ngrx/store";
 import {AppState} from "../state/app.state";
+import {environment} from "../../environments/environment";
 
 const RESOURCE_AUTHOR = "api/author";
 
@@ -25,7 +26,7 @@ export class AuthorService {
     return this.http.get<Author[]>(RESOURCE_AUTHOR);
   }
 
-  page(page: number, filter: string, sort: Sort, pageSize = 10): Observable<PagedAuthors> {
+  page(page: number, filter: string, sort: Sort, pageSize = environment.pageSize): Observable<PagedAuthors> {
     const url = `${RESOURCE_AUTHOR}/page/${page}?pageSize=${pageSize}&sort=${Sort[sort]}&filter=${filter}`;
     return this.http.get<PagedAuthors>(url);
   }

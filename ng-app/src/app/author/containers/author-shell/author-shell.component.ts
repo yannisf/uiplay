@@ -48,6 +48,7 @@ export class AuthorShellComponent implements OnInit {
       .subscribe((listParams: ListParams) => {
         this.sort = listParams.sort;
         this.filter = listParams.filter;
+        this.currentPage = listParams.page + 1;
         this.store.dispatch(new LoadAuthors(listParams))
       });
 
